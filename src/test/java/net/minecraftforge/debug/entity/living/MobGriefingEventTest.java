@@ -19,7 +19,7 @@
 
 package net.minecraftforge.debug.entity.living;
 
-import net.minecraftforge.event.entity.EntityMobGriefingEvent;
+import net.minecraftforge.event.old.entity.EntityMobGriefingEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;

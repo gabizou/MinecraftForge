@@ -39,14 +39,19 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
  */
 public class RegistryEvent<T extends IForgeRegistryEntry<T>> extends GenericEvent<T> implements IContextSetter
 {
-    RegistryEvent(Class<T> clazz) {
-        super(clazz);
+    RegistryEvent(Cause cause, Class<T> clazz) {
+        super(cause, clazz);
     }
     /**
      * Register new registries when you receive this event, through the {@link RecipeBuilder}
      */
     public static class NewRegistry extends Event
     {
+
+        public NewRegistry(Cause cause)
+        {
+            super(cause);
+        }
     }
 
     /**
@@ -65,9 +70,9 @@ public class RegistryEvent<T extends IForgeRegistryEntry<T>> extends GenericEven
         private final IForgeRegistry<T> registry;
         private final ResourceLocation name;
 
-        public Register(ResourceLocation name, IForgeRegistry<T> registry)
+        public Register(Cause cause, ResourceLocation name, IForgeRegistry<T> registry)
         {
-            super(registry.getRegistrySuperType());
+            super(cause, registry.getRegistrySuperType());
             this.name = name;
             this.registry = registry;
         }
@@ -91,9 +96,9 @@ public class RegistryEvent<T extends IForgeRegistryEntry<T>> extends GenericEven
         private final ImmutableList<Mapping<T>> mappings;
         private ModContainer activeMod;
 
-        public MissingMappings(ResourceLocation name, IForgeRegistry<T> registry, Collection<Mapping<T>> missed)
+        public MissingMappings(Cause cause, ResourceLocation name, IForgeRegistry<T> registry, Collection<Mapping<T>> missed)
         {
-            super(registry.getRegistrySuperType());
+            super(cause, registry.getRegistrySuperType());
             this.registry = registry;
             this.name = name;
             this.mappings = ImmutableList.copyOf(missed);

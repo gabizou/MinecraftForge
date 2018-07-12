@@ -37,7 +37,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.event.world.GetCollisionBoxesEvent;
+import net.minecraftforge.event.old.world.GetCollisionBoxesEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;

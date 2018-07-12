@@ -36,7 +36,7 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.event.entity.player.FillBucketEvent;
+import net.minecraftforge.event.old.entity.player.FillBucketEvent;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.wrappers.FluidBucketWrapper;

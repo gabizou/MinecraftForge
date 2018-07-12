@@ -102,7 +102,6 @@ public class RenderGameOverlayEvent extends Event
         {
             super(parent, type);
         }
-        @Override public boolean isCancelable(){ return false; }
     }
 
     public static class BossInfo extends Pre

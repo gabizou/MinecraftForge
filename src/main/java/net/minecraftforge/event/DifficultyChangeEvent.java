@@ -19,21 +19,18 @@
 
 package net.minecraftforge.event;
 
-import javax.annotation.Nonnull;
-
 import net.minecraft.world.EnumDifficulty;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import net.minecraftforge.fml.common.eventhandler.Event;
-import net.minecraftforge.fml.common.eventhandler.Event.HasResult;
 
 /**
  * DifficultyChangeEvent is fired when difficulty is changing. <br>
  * <br>
  * This event is fired via the {@link ForgeHooks#onDifficultyChange(EnumDifficulty, EnumDifficulty)}.<br>
  * <br>
- * This event is not {@link Cancelable}.<br>
+ * This event is not {@link Cancellable}.<br>
  * <br>
  * This event does not have a result. {@link HasResult}<br>
  * <br>
@@ -41,11 +38,13 @@ import net.minecraftforge.fml.common.eventhandler.Event.HasResult;
  **/
 public class DifficultyChangeEvent extends Event
 {
+
     private final EnumDifficulty difficulty;
     private final EnumDifficulty oldDifficulty;
 
-    public DifficultyChangeEvent(EnumDifficulty difficulty, EnumDifficulty oldDifficulty)
+    public DifficultyChangeEvent(Cause cause, EnumDifficulty difficulty, EnumDifficulty oldDifficulty)
     {
+        super(cause);
         this.difficulty = difficulty;
         this.oldDifficulty = oldDifficulty;
     }

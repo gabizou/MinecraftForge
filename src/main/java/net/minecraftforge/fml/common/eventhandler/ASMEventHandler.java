@@ -26,6 +26,7 @@ import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.util.HashMap;
 
+import net.minecraftforge.event.Cancellable;
 import net.minecraftforge.fml.common.ModContainer;
 
 import org.apache.logging.log4j.ThreadContext;
@@ -83,7 +84,7 @@ public class ASMEventHandler implements IEventListener
             ThreadContext.put("mod", owner == null ? "" : owner.getName());
         if (handler != null)
         {
-            if (!event.isCancelable() || !event.isCanceled() || subInfo.receiveCanceled())
+            if (!(event instanceof Cancellable && ((Cancellable) event).isCancelled()) || subInfo.receiveCanceled())
             {
                 if (filter == null || filter == ((IGenericEvent)event).getGenericType())
                 {

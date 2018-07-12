@@ -23,7 +23,7 @@ import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.old.entity.player.PlayerEvent;
 
 import javax.annotation.Nonnull;
 

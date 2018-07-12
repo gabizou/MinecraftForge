@@ -21,7 +21,7 @@ package net.minecraftforge.debug.item;
 
 import net.minecraft.util.EnumHand;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.player.BonemealEvent;
+import net.minecraftforge.event.old.entity.player.BonemealEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;

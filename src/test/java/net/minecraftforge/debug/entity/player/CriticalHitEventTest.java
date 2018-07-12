@@ -20,7 +20,7 @@
 package net.minecraftforge.debug.entity.player;
 
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.player.CriticalHitEvent;
+import net.minecraftforge.event.old.entity.player.CriticalHitEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;

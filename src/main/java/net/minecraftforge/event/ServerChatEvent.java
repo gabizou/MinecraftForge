@@ -19,13 +19,14 @@
 
 package net.minecraftforge.event;
 
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.NetHandlerPlayServer;
 import net.minecraft.network.play.client.CPacketChatMessage;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import net.minecraftforge.fml.common.eventhandler.Event;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.util.text.ITextComponent;
 
 /**
  * ServerChatEvent is fired whenever a C01PacketChatMessage is processed. <br>
@@ -44,15 +45,17 @@ import net.minecraft.util.text.ITextComponent;
  * <br>
  * This event is fired on the {@link MinecraftForge#EVENT_BUS}.
  **/
-@Cancelable
-public class ServerChatEvent extends Event
+public class ServerChatEvent extends Event implements Cancellable
 {
+
     private final String message, username;
     private final EntityPlayerMP player;
     private ITextComponent component;
-    public ServerChatEvent(EntityPlayerMP player, String message, ITextComponent component)
+    private boolean isCancelled = false;
+
+    public ServerChatEvent(Cause cause, EntityPlayerMP player, String message, ITextComponent component)
     {
-        super();
+        super(cause);
         this.message = message;
         this.player = player;
         this.username = player.getGameProfile().getName();
@@ -69,7 +72,30 @@ public class ServerChatEvent extends Event
         return this.component;
     }
 
-    public String getMessage() { return this.message; }
-    public String getUsername() { return this.username; }
-    public EntityPlayerMP getPlayer() { return this.player; }
+    public String getMessage()
+    {
+        return this.message;
+    }
+
+    public String getUsername()
+    {
+        return this.username;
+    }
+
+    public EntityPlayerMP getPlayer()
+    {
+        return this.player;
+    }
+
+    @Override
+    public boolean isCancelled()
+    {
+        return this.isCancelled;
+    }
+
+    @Override
+    public void setCancelled(boolean cancelled)
+    {
+        this.isCancelled = cancelled;
+    }
 }

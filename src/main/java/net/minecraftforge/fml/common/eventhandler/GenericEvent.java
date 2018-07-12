@@ -19,13 +19,16 @@
 
 package net.minecraftforge.fml.common.eventhandler;
 
+import net.minecraftforge.event.Cause;
+
 import java.lang.reflect.Type;
 
 public class GenericEvent<T> extends Event implements IGenericEvent<T>
 {
     private Class<T> type;
-    protected GenericEvent(Class<T> type)
+    protected GenericEvent(Cause cause, Class<T> type)
     {
+        super(cause);
         this.type = type;
     }
 

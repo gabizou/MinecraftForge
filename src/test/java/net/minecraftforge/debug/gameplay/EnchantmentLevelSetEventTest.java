@@ -20,7 +20,7 @@
 package net.minecraftforge.debug.gameplay;
 
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.enchanting.EnchantmentLevelSetEvent;
+import net.minecraftforge.event.old.enchanting.EnchantmentLevelSetEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;

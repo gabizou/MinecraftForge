@@ -21,7 +21,7 @@ package net.minecraftforge.client.event;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.old.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
 
 import javax.annotation.Nonnull;

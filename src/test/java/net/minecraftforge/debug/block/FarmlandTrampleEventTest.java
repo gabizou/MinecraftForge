@@ -19,9 +19,8 @@
 
 package net.minecraftforge.debug.block;
 
-import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.old.world.BlockEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @Mod(modid = FarmlandTrampleEventTest.MOD_ID, name = "Farmland Trample Event Test", version = "1.0", acceptableRemoteVersions = "*")

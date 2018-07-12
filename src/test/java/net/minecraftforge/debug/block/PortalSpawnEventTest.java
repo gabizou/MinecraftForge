@@ -21,7 +21,7 @@ package net.minecraftforge.debug.block;
 
 import net.minecraft.init.Biomes;
 import net.minecraft.world.World;
-import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.old.world.BlockEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 

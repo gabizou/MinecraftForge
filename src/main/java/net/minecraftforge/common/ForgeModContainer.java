@@ -32,7 +32,6 @@ import java.security.cert.Certificate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -58,7 +57,7 @@ import net.minecraftforge.common.network.ForgeNetworkHandler;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.RegistryEvent.MissingMappings;
-import net.minecraftforge.event.terraingen.DeferredBiomeDecorator;
+import net.minecraftforge.event.old.terraingen.DeferredBiomeDecorator;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
@@ -599,14 +598,14 @@ public class ForgeModContainer extends DummyModContainer implements WorldAccessC
                 "net.minecraftforge.common.network",
                 "net.minecraftforge.common.util",
                 "net.minecraftforge.event",
-                "net.minecraftforge.event.brewing",
-                "net.minecraftforge.event.entity",
-                "net.minecraftforge.event.entity.item",
-                "net.minecraftforge.event.entity.living",
-                "net.minecraftforge.event.entity.minecart",
-                "net.minecraftforge.event.entity.player",
-                "net.minecraftforge.event.terraingen",
-                "net.minecraftforge.event.world",
+                "net.minecraftforge.event.old.brewing",
+                "net.minecraftforge.event.old.entity",
+                "net.minecraftforge.event.old.entity.item",
+                "net.minecraftforge.event.old.entity.living",
+                "net.minecraftforge.event.old.entity.minecart",
+                "net.minecraftforge.event.old.entity.player",
+                "net.minecraftforge.event.old.terraingen",
+                "net.minecraftforge.event.old.world",
                 "net.minecraftforge.fluids",
                 "net.minecraftforge.oredict",
                 "net.minecraftforge.server",

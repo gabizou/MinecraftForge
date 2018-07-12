@@ -19,6 +19,7 @@
 
 package net.minecraftforge.fml.common.eventhandler;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
@@ -29,6 +30,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.google.common.base.Preconditions;
+import net.minecraftforge.event.Cause;
 
 
 /**
@@ -51,23 +53,15 @@ public class Event
     private Result result = Result.DEFAULT;
     private static ListenerList listeners = new ListenerList();
     private EventPriority phase = null;
+    private final Cause cause;
 
-    public Event()
+    public Event(Cause cause)
+
     {
         setup();
+        this.cause = checkNotNull(cause, "cause");
     }
 
-    /**
-     * Determine if this function is cancelable at all.
-     * @return If access to setCanceled should be allowed
-     *
-     * Note:
-     * Events with the Cancelable annotation will have this method automatically added to return true.
-     */
-    public boolean isCancelable()
-    {
-        return false;
-    }
 
     /**
      * Determine if this event is canceled and should stop executing.
@@ -89,13 +83,7 @@ public class Event
      */
     public void setCanceled(boolean cancel)
     {
-        if (!isCancelable())
-        {
-            throw new UnsupportedOperationException(
-                "Attempted to call Event#setCanceled() on a non-cancelable event of type: "
-                + this.getClass().getCanonicalName()
-            );
-        }
+
         isCanceled = cancel;
     }
 
@@ -158,7 +146,7 @@ public class Event
 
     public void setPhase(@Nonnull EventPriority value)
     {
-        Preconditions.checkNotNull(value, "setPhase argument must not be null");
+        checkNotNull(value, "setPhase argument must not be null");
         int prev = phase == null ? -1 : phase.ordinal();
         Preconditions.checkArgument(prev < value.ordinal(), "Attempted to set event phase to %s when already %s", value, phase);
         phase = value;

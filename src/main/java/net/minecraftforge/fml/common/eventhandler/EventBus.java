@@ -29,6 +29,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.Nonnull;
 
+import net.minecraftforge.event.Cancellable;
 import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
@@ -188,7 +189,7 @@ public class EventBus implements IEventExceptionHandler
             Throwables.throwIfUnchecked(throwable);
             throw new RuntimeException(throwable);
         }
-        return event.isCancelable() && event.isCanceled();
+        return event instanceof Cancellable && ((Cancellable) event).isCancelled();
     }
 
     public void shutdown()

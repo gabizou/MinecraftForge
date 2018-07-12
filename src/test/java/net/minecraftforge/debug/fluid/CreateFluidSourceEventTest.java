@@ -21,7 +21,7 @@ package net.minecraftforge.debug.fluid;
 
 import net.minecraft.init.Blocks;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.world.BlockEvent.CreateFluidSourceEvent;
+import net.minecraftforge.event.old.world.BlockEvent.CreateFluidSourceEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;

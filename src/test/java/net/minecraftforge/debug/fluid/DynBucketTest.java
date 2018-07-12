@@ -57,7 +57,7 @@ import net.minecraftforge.debug.client.model.ModelFluidTest;
 import net.minecraftforge.debug.client.model.ModelFluidTest.TestFluid;
 import net.minecraftforge.debug.client.model.ModelFluidTest.TestGas;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.event.entity.player.FillBucketEvent;
+import net.minecraftforge.event.old.entity.player.FillBucketEvent;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;

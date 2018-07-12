@@ -22,7 +22,7 @@ package net.minecraftforge.debug.network;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.item.EntityItemFrame;
 import net.minecraft.init.Items;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.old.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;

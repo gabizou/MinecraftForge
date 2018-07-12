@@ -34,15 +34,16 @@ import net.minecraftforge.fml.common.eventhandler.Event;
  * Canceling the event will make it load a empty loot table.
  *
  */
-@Cancelable
-public class LootTableLoadEvent extends Event
+public class LootTableLoadEvent extends Event implements Cancellable
 {
     private final ResourceLocation name;
     private LootTable table;
     private LootTableManager lootTableManager;
+    private boolean isCancelled = false;
 
-    public LootTableLoadEvent(ResourceLocation name, LootTable table, LootTableManager lootTableManager)
+    public LootTableLoadEvent(Cause cause, ResourceLocation name, LootTable table, LootTableManager lootTableManager)
     {
+        super(cause);
         this.name = name;
         this.table = table;
         this.lootTableManager = lootTableManager;
@@ -66,5 +67,17 @@ public class LootTableLoadEvent extends Event
     public void setTable(LootTable table)
     {
         this.table = table;
+    }
+
+    @Override
+    public boolean isCancelled()
+    {
+        return this.isCancelled;
+    }
+
+    @Override
+    public void setCancelled(boolean cancelled)
+    {
+        this.isCancelled = cancelled;
     }
 }

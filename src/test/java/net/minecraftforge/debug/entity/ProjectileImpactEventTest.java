@@ -20,7 +20,7 @@
 package net.minecraftforge.debug.entity;
 
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.ProjectileImpactEvent;
+import net.minecraftforge.event.old.entity.ProjectileImpactEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;

@@ -56,7 +56,7 @@ import net.minecraft.world.WorldProvider;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.WorldServerMulti;
 import net.minecraft.world.storage.ISaveHandler;
-import net.minecraftforge.event.world.WorldEvent;
+import net.minecraftforge.event.old.world.WorldEvent;
 import net.minecraftforge.fml.common.FMLLog;
 
 import javax.annotation.Nullable;

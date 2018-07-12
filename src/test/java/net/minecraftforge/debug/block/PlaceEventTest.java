@@ -20,7 +20,7 @@
 package net.minecraftforge.debug.block;
 
 import net.minecraft.init.Blocks;
-import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.old.world.BlockEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 

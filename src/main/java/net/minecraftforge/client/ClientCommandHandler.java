@@ -30,7 +30,7 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.CommandEvent;
+import net.minecraftforge.event.SendCommandEvent;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
@@ -82,7 +82,7 @@ public class ClientCommandHandler extends CommandHandler
 
             if (icommand.checkPermission(this.getServer(), sender))
             {
-                CommandEvent event = new CommandEvent(icommand, sender, args);
+                SendCommandEvent event = new SendCommandEvent(icommand, sender, args);
                 if (MinecraftForge.EVENT_BUS.post(event))
                 {
                     if (event.getException() != null)

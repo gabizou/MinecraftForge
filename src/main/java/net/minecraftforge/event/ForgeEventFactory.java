@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.BlockPortal;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -81,51 +80,51 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityDispatcher;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.BlockSnapshot;
-import net.minecraftforge.event.brewing.PlayerBrewedPotionEvent;
-import net.minecraftforge.event.brewing.PotionBrewEvent;
-import net.minecraftforge.event.entity.EntityEvent;
-import net.minecraftforge.event.entity.EntityMobGriefingEvent;
-import net.minecraftforge.event.entity.EntityMountEvent;
-import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
-import net.minecraftforge.event.entity.PlaySoundAtEntityEvent;
-import net.minecraftforge.event.entity.ProjectileImpactEvent;
-import net.minecraftforge.event.entity.ThrowableImpactEvent;
-import net.minecraftforge.event.entity.item.ItemExpireEvent;
-import net.minecraftforge.event.entity.living.AnimalTameEvent;
-import net.minecraftforge.event.entity.living.LivingDestroyBlockEvent;
-import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
-import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
-import net.minecraftforge.event.entity.living.LivingHealEvent;
-import net.minecraftforge.event.entity.living.LivingPackSizeEvent;
-import net.minecraftforge.event.entity.living.LivingSpawnEvent;
-import net.minecraftforge.event.entity.living.LivingSpawnEvent.AllowDespawn;
-import net.minecraftforge.event.entity.living.ZombieEvent.SummonAidEvent;
-import net.minecraftforge.event.entity.player.ArrowLooseEvent;
-import net.minecraftforge.event.entity.player.ArrowNockEvent;
-import net.minecraftforge.event.entity.player.BonemealEvent;
-import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
-import net.minecraftforge.event.entity.player.FillBucketEvent;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
-import net.minecraftforge.event.entity.player.PlayerDropsEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.entity.player.PlayerFlyableFallEvent;
-import net.minecraftforge.event.entity.player.PlayerSetSpawnEvent;
-import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
-import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
-import net.minecraftforge.event.entity.player.SleepingLocationCheckEvent;
-import net.minecraftforge.event.entity.player.UseHoeEvent;
-import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
-import net.minecraftforge.event.terraingen.ChunkGeneratorEvent;
-import net.minecraftforge.event.terraingen.PopulateChunkEvent;
-import net.minecraftforge.event.world.BlockEvent;
-import net.minecraftforge.event.world.BlockEvent.CreateFluidSourceEvent;
-import net.minecraftforge.event.world.BlockEvent.MultiPlaceEvent;
-import net.minecraftforge.event.world.BlockEvent.NeighborNotifyEvent;
-import net.minecraftforge.event.world.BlockEvent.PlaceEvent;
-import net.minecraftforge.event.world.ExplosionEvent;
-import net.minecraftforge.event.world.GetCollisionBoxesEvent;
-import net.minecraftforge.event.world.WorldEvent;
+import net.minecraftforge.event.brewing.BrewPotionEvent;
+import net.minecraftforge.event.old.brewing.PlayerBrewedPotionEvent;
+import net.minecraftforge.event.old.entity.EntityEvent;
+import net.minecraftforge.event.old.entity.EntityMobGriefingEvent;
+import net.minecraftforge.event.old.entity.EntityMountEvent;
+import net.minecraftforge.event.old.entity.EntityStruckByLightningEvent;
+import net.minecraftforge.event.old.entity.PlaySoundAtEntityEvent;
+import net.minecraftforge.event.old.entity.ProjectileImpactEvent;
+import net.minecraftforge.event.old.entity.ThrowableImpactEvent;
+import net.minecraftforge.event.old.entity.item.ItemExpireEvent;
+import net.minecraftforge.event.old.entity.living.AnimalTameEvent;
+import net.minecraftforge.event.old.entity.living.LivingDestroyBlockEvent;
+import net.minecraftforge.event.old.entity.living.LivingEntityUseItemEvent;
+import net.minecraftforge.event.old.entity.living.LivingExperienceDropEvent;
+import net.minecraftforge.event.old.entity.living.LivingHealEvent;
+import net.minecraftforge.event.old.entity.living.LivingPackSizeEvent;
+import net.minecraftforge.event.old.entity.living.LivingSpawnEvent;
+import net.minecraftforge.event.old.entity.living.LivingSpawnEvent.AllowDespawn;
+import net.minecraftforge.event.old.entity.living.ZombieEvent.SummonAidEvent;
+import net.minecraftforge.event.old.entity.player.ArrowLooseEvent;
+import net.minecraftforge.event.old.entity.player.ArrowNockEvent;
+import net.minecraftforge.event.old.entity.player.BonemealEvent;
+import net.minecraftforge.event.old.entity.player.EntityItemPickupEvent;
+import net.minecraftforge.event.old.entity.player.FillBucketEvent;
+import net.minecraftforge.event.old.entity.player.ItemTooltipEvent;
+import net.minecraftforge.event.old.entity.player.PlayerDestroyItemEvent;
+import net.minecraftforge.event.old.entity.player.PlayerDropsEvent;
+import net.minecraftforge.event.old.entity.player.PlayerEvent;
+import net.minecraftforge.event.old.entity.player.PlayerFlyableFallEvent;
+import net.minecraftforge.event.old.entity.player.PlayerSetSpawnEvent;
+import net.minecraftforge.event.old.entity.player.PlayerSleepInBedEvent;
+import net.minecraftforge.event.old.entity.player.PlayerWakeUpEvent;
+import net.minecraftforge.event.old.entity.player.SleepingLocationCheckEvent;
+import net.minecraftforge.event.old.entity.player.UseHoeEvent;
+import net.minecraftforge.event.old.furnace.FurnaceFuelBurnTimeEvent;
+import net.minecraftforge.event.old.terraingen.ChunkGeneratorEvent;
+import net.minecraftforge.event.old.terraingen.PopulateChunkEvent;
+import net.minecraftforge.event.old.world.BlockEvent;
+import net.minecraftforge.event.old.world.BlockEvent.CreateFluidSourceEvent;
+import net.minecraftforge.event.old.world.BlockEvent.MultiPlaceEvent;
+import net.minecraftforge.event.old.world.BlockEvent.NeighborNotifyEvent;
+import net.minecraftforge.event.old.world.BlockEvent.PlaceEvent;
+import net.minecraftforge.event.old.world.ExplosionEvent;
+import net.minecraftforge.event.old.world.GetCollisionBoxesEvent;
+import net.minecraftforge.event.old.world.WorldEvent;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
@@ -542,7 +541,7 @@ public class ForgeEventFactory
 
     public static void onPlayerClone(EntityPlayer player, EntityPlayer oldPlayer, boolean wasDeath)
     {
-        MinecraftForge.EVENT_BUS.post(new net.minecraftforge.event.entity.player.PlayerEvent.Clone(player, oldPlayer, wasDeath));
+        MinecraftForge.EVENT_BUS.post(new net.minecraftforge.event.old.entity.player.PlayerEvent.Clone(player, oldPlayer, wasDeath));
     }
 
     public static boolean onExplosionStart(World world, Explosion explosion)
@@ -583,7 +582,7 @@ public class ForgeEventFactory
         for (int x = 0; x < tmp.size(); x++)
             tmp.set(x, stacks.get(x).copy());
 
-        PotionBrewEvent.Pre event = new PotionBrewEvent.Pre(tmp);
+        BrewPotionEvent.Pre event = new BrewPotionEvent.Pre(tmp);
         if (MinecraftForge.EVENT_BUS.post(event))
         {
             boolean changed = false;
@@ -601,7 +600,7 @@ public class ForgeEventFactory
 
     public static void onPotionBrewed(NonNullList<ItemStack> brewingItemStacks)
     {
-        MinecraftForge.EVENT_BUS.post(new PotionBrewEvent.Post(brewingItemStacks));
+        MinecraftForge.EVENT_BUS.post(new BrewPotionEvent.Post(brewingItemStacks));
     }
 
     public static void onPlayerBrewedPotion(EntityPlayer player, ItemStack stack)
@@ -756,7 +755,7 @@ public class ForgeEventFactory
 
     public static int onEnchantmentLevelSet(World world, BlockPos pos, int enchantRow, int power, ItemStack itemStack, int level)
     {
-        net.minecraftforge.event.enchanting.EnchantmentLevelSetEvent e = new net.minecraftforge.event.enchanting.EnchantmentLevelSetEvent(world, pos, enchantRow, power, itemStack, level);
+        net.minecraftforge.event.old.enchanting.EnchantmentLevelSetEvent e = new net.minecraftforge.event.old.enchanting.EnchantmentLevelSetEvent(world, pos, enchantRow, power, itemStack, level);
         net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(e);
         return e.getLevel();
     }

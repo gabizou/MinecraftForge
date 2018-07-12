@@ -26,7 +26,7 @@ import javax.annotation.Nonnull;
 
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.event.old.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
