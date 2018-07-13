@@ -41,9 +41,9 @@ public class AttachCapabilitiesEvent<T> extends GenericEvent<T>
     private final Map<ResourceLocation, ICapabilityProvider> caps = Maps.newLinkedHashMap();
     private final Map<ResourceLocation, ICapabilityProvider> view = Collections.unmodifiableMap(caps);
 
-    public AttachCapabilitiesEvent(Class<T> type, T obj)
+    public AttachCapabilitiesEvent(Cause cause, Class<T> type, T obj)
     {
-        super(type);
+        super(cause, type);
         this.obj = obj;
     }
 

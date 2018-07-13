@@ -52,8 +52,9 @@ public class SendCommandEvent extends Event implements Cancellable
     private Throwable exception;
     private boolean isCancelled = false;
 
-    public SendCommandEvent(ICommand command, ICommandSender sender, String[] parameters)
+    public SendCommandEvent(Cause cause, ICommand command, ICommandSender sender, String[] parameters)
     {
+        super(cause);
         this.command = command;
         this.sender = sender;
         this.setParameters(parameters);

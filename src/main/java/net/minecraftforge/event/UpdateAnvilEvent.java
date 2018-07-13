@@ -46,8 +46,9 @@ public class UpdateAnvilEvent extends Event implements Cancellable
     private int materialCost; // The number of items from the right slot to be consumed during the repair. Leave as 0 to consume the entire stack.
     private boolean isCancelled = false;
 
-    public UpdateAnvilEvent(@Nonnull ItemStack left, @Nonnull ItemStack right, String name, int cost)
+    public UpdateAnvilEvent(Cause cause, @Nonnull ItemStack left, @Nonnull ItemStack right, String name, int cost)
     {
+        super(cause);
         this.left = checkNotNull(left, "left");
         this.right = checkNotNull(right, "right");
         this.output = ItemStack.EMPTY;
