@@ -87,9 +87,6 @@ import net.minecraftforge.event.entity.MountEntityEvent;
 import net.minecraftforge.event.old.brewing.PlayerBrewedPotionEvent;
 import net.minecraftforge.event.old.entity.EntityEvent;
 import net.minecraftforge.event.old.entity.EntityStruckByLightningEvent;
-import net.minecraftforge.event.old.entity.PlaySoundAtEntityEvent;
-import net.minecraftforge.event.old.entity.ProjectileImpactEvent;
-import net.minecraftforge.event.old.entity.ThrowableImpactEvent;
 import net.minecraftforge.event.old.entity.item.ItemExpireEvent;
 import net.minecraftforge.event.old.entity.living.AnimalTameEvent;
 import net.minecraftforge.event.old.entity.living.LivingDestroyBlockEvent;
@@ -126,6 +123,8 @@ import net.minecraftforge.event.old.world.BlockEvent.PlaceEvent;
 import net.minecraftforge.event.old.world.ExplosionEvent;
 import net.minecraftforge.event.old.world.GetCollisionBoxesEvent;
 import net.minecraftforge.event.old.world.WorldEvent;
+import net.minecraftforge.event.world.CollideEvent;
+import net.minecraftforge.event.world.PlaySoundEvent;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
@@ -467,9 +466,9 @@ public class ForgeEventFactory
         return event.getCanUpdate();
     }
 
-    public static PlaySoundAtEntityEvent onPlaySoundAtEntity(Entity entity, SoundEvent name, SoundCategory category, float volume, float pitch)
+    public static PlaySoundEvent onPlaySoundAtEntity(Entity entity, SoundEvent name, SoundCategory category, float volume, float pitch)
     {
-        PlaySoundAtEntityEvent event = new PlaySoundAtEntityEvent(entity, name, category, volume, pitch);
+        PlaySoundEvent event = new PlaySoundEvent(Cause.of(entity), name, category, volume, pitch);
         MinecraftForge.EVENT_BUS.post(event);
         return event;
     }
@@ -701,26 +700,9 @@ public class ForgeEventFactory
         return event.getCharge();
     }
 
-    public static boolean onProjectileImpact(Entity entity, RayTraceResult ray)
+    public static boolean onProjectileImpact(Cause cause, RayTraceResult ray)
     {
-        return MinecraftForge.EVENT_BUS.post(new ProjectileImpactEvent(entity, ray));
-    }
-
-    public static boolean onProjectileImpact(EntityArrow arrow, RayTraceResult ray)
-    {
-        return MinecraftForge.EVENT_BUS.post(new ProjectileImpactEvent.Arrow(arrow, ray));
-    }
-
-    public static boolean onProjectileImpact(EntityFireball fireball, RayTraceResult ray)
-    {
-        return MinecraftForge.EVENT_BUS.post(new ProjectileImpactEvent.Fireball(fireball, ray));
-    }
-
-    public static boolean onProjectileImpact(EntityThrowable throwable, RayTraceResult ray)
-    {
-        boolean oldEvent = MinecraftForge.EVENT_BUS.post(new ThrowableImpactEvent(throwable, ray));
-        boolean newEvent = MinecraftForge.EVENT_BUS.post(new ProjectileImpactEvent.Throwable(throwable, ray));
-        return oldEvent || newEvent; // TODO: clean up when old event is removed
+        return MinecraftForge.EVENT_BUS.post(new CollideEvent(cause, ray));
     }
 
     public static boolean onReplaceBiomeBlocks(IChunkGenerator gen, int x, int z, ChunkPrimer primer, World world)

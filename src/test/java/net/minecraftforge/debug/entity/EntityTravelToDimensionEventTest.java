@@ -20,7 +20,7 @@
 package net.minecraftforge.debug.entity;
 
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.old.entity.EntityTravelToDimensionEvent;
+import net.minecraftforge.event.entity.MoveEntityEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -44,11 +44,11 @@ public class EntityTravelToDimensionEventTest
     }
 
     @SubscribeEvent
-    public void onDimensionTravel(EntityTravelToDimensionEvent event)
+    public void onDimensionTravel(MoveEntityEvent.Teleport event)
     {
         if (ENABLE)
         {
-            logger.info("Travelling to Dimension {} Entity: {}", event.getDimension(), event.getEntity());
+            logger.info("Travelling to Dimension {} Entity: {}", event.getToWorld(), event.getEntity());
             event.setCanceled(true);
         }
     }

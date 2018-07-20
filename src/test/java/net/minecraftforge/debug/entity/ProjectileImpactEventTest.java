@@ -19,8 +19,9 @@
 
 package net.minecraftforge.debug.entity;
 
+import net.minecraft.entity.Entity;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.old.entity.ProjectileImpactEvent;
+import net.minecraftforge.event.world.CollideEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -44,8 +45,8 @@ public class ProjectileImpactEventTest
     }
 
     @SubscribeEvent
-    public static void onProjectileImpact(ProjectileImpactEvent event)
+    public static void onProjectileImpact(CollideEvent event)
     {
-        logger.info("projectile: {}, impact: {}", event.getEntity().getName(), event.getRayTraceResult());
+        logger.info("projectile: {}, impact: {}", event.getCause().first(Entity.class).map(Entity::getName), event.getRayTraceResult());
     }
 }

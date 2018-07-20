@@ -59,7 +59,6 @@ import net.minecraft.entity.item.EntityMinecartContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.ContainerRepair;
@@ -115,11 +114,12 @@ import net.minecraft.world.storage.loot.LootTableManager;
 import net.minecraft.world.storage.loot.conditions.LootCondition;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.util.BlockSnapshot;
+import net.minecraftforge.event.Cause;
 import net.minecraftforge.event.UpdateAnvilEvent;
 import net.minecraftforge.event.ChangeDifficultyEvent;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.ServerChatEvent;
-import net.minecraftforge.event.old.entity.EntityTravelToDimensionEvent;
+import net.minecraftforge.event.entity.MoveEntityEvent;
 import net.minecraftforge.event.old.entity.item.ItemTossEvent;
 import net.minecraftforge.event.old.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.old.entity.living.LivingDamageEvent;
@@ -1057,7 +1057,7 @@ public class ForgeHooks
 
     public static boolean onTravelToDimension(Entity entity, int dimension)
     {
-        EntityTravelToDimensionEvent event = new EntityTravelToDimensionEvent(entity, dimension);
+        MoveEntityEvent.Teleport.Portal event = new MoveEntityEvent.Teleport.Portal(Cause.of(entity), dimension);
         MinecraftForge.EVENT_BUS.post(event);
         if (event.isCanceled())
         {
@@ -1269,12 +1269,6 @@ public class ForgeHooks
     public static LootEntry deserializeJsonLootEntry(String type, JsonObject json, int weight, int quality, LootCondition[] conditions){ return null; }
     public static String getLootEntryType(LootEntry entry){ return null; } //Companion to above function
 
-    /** @deprecated use {@link ForgeEventFactory#onProjectileImpact(EntityThrowable, RayTraceResult)} */
-    @Deprecated // TODO: remove (1.13)
-    public static boolean onThrowableImpact(EntityThrowable throwable, RayTraceResult ray)
-    {
-        return ForgeEventFactory.onProjectileImpact(throwable, ray);
-    }
 
     public static boolean onCropsGrowPre(World worldIn, BlockPos pos, IBlockState state, boolean def)
     {
