@@ -21,6 +21,7 @@ package net.minecraftforge.event.entity;
 
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.Cancellable;
 import net.minecraftforge.event.Cause;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import net.minecraft.entity.Entity;
@@ -29,7 +30,7 @@ import net.minecraft.world.World;
 import java.util.Collection;
 
 /**
- * EntityJoinWorldEvent is fired when an Entity joins the world. <br>
+ * SpawnEntityEvent is fired when an Entity joins the world. <br>
  * This event is fired whenever an Entity is added to the world in 
  * {@link World#loadEntities(Collection)}, {@link WorldServer#loadEntities(Collection)} {@link World#joinEntityInSurroundings(Entity)}, and {@link World#spawnEntity(Entity)}. <br>
  * <br>
@@ -42,11 +43,11 @@ import java.util.Collection;
  * <br>
  * This event is fired on the {@link MinecraftForge#EVENT_BUS}.
  **/
-@Cancelable
-public class SpawnEntityEvent extends EntityEvent
+public class SpawnEntityEvent extends EntityEvent implements Cancellable
 {
 
     private final World world;
+    private boolean iscancelled;
 
     public SpawnEntityEvent(Cause cause, Entity entity, World world)
     {
@@ -57,5 +58,15 @@ public class SpawnEntityEvent extends EntityEvent
     public World getWorld()
     {
         return world;
+    }
+
+    @Override
+    public boolean isCancelled() {
+        return this.iscancelled;
+    }
+
+    @Override
+    public void setCancelled(boolean cancelled) {
+        this.iscancelled = cancelled;
     }
 }

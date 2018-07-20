@@ -22,7 +22,7 @@ package net.minecraftforge.debug.network;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.item.EntityItemFrame;
 import net.minecraft.init.Items;
-import net.minecraftforge.event.old.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.SpawnEntityEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -94,7 +94,7 @@ public class TrackingTargetTest
     // If you move sufficiently far away from the frame, you should stop receiving the messages.
     private static final Set<EntityItemFrame> FRAMES = Collections.newSetFromMap(new WeakHashMap<>());
     @SubscribeEvent
-    public static void frameJoin(EntityJoinWorldEvent evt)
+    public static void frameJoin(SpawnEntityEvent evt)
     {
         if (ENABLED && !evt.getWorld().isRemote && evt.getEntity() instanceof EntityItemFrame)
         {

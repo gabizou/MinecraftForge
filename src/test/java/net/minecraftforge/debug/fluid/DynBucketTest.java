@@ -172,7 +172,7 @@ public class DynBucketTest
                     {
                         ItemStack filledBucket = fluidHandler.getContainer();
                         event.setFilledBucket(filledBucket);
-                        event.setResult(Result.ALLOW);
+                        event.oldSetResult(Result.ALLOW);
                     }
                 }
             }

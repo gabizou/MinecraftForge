@@ -47,11 +47,11 @@ public class CreateFluidSourceEventTest
         // make it work exactly the opposite of how it works by default
         if (event.getState().getBlock() == Blocks.FLOWING_WATER)
         {
-            event.setResult(Result.DENY);
+            event.oldSetResult(Result.DENY);
         }
         else
         {
-            event.setResult(Result.ALLOW);
+            event.oldSetResult(Result.ALLOW);
         }
     }
 }

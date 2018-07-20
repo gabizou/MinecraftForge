@@ -25,7 +25,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayerFactory;
-import net.minecraftforge.event.old.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.SpawnEntityEvent;
 import net.minecraftforge.event.old.world.WorldEvent;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -38,7 +38,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.ServerTickEvent;
 public class ForgeInternalHandler
 {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public void onEntityJoinWorld(EntityJoinWorldEvent event)
+    public void onEntityJoinWorld(SpawnEntityEvent event)
     {
         if (!event.getWorld().isRemote)
         {

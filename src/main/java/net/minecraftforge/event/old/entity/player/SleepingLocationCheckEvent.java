@@ -33,8 +33,8 @@ import net.minecraftforge.fml.common.eventhandler.Event.HasResult;
  *
  * This event has a result. {@link HasResult}<br>
  *
- * setResult(ALLOW) informs game that player is still "in bed"<br>
- * setResult(DEFAULT) causes game to check {@link Block#isBed(IBlockState, IBlockAccess, BlockPos, Entity)} instead
+ * oldSetResult(ALLOW) informs game that player is still "in bed"<br>
+ * oldSetResult(DEFAULT) causes game to check {@link Block#isBed(IBlockState, IBlockAccess, BlockPos, Entity)} instead
  */
 @HasResult
 public class SleepingLocationCheckEvent extends PlayerEvent

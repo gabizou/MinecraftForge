@@ -62,6 +62,9 @@ public class Event
         this.cause = checkNotNull(cause, "cause");
     }
 
+    public Cause getCause() {
+        return cause;
+    }
 
     /**
      * Determine if this event is canceled and should stop executing.
@@ -88,20 +91,10 @@ public class Event
     }
 
     /**
-     * Determines if this event expects a significant result value.
-     *
-     * Note:
-     * Events with the HasResult annotation will have this method automatically added to return true.
-     */
-    public boolean hasResult()
-    {
-        return false;
-    }
-
-    /**
      * Returns the value set as the result of this event
      */
-    public Result getResult()
+    @Deprecated
+    public Result oldGetResult()
     {
         return result;
     }
@@ -114,7 +107,8 @@ public class Event
      *
      * @param value The new result
      */
-    public void setResult(Result value)
+    @Deprecated
+    public void oldSetResult(Result value)
     {
         result = value;
     }

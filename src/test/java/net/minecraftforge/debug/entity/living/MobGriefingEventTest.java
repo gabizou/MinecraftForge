@@ -19,10 +19,11 @@
 
 package net.minecraftforge.debug.entity.living;
 
-import net.minecraftforge.event.old.entity.EntityMobGriefingEvent;
+import net.minecraft.entity.Entity;
+import net.minecraftforge.event.block.ChangeBlockEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @Mod(modid = "entitymobgriefingeventtest", name = "EntityMobGriefingEventTest", version = "1.0", acceptableRemoteVersions = "*")
 @Mod.EventBusSubscriber
@@ -31,16 +32,17 @@ public class MobGriefingEventTest
     private static final boolean ENABLED = false;
 
     @SubscribeEvent
-    public static void onMobGriefing(EntityMobGriefingEvent event)
+    public static void onMobGriefing(ChangeBlockEvent.Check event)
     {
-        if (ENABLED)
+        final Object root = event.getCause().root();
+        if (ENABLED && root instanceof Entity)
         {
-            String customName = event.getEntity().getCustomNameTag();
+            String customName = ((Entity) root).getCustomNameTag();
 
             try
             {
                 Result result = Result.valueOf(customName);
-                event.setResult(result);
+                event.oldSetResult(result);
             }
             catch (IllegalArgumentException iae)
             {

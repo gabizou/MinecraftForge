@@ -68,17 +68,17 @@ public class CriticalHitEventTest
     
         if (itemstack.getItem() instanceof ItemSword)
         {
-            event.setResult(Result.ALLOW); //Every hit is Critical
+            event.oldSetResult(Result.ALLOW); //Every hit is Critical
             log.info("This hit will be critical.");
         }
         else if (!itemstack.isEmpty())
         {
-            event.setResult(Result.DENY);//No hit will be Critical
+            event.oldSetResult(Result.DENY);//No hit will be Critical
             log.info("This hit wont be critical.");
         }
         else
         {
-            event.setResult(Result.DEFAULT); //Vanilla Hits
+            event.oldSetResult(Result.DEFAULT); //Vanilla Hits
         }       
             
         log.info("{} got hit by {} with a damagemodifier of {}" , event.getTarget(), event.getEntityPlayer(), event.getDamageModifier());

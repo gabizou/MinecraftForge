@@ -32,7 +32,7 @@ import net.minecraft.entity.player.EntityPlayer;
  *  processing of achievements, FML's event, play the sound, and kill the
  *  entity if all the items are picked up.
  *
- *  setResult(ALLOW) is the same as the old setHandled()
+ *  oldSetResult(ALLOW) is the same as the old setHandled()
  */
 @Cancelable
 @Event.HasResult

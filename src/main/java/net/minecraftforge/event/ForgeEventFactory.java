@@ -80,11 +80,12 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityDispatcher;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.BlockSnapshot;
+import net.minecraftforge.event.block.ChangeBlockEvent;
 import net.minecraftforge.event.brewing.BrewPotionEvent;
+import net.minecraftforge.event.entity.DismountEntityEvent;
+import net.minecraftforge.event.entity.MountEntityEvent;
 import net.minecraftforge.event.old.brewing.PlayerBrewedPotionEvent;
 import net.minecraftforge.event.old.entity.EntityEvent;
-import net.minecraftforge.event.old.entity.EntityMobGriefingEvent;
-import net.minecraftforge.event.old.entity.EntityMountEvent;
 import net.minecraftforge.event.old.entity.EntityStruckByLightningEvent;
 import net.minecraftforge.event.old.entity.PlaySoundAtEntityEvent;
 import net.minecraftforge.event.old.entity.ProjectileImpactEvent;
@@ -196,7 +197,7 @@ public class ForgeEventFactory
             return Result.DEFAULT;
         LivingSpawnEvent.CheckSpawn event = new LivingSpawnEvent.CheckSpawn(entity, world, x, y, z, isSpawner); // TODO: replace isSpawner with null in 1.13
         MinecraftForge.EVENT_BUS.post(event);
-        return event.getResult();
+        return event.oldGetResult();
     }
 
     public static Result canEntitySpawn(EntityLiving entity, World world, float x, float y, float z, MobSpawnerBaseLogic spawner)
@@ -205,7 +206,7 @@ public class ForgeEventFactory
             return Result.DEFAULT;
         LivingSpawnEvent.CheckSpawn event = new LivingSpawnEvent.CheckSpawn(entity, world, x, y, z, spawner);
         MinecraftForge.EVENT_BUS.post(event);
-        return event.getResult();
+        return event.oldGetResult();
     }
 
     public static boolean canEntitySpawnSpawner(EntityLiving entity, World world, float x, float y, float z, MobSpawnerBaseLogic spawner)
@@ -256,7 +257,7 @@ public class ForgeEventFactory
     {
         AllowDespawn event = new AllowDespawn(entity);
         MinecraftForge.EVENT_BUS.post(event);
-        return event.getResult();
+        return event.oldGetResult();
     }
 
     public static int getItemBurnTime(@Nonnull ItemStack itemStack)
@@ -302,7 +303,7 @@ public class ForgeEventFactory
     {
         LivingPackSizeEvent maxCanSpawnEvent = new LivingPackSizeEvent(entity);
         MinecraftForge.EVENT_BUS.post(maxCanSpawnEvent);
-        return maxCanSpawnEvent.getResult() == Result.ALLOW ? maxCanSpawnEvent.getMaxPackSize() : entity.getMaxSpawnedInChunk();
+        return maxCanSpawnEvent.oldGetResult() == Result.ALLOW ? maxCanSpawnEvent.getMaxPackSize() : entity.getMaxSpawnedInChunk();
     }
 
     public static String getPlayerDisplayName(EntityPlayer player, String username)
@@ -414,7 +415,7 @@ public class ForgeEventFactory
     {
         UseHoeEvent event = new UseHoeEvent(player, stack, worldIn, pos);
         if (MinecraftForge.EVENT_BUS.post(event)) return -1;
-        if (event.getResult() == Result.ALLOW)
+        if (event.oldGetResult() == Result.ALLOW)
         {
             stack.damageItem(1, player);
             return 1;
@@ -427,7 +428,7 @@ public class ForgeEventFactory
     {
         BonemealEvent event = new BonemealEvent(player, world, pos, state, hand, stack);
         if (MinecraftForge.EVENT_BUS.post(event)) return -1;
-        if (event.getResult() == Result.ALLOW)
+        if (event.oldGetResult() == Result.ALLOW)
         {
             if (!world.isRemote)
                 stack.shrink(1);
@@ -442,7 +443,7 @@ public class ForgeEventFactory
         FillBucketEvent event = new FillBucketEvent(player, stack, world, target);
         if (MinecraftForge.EVENT_BUS.post(event)) return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
 
-        if (event.getResult() == Result.ALLOW)
+        if (event.oldGetResult() == Result.ALLOW)
         {
             if (player.capabilities.isCreativeMode)
                 return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
@@ -485,7 +486,7 @@ public class ForgeEventFactory
     {
         Event event = new EntityItemPickupEvent(player, entityItem);
         if (MinecraftForge.EVENT_BUS.post(event)) return -1;
-        return event.getResult() == Result.ALLOW ? 1 : 0;
+        return event.oldGetResult() == Result.ALLOW ? 1 : 0;
     }
 
     public static void onPlayerDrops(EntityPlayer player, DamageSource cause, List<EntityItem> capturedDrops, boolean recentlyHit)
@@ -502,7 +503,10 @@ public class ForgeEventFactory
 
     public static boolean canMountEntity(Entity entityMounting, Entity entityBeingMounted, boolean isMounting)
     {
-        boolean isCanceled = MinecraftForge.EVENT_BUS.post(new EntityMountEvent(entityMounting, entityBeingMounted, entityMounting.world, isMounting));
+        final Event cancellable = isMounting
+                                  ? new MountEntityEvent(Cause.of(entityMounting), entityBeingMounted, entityBeingMounted.world)
+                                  : new DismountEntityEvent(Cause.of(entityMounting), entityBeingMounted, entityBeingMounted.world);
+        boolean isCanceled = MinecraftForge.EVENT_BUS.post(cancellable);
 
         if(isCanceled)
         {
@@ -671,7 +675,7 @@ public class ForgeEventFactory
         SleepingLocationCheckEvent evt = new SleepingLocationCheckEvent(player, sleepingLocation);
         MinecraftForge.EVENT_BUS.post(evt);
 
-        Result canContinueSleep = evt.getResult();
+        Result canContinueSleep = evt.oldGetResult();
         if (canContinueSleep == Result.DEFAULT)
         {
             IBlockState state = player.world.getBlockState(player.bedLocation);
@@ -723,7 +727,7 @@ public class ForgeEventFactory
     {
         ChunkGeneratorEvent.ReplaceBiomeBlocks event = new ChunkGeneratorEvent.ReplaceBiomeBlocks(gen, x, z, primer, world);
         net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(event);
-        return event.getResult() != net.minecraftforge.fml.common.eventhandler.Event.Result.DENY;
+        return event.oldGetResult() != net.minecraftforge.fml.common.eventhandler.Event.Result.DENY;
     }
 
     public static void onChunkPopulate(boolean pre, IChunkGenerator gen, World world, Random rand, int x, int z, boolean hasVillageGenerated)
@@ -744,7 +748,7 @@ public class ForgeEventFactory
         CreateFluidSourceEvent evt = new CreateFluidSourceEvent(world, pos, state);
         MinecraftForge.EVENT_BUS.post(evt);
 
-        Result result = evt.getResult();
+        Result result = evt.oldGetResult();
         return result == Result.DEFAULT ? def : result == Result.ALLOW;
     }
 
@@ -773,10 +777,11 @@ public class ForgeEventFactory
 
     public static boolean getMobGriefingEvent(World world, Entity entity)
     {
-        EntityMobGriefingEvent event = new EntityMobGriefingEvent(entity);
+        final Cause cause = Cause.of(entity, world);
+        ChangeBlockEvent.Check event = new ChangeBlockEvent.Check(cause);
         MinecraftForge.EVENT_BUS.post(event);
 
-        Result result = event.getResult();
+        Result result = event.oldGetResult();
         return result == Result.DEFAULT ? world.getGameRules().getBoolean("mobGriefing") : result == Result.ALLOW;
     }
 }

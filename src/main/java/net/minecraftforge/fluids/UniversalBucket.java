@@ -212,7 +212,7 @@ public class UniversalBucket extends Item
     @SubscribeEvent(priority = EventPriority.LOW) // low priority so other mods can handle their stuff first
     public void onFillBucket(FillBucketEvent event)
     {
-        if (event.getResult() != Event.Result.DEFAULT)
+        if (event.oldGetResult() != Event.Result.DEFAULT)
         {
             // event was already handled
             return;
@@ -243,7 +243,7 @@ public class UniversalBucket extends Item
         FluidActionResult filledResult = FluidUtil.tryPickUpFluid(singleBucket, event.getEntityPlayer(), world, pos, target.sideHit);
         if (filledResult.isSuccess())
         {
-            event.setResult(Event.Result.ALLOW);
+            event.oldSetResult(Event.Result.ALLOW);
             event.setFilledBucket(filledResult.getResult());
         }
         else

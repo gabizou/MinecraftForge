@@ -45,6 +45,6 @@ public class CheckSpawnEventTest
     @SubscribeEvent
     public void canMobSpawn(CheckSpawn event) 
     {   	
-    	event.setResult(Result.DENY);
+    	event.oldSetResult(Result.DENY);
     }
 }

@@ -53,7 +53,7 @@ public abstract class TerrainGen
     {
         PopulateChunkEvent.Populate event = new PopulateChunkEvent.Populate(chunkProvider, world, rand, chunkX, chunkZ, hasVillageGenerated, type);
         MinecraftForge.TERRAIN_GEN_BUS.post(event);
-        return event.getResult() != Result.DENY;
+        return event.oldGetResult() != Result.DENY;
     }
 
     /**
@@ -70,7 +70,7 @@ public abstract class TerrainGen
     {
         Decorate event = new Decorate(world, rand, chunkPos, placementPos, type);
         MinecraftForge.TERRAIN_GEN_BUS.post(event);
-        return event.getResult() != Result.DENY;
+        return event.oldGetResult() != Result.DENY;
     }
 
     /**
@@ -86,7 +86,7 @@ public abstract class TerrainGen
     {
         Decorate event = new Decorate(world, rand, chunkPos, null, type);
         MinecraftForge.TERRAIN_GEN_BUS.post(event);
-        return event.getResult() != Result.DENY;
+        return event.oldGetResult() != Result.DENY;
     }
 
     @Deprecated
@@ -99,13 +99,13 @@ public abstract class TerrainGen
     {
         GenerateMinable event = new GenerateMinable(world, rand, generator, pos, type);
         MinecraftForge.ORE_GEN_BUS.post(event);
-        return event.getResult() != Result.DENY;
+        return event.oldGetResult() != Result.DENY;
     }
 
     public static boolean saplingGrowTree(World world, Random rand, BlockPos pos)
     {
         SaplingGrowTreeEvent event = new SaplingGrowTreeEvent(world, rand, pos);
         MinecraftForge.TERRAIN_GEN_BUS.post(event);
-        return event.getResult() != Result.DENY;
+        return event.oldGetResult() != Result.DENY;
     }
 }

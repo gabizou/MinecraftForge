@@ -48,6 +48,6 @@ public class DecorateEventDebug
     @SubscribeEvent
     public void decorateEvent(DecorateBiomeEvent.Decorate event)
     {
-        event.setResult(Result.DENY);
+        event.oldSetResult(Result.DENY);
     }
 }

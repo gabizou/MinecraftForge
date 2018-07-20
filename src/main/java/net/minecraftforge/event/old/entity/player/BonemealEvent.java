@@ -38,7 +38,7 @@ import javax.annotation.Nullable;
  * You can also set the result to ALLOW to mark the event as processed
  * and use up a bonemeal from the stack but do no further processing.
  *
- * setResult(ALLOW) is the same as the old setHandled()
+ * oldSetResult(ALLOW) is the same as the old setHandled()
  */
 @Cancelable
 @Event.HasResult

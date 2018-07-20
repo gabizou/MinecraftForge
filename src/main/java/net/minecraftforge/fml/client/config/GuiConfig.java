@@ -25,7 +25,6 @@ import static net.minecraftforge.fml.client.config.GuiUtils.UNDO_CHAR;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -320,7 +319,7 @@ public class GuiConfig extends GuiScreen
                     {
                         ConfigChangedEvent event = new OnConfigChangedEvent(modID, configID, isWorldRunning, requiresMcRestart);
                         MinecraftForge.EVENT_BUS.post(event);
-                        if (!event.getResult().equals(Result.DENY))
+                        if (!event.oldGetResult().equals(Result.DENY))
                             MinecraftForge.EVENT_BUS.post(new PostConfigChangedEvent(modID, configID, isWorldRunning, requiresMcRestart));
 
                         if (requiresMcRestart)

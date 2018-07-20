@@ -130,7 +130,6 @@ public class EventSubscriptionTransformer implements IClassTransformer
             {
                 if (method.name.equals("getListenerList") && method.desc.equals(listDescM)) hasGetListenerList = true;
                 if (method.name.equals("isCancelable")    && method.desc.equals(boolDesc))  hasCancelable = true;
-                if (method.name.equals("hasResult")       && method.desc.equals(boolDesc))  hasResult = true;
             }
             if (method.name.equals("<init>") && method.desc.equals(voidDesc)) hasDefaultCtr = true;
         }
@@ -139,21 +138,7 @@ public class EventSubscriptionTransformer implements IClassTransformer
         {
             for (AnnotationNode node : classNode.visibleAnnotations)
             {
-                if (!hasResult && node.desc.equals("Lnet/minecraftforge/fml/common/eventhandler/Event$HasResult;"))
-                {
-                    /* Add:
-                     *      public boolean hasResult()
-                     *      {
-                     *            return true;
-                     *      }
-                     */
-                    MethodNode method = new MethodNode(ACC_PUBLIC, "hasResult", boolDesc, null, null);
-                    method.instructions.add(new InsnNode(ICONST_1));
-                    method.instructions.add(new InsnNode(IRETURN));
-                    classNode.methods.add(method);
-                    edited = true;
-                }
-                else if (!hasCancelable && node.desc.equals("Lnet/minecraftforge/fml/common/eventhandler/Cancelable;"))
+                if (!hasCancelable && node.desc.equals("Lnet/minecraftforge/fml/common/eventhandler/Cancelable;"))
                 {
                     /* Add:
                      *      public boolean isCancelable()

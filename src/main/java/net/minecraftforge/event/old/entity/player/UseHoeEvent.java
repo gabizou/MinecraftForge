@@ -35,7 +35,7 @@ import javax.annotation.Nonnull;
  * You can also set the result to ALLOW to mark the event as processed
  * and damage the hoe.
  *
- * setResult(ALLOW) is the same as the old setHandled();
+ * oldSetResult(ALLOW) is the same as the old setHandled();
  */
 @Cancelable
 @Event.HasResult

@@ -1280,7 +1280,7 @@ public class ForgeHooks
     {
         BlockEvent ev = new BlockEvent.CropGrowEvent.Pre(worldIn,pos,state);
         MinecraftForge.EVENT_BUS.post(ev);
-        return (ev.getResult() == Event.Result.ALLOW || (ev.getResult() == Event.Result.DEFAULT && def));
+        return (ev.oldGetResult() == Event.Result.ALLOW || (ev.oldGetResult() == Event.Result.DEFAULT && def));
     }
 
     public static void onCropsGrowPost(World worldIn, BlockPos pos, IBlockState state, IBlockState blockState)
@@ -1321,7 +1321,7 @@ public class ForgeHooks
     {
         CriticalHitEvent hitResult = new CriticalHitEvent(player, target, damageModifier, vanillaCritical);
         MinecraftForge.EVENT_BUS.post(hitResult);
-        if (hitResult.getResult() == Event.Result.ALLOW || (vanillaCritical && hitResult.getResult() == Event.Result.DEFAULT))
+        if (hitResult.oldGetResult() == Event.Result.ALLOW || (vanillaCritical && hitResult.oldGetResult() == Event.Result.DEFAULT))
         {
             return hitResult;
         }

@@ -28,7 +28,7 @@ import net.minecraft.advancements.critereon.AbstractCriterionInstance;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.event.old.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.SpawnEntityEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -84,7 +84,7 @@ public class OredictTriggerTest
 
     // trigger the enabled advancement on player entry
     @SubscribeEvent
-    public static void triggerAdv(EntityJoinWorldEvent event)
+    public static void triggerAdv(SpawnEntityEvent event)
     {
         if (event.getEntity() instanceof EntityPlayerMP)
         {

@@ -136,7 +136,7 @@ public class NoBedSleepingTest
             final IExtraSleeping sleep = evt.getEntityPlayer().getCapability(SLEEP_CAP, null);
             if (sleep != null && sleep.isSleeping())
             {
-                evt.setResult(Result.ALLOW);
+                evt.oldSetResult(Result.ALLOW);
             }
         }
 

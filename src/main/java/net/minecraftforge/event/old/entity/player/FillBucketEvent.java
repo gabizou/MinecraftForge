@@ -36,7 +36,7 @@ import javax.annotation.Nullable;
  * If you set the result to 'ALLOW', it means that you have processed
  * the event and wants the basic functionality of adding the new
  * ItemStack to your inventory and reducing the stack size to process.
- * setResult(ALLOW) is the same as the old setHandled();
+ * oldSetResult(ALLOW) is the same as the old setHandled();
  */
 @Cancelable
 @Event.HasResult

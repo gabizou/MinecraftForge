@@ -53,7 +53,7 @@ public class BonemealEventTest
         if (event.getHand() == EnumHand.MAIN_HAND)
         {
             // If the bone meal is being used from the main hand, set the result to ALLOW to use up the bone meal without growing the crop
-            event.setResult(Event.Result.ALLOW);
+            event.oldSetResult(Event.Result.ALLOW);
             logger.info("Prevented bone meal growth effect from main hand");
         }
         else if (event.getHand() == EnumHand.OFF_HAND)
