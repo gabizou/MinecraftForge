@@ -84,6 +84,7 @@ import net.minecraftforge.event.block.ChangeBlockEvent;
 import net.minecraftforge.event.brewing.BrewPotionEvent;
 import net.minecraftforge.event.entity.DismountEntityEvent;
 import net.minecraftforge.event.entity.MountEntityEvent;
+import net.minecraftforge.event.entity.UpdateEntityEvent;
 import net.minecraftforge.event.old.brewing.PlayerBrewedPotionEvent;
 import net.minecraftforge.event.old.entity.EntityEvent;
 import net.minecraftforge.event.old.entity.EntityStruckByLightningEvent;
@@ -461,7 +462,7 @@ public class ForgeEventFactory
 
     public static boolean canEntityUpdate(Entity entity)
     {
-        EntityEvent.CanUpdate event = new EntityEvent.CanUpdate(entity);
+        UpdateEntityEvent event = new UpdateEntityEvent(Cause.of(entity, entity.world), entity);
         MinecraftForge.EVENT_BUS.post(event);
         return event.getCanUpdate();
     }

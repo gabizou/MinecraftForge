@@ -29,7 +29,7 @@ import net.minecraftforge.fml.common.eventhandler.Cancelable;
  * This event is fired whenever vanilla Minecraft determines that an entity<br>
  * cannot update in {@link World#updateEntityWithOptionalForce(net.minecraft.entity.Entity, boolean)} <br>
  * <br>
- * {@link Update#canUpdate} contains the boolean value of whether this entity can update.<br>
+ * {@link UpdateEntityEvent#getCanUpdate()} contains the boolean value of whether this entity can update.<br>
  * If the modder decides that this Entity can be updated, they may change canUpdate to true, <br>
  * and the entity with then be updated.<br>
  * <br>
