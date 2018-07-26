@@ -19,6 +19,7 @@
 
 package net.minecraftforge.event.entity;
 
+import net.minecraft.tileentity.MobSpawnerBaseLogic;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.Cancellable;
@@ -28,6 +29,9 @@ import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
 
 import java.util.Collection;
+import java.util.Optional;
+
+import javax.annotation.Nullable;
 
 /**
  * SpawnEntityEvent is fired when an Entity joins the world. <br>
@@ -47,17 +51,35 @@ public class SpawnEntityEvent extends EntityEvent implements Cancellable
 {
 
     private final World world;
+    private final float x;
+    private final float y;
+    private final float z;
     private boolean iscancelled;
 
-    public SpawnEntityEvent(Cause cause, Entity entity, World world)
+    public SpawnEntityEvent(Cause cause, Entity entity, World world, float x, float y, float z)
     {
         super(cause, entity);
         this.world = world;
+        this.x = x;
+        this.y = y;
+        this.z = z;
     }
 
     public World getWorld()
     {
-        return world;
+        return this.world;
+    }
+
+    public float getX() {
+        return this.x;
+    }
+
+    public float getY() {
+        return this.y;
+    }
+
+    public float getZ() {
+        return this.z;
     }
 
     @Override
@@ -68,5 +90,20 @@ public class SpawnEntityEvent extends EntityEvent implements Cancellable
     @Override
     public void setCancelled(boolean cancelled) {
         this.iscancelled = cancelled;
+    }
+
+    public static class Check extends SpawnEntityEvent
+    {
+
+        @Nullable private final MobSpawnerBaseLogic logic;
+
+        public Check(Cause cause, Entity entity, World world, float x, float y, float z, @Nullable MobSpawnerBaseLogic logic) {
+            super(cause, entity, world, x, y, z);
+            this.logic = logic;
+        }
+
+        public Optional<MobSpawnerBaseLogic> getSpawner() {
+            return Optional.ofNullable(this.logic);
+        }
     }
 }

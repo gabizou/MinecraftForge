@@ -3,6 +3,7 @@ package net.minecraftforge.event.entity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.common.MinecraftForge;
@@ -16,7 +17,7 @@ import java.util.Optional;
 import javax.annotation.Nullable;
 
 /**
- * MinecartInteractEvent is fired when a player interacts with an entity. <br>
+ * InteractEntityEvent is fired when a player interacts with an entity. <br>
  * This event is fired whenever a player interacts with an entity in
  * {@link EntityMinecart#processInitialInteract(EntityPlayer, EnumHand)}.
  * <br>
@@ -45,7 +46,21 @@ public class InteractEntityEvent extends EntityEvent implements Cancellable {
     }
 
     public EnumHand getHand() {
-        return hand;
+        return this.hand;
+    }
+
+    /**
+     * Gets the item used in the main hand, if available. Since normally players
+     * will be "causing" this event, we can usually discern that if the player is
+     * available, the item used in hand is available. If the item is not available,
+     * or is empty, an {@link Optional#empty()} is returned.
+     *
+     * @return The item stack used in the event, if available
+     */
+    public Optional<ItemStack> getItemUsed() {
+        return getCause().first(EntityPlayer.class)
+            .map(EntityPlayer::getHeldItemMainhand)
+            .filter(stack -> !stack.isEmpty());
     }
 
     @Override

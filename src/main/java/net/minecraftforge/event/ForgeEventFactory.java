@@ -37,9 +37,6 @@ import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayer.SleepResult;
-import net.minecraft.entity.projectile.EntityArrow;
-import net.minecraft.entity.projectile.EntityFireball;
-import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -80,15 +77,17 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityDispatcher;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.BlockSnapshot;
+import net.minecraftforge.event.action.SleepingEvent;
 import net.minecraftforge.event.block.ChangeBlockEvent;
 import net.minecraftforge.event.brewing.BrewPotionEvent;
 import net.minecraftforge.event.entity.DismountEntityEvent;
 import net.minecraftforge.event.entity.MountEntityEvent;
+import net.minecraftforge.event.entity.SpawnEntityEvent;
 import net.minecraftforge.event.entity.UpdateEntityEvent;
+import net.minecraftforge.event.entity.item.ExpireItemEvent;
+import net.minecraftforge.event.entity.item.UseItemEvent;
 import net.minecraftforge.event.old.brewing.PlayerBrewedPotionEvent;
-import net.minecraftforge.event.old.entity.EntityEvent;
 import net.minecraftforge.event.old.entity.EntityStruckByLightningEvent;
-import net.minecraftforge.event.old.entity.item.ItemExpireEvent;
 import net.minecraftforge.event.old.entity.living.AnimalTameEvent;
 import net.minecraftforge.event.old.entity.living.LivingDestroyBlockEvent;
 import net.minecraftforge.event.old.entity.living.LivingEntityUseItemEvent;
@@ -111,8 +110,6 @@ import net.minecraftforge.event.old.entity.player.PlayerFlyableFallEvent;
 import net.minecraftforge.event.old.entity.player.PlayerSetSpawnEvent;
 import net.minecraftforge.event.old.entity.player.PlayerSleepInBedEvent;
 import net.minecraftforge.event.old.entity.player.PlayerWakeUpEvent;
-import net.minecraftforge.event.old.entity.player.SleepingLocationCheckEvent;
-import net.minecraftforge.event.old.entity.player.UseHoeEvent;
 import net.minecraftforge.event.old.furnace.FurnaceFuelBurnTimeEvent;
 import net.minecraftforge.event.old.terraingen.ChunkGeneratorEvent;
 import net.minecraftforge.event.old.terraingen.PopulateChunkEvent;
@@ -195,7 +192,7 @@ public class ForgeEventFactory
     {
         if (entity == null)
             return Result.DEFAULT;
-        LivingSpawnEvent.CheckSpawn event = new LivingSpawnEvent.CheckSpawn(entity, world, x, y, z, isSpawner); // TODO: replace isSpawner with null in 1.13
+        SpawnEntityEvent. event = new LivingSpawnEvent.CheckSpawn(entity, world, x, y, z, isSpawner); // TODO: replace isSpawner with null in 1.13
         MinecraftForge.EVENT_BUS.post(event);
         return event.oldGetResult();
     }
@@ -411,9 +408,9 @@ public class ForgeEventFactory
         return MinecraftForge.EVENT_BUS.post(event) ? "" : event.getMessage();
     }
 
-    public static int onHoeUse(ItemStack stack, EntityPlayer player, World worldIn, BlockPos pos)
+    public static int onItemUse(ItemStack stack, EntityPlayer player, World worldIn, BlockPos pos)
     {
-        UseHoeEvent event = new UseHoeEvent(player, stack, worldIn, pos);
+        UseItemEvent event = new UseItemEvent(Cause.of(player), stack, worldIn, pos);
         if (MinecraftForge.EVENT_BUS.post(event)) return -1;
         if (event.oldGetResult() == Result.ALLOW)
         {
@@ -477,9 +474,9 @@ public class ForgeEventFactory
     public static int onItemExpire(EntityItem entity, @Nonnull ItemStack item)
     {
         if (item.isEmpty()) return -1;
-        ItemExpireEvent event = new ItemExpireEvent(entity, (item.isEmpty() ? 6000 : item.getItem().getEntityLifespan(item, entity.world)));
+        ExpireItemEvent event = new ExpireItemEvent(Cause.of(entity, entity.world), entity, (item.isEmpty() ? 6000 : item.getItem().getEntityLifespan(item, entity.world)));
         if (!MinecraftForge.EVENT_BUS.post(event)) return -1;
-        return event.getExtraLife();
+        return event.getNewLife();
     }
 
     public static int onItemPickup(EntityItem entityItem, EntityPlayer player)
@@ -672,7 +669,7 @@ public class ForgeEventFactory
 
     public static boolean fireSleepingLocationCheck(EntityPlayer player, BlockPos sleepingLocation)
     {
-        SleepingLocationCheckEvent evt = new SleepingLocationCheckEvent(player, sleepingLocation);
+        SleepingEvent.Tick evt = new  SleepingEvent.Tick(Cause.of(player), player, BlockSnapshot.getBlockSnapshot(player.world, sleepingLocation));
         MinecraftForge.EVENT_BUS.post(evt);
 
         Result canContinueSleep = evt.oldGetResult();

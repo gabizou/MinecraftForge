@@ -45,8 +45,8 @@ import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.action.SleepingEvent;
 import net.minecraftforge.event.old.entity.player.PlayerWakeUpEvent;
-import net.minecraftforge.event.old.entity.player.SleepingLocationCheckEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
@@ -131,9 +131,11 @@ public class NoBedSleepingTest
         }
 
         @SubscribeEvent
-        public void onBedCheck(SleepingLocationCheckEvent evt)
+        public void onBedCheck(SleepingEvent.Tick evt)
         {
-            final IExtraSleeping sleep = evt.getEntityPlayer().getCapability(SLEEP_CAP, null);
+            final IExtraSleeping sleep = evt.getCause().first(EntityPlayer.class)
+                .orElseThrow(() -> new IllegalStateException("Must be ticking on a player for bed checks!"))
+                .getCapability(SLEEP_CAP, null);
             if (sleep != null && sleep.isSleeping())
             {
                 evt.oldSetResult(Result.ALLOW);

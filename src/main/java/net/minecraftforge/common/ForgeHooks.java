@@ -120,7 +120,7 @@ import net.minecraftforge.event.ChangeDifficultyEvent;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.event.entity.MoveEntityEvent;
-import net.minecraftforge.event.old.entity.item.ItemTossEvent;
+import net.minecraftforge.event.entity.item.DropItemEvent;
 import net.minecraftforge.event.old.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.old.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.old.entity.living.LivingDeathEvent;
@@ -692,7 +692,7 @@ public class ForgeHooks
             return null;
         }
 
-        ItemTossEvent event = new ItemTossEvent(ret, player);
+        DropItemEvent.Dispense event = new DropItemEvent.Dispense(Cause.of(player), ret);
         if (MinecraftForge.EVENT_BUS.post(event))
         {
             return null;
@@ -700,9 +700,9 @@ public class ForgeHooks
 
         if (!player.world.isRemote)
         {
-            player.getEntityWorld().spawnEntity(event.getEntityItem());
+            player.getEntityWorld().spawnEntity(event.getEntityToSpawn());
         }
-        return event.getEntityItem();
+        return event.getEntityToSpawn();
     }
 
     public static float getEnchantPower(@Nonnull World world, @Nonnull BlockPos pos)
@@ -865,6 +865,11 @@ public class ForgeHooks
         if (itemstack.getTagCompound() != null)
         {
             nbt = itemstack.getTagCompound().copy();
+        }
+
+        final int result = ForgeEventFactory.onItemUse(itemstack, player, world, pos);
+        if (result == -1) {
+            return EnumActionResult.FAIL;
         }
 
         if (!(itemstack.getItem() instanceof ItemBucket)) // if not bucket

@@ -20,6 +20,7 @@
 package net.minecraftforge.event.entity;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.Cause;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
@@ -45,11 +46,33 @@ public class UpdateEntityEvent extends EntityEvent
 
     public boolean getCanUpdate()
     {
-        return canUpdate;
+        return this.canUpdate;
     }
 
     public void setCanUpdate(boolean canUpdate)
     {
         this.canUpdate = canUpdate;
+    }
+
+    /**
+     * A notification event for when an entity has finished performing an update, called after
+     * {@link Entity#onUpdate()} in {@link World#updateEntity(Entity)}. Ideally, this should be
+     * called by mods providing "expanded ticks" or "tick contained entities" to notify other
+     * mods of the entity update.
+     */
+    public static class Post extends UpdateEntityEvent
+    {
+
+        private final BlockPos finalPosition;
+
+        public Post(Cause cause, Entity entity, BlockPos pos) {
+            super(cause, entity);
+            this.finalPosition = pos;
+        }
+
+        public BlockPos getFinalPosition()
+        {
+            return this.finalPosition;
+        }
     }
 }
