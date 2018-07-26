@@ -577,13 +577,13 @@ public class ForgeEventFactory
         return (MinecraftForge.EVENT_BUS.post(event) ? 0 : event.getAmount());
     }
 
-    public static boolean onPotionAttemptBrew(NonNullList<ItemStack> stacks)
+    public static boolean onPotionAttemptBrew(Object cause, NonNullList<ItemStack> stacks)
     {
         NonNullList<ItemStack> tmp = NonNullList.withSize(stacks.size(), ItemStack.EMPTY);
         for (int x = 0; x < tmp.size(); x++)
             tmp.set(x, stacks.get(x).copy());
 
-        BrewPotionEvent.Pre event = new BrewPotionEvent.Pre(tmp);
+        BrewPotionEvent.Pre event = new BrewPotionEvent.Pre(Cause.of(cause), tmp);
         if (MinecraftForge.EVENT_BUS.post(event))
         {
             boolean changed = false;
@@ -593,20 +593,20 @@ public class ForgeEventFactory
                 stacks.set(x, event.getItem(x));
             }
             if (changed)
-                onPotionBrewed(stacks);
+                onPotionBrewed(cause, stacks);
             return true;
         }
         return false;
     }
 
-    public static void onPotionBrewed(NonNullList<ItemStack> brewingItemStacks)
+    public static void onPotionBrewed(Object cause, NonNullList<ItemStack> brewingItemStacks)
     {
-        MinecraftForge.EVENT_BUS.post(new BrewPotionEvent.Post(brewingItemStacks));
+        MinecraftForge.EVENT_BUS.post(new BrewPotionEvent.Post(Cause.of(cause), brewingItemStacks));
     }
 
     public static void onPlayerBrewedPotion(EntityPlayer player, ItemStack stack)
     {
-        MinecraftForge.EVENT_BUS.post(new PlayerBrewedPotionEvent(player, stack));
+        MinecraftForge.EVENT_BUS.post(new BrewPotionEvent.Post(Cause.of(player), NonNullList.withSize(1, stack)));
     }
 
     public static boolean renderFireOverlay(EntityPlayer player, float renderPartialTicks)
