@@ -19,17 +19,17 @@
 
 package net.minecraftforge.event.old.entity.living;
 
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.util.DamageSource;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
-import net.minecraft.util.DamageSource;
-import net.minecraft.entity.EntityLivingBase;
 
 /**
  * LivingDeathEvent is fired when an Entity dies. <br>
- * This event is fired whenever an Entity dies in 
+ * This event is fired whenever an Entity dies in
  * {@link EntityLivingBase#onDeath(DamageSource)},
  * {@link EntityPlayer#onDeath(DamageSource)}, and
  * {@link EntityPlayerMP#onDeath(DamageSource)}. <br>
@@ -49,6 +49,7 @@ import net.minecraft.entity.EntityLivingBase;
 public class LivingDeathEvent extends LivingEvent
 {
     private final DamageSource source;
+
     public LivingDeathEvent(EntityLivingBase entity, DamageSource source)
     {
         super(entity);
@@ -57,6 +58,6 @@ public class LivingDeathEvent extends LivingEvent
 
     public DamageSource getSource()
     {
-        return source;
+        return this.source;
     }
 }

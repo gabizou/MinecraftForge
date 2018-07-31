@@ -5,37 +5,44 @@ import net.minecraftforge.event.Cancellable;
 import net.minecraftforge.event.Cause;
 import net.minecraftforge.event.entity.EntityEvent;
 
-public class ExpireItemEvent extends EntityEvent implements Cancellable {
+public class ExpireItemEvent extends EntityEvent implements Cancellable
+{
 
     private final int originalLife;
     private int newLife;
     private boolean cancelled = false;
 
-    public ExpireItemEvent(Cause cause, EntityItem entity, int life) {
+    public ExpireItemEvent(Cause cause, EntityItem entity, int life)
+    {
         super(cause, entity);
         this.originalLife = life;
         this.newLife = life;
     }
 
-    public int getOriginalLife() {
+    public int getOriginalLife()
+    {
         return this.originalLife;
     }
 
-    public int getNewLife() {
+    public int getNewLife()
+    {
         return this.newLife;
     }
 
-    public void setNewLife(int newLife) {
+    public void setNewLife(int newLife)
+    {
         this.newLife = newLife;
     }
 
     @Override
-    public boolean isCancelled() {
+    public boolean isCancelled()
+    {
         return this.cancelled;
     }
 
     @Override
-    public void setCancelled(boolean cancelled) {
+    public void setCancelled(boolean cancelled)
+    {
         this.cancelled = cancelled;
     }
 }

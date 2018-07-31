@@ -19,14 +19,14 @@
 
 package net.minecraftforge.event.old.furnace;
 
-import javax.annotation.Nonnull;
-
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import net.minecraftforge.fml.common.eventhandler.Event;
+
+import javax.annotation.Nonnull;
 
 /**
  * {@link FurnaceFuelBurnTimeEvent} is fired when determining the fuel value for an ItemStack. <br>
@@ -60,7 +60,17 @@ public class FurnaceFuelBurnTimeEvent extends Event
     @Nonnull
     public ItemStack getItemStack()
     {
-        return itemStack;
+        return this.itemStack;
+    }
+
+    /**
+     * The resulting value of this event, the burn time for the ItemStack.
+     * A value of 0 will prevent the item from being used as fuel, overriding vanilla's decision.
+     * A value of -1 will let vanilla decide on the fuel value, this is the default for {@link Item#getItemBurnTime(ItemStack)}.
+     */
+    public int getBurnTime()
+    {
+        return this.burnTime;
     }
 
     /**
@@ -72,15 +82,5 @@ public class FurnaceFuelBurnTimeEvent extends Event
     {
         this.burnTime = burnTime;
         setCanceled(true);
-    }
-
-    /**
-     * The resulting value of this event, the burn time for the ItemStack.
-     * A value of 0 will prevent the item from being used as fuel, overriding vanilla's decision.
-     * A value of -1 will let vanilla decide on the fuel value, this is the default for {@link Item#getItemBurnTime(ItemStack)}.
-     */
-    public int getBurnTime()
-    {
-        return burnTime;
     }
 }

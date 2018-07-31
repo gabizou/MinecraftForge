@@ -19,26 +19,27 @@
 
 package net.minecraftforge.event.old.entity.living;
 
-import java.util.Collection;
-import java.util.Collections;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.PotionEffect;
 
+import java.util.Collection;
+import java.util.Collections;
+
 /**
  * Fires after Potion Color Calculation.
- * 
+ * <p>
  * this event is not {@link Cancelable}
- * 
+ * <p>
  * This event is fired on the {@link MinecraftForge#EVENT_BUS}.
  */
 public class PotionColorCalculationEvent extends LivingEvent
 {
+    private final Collection<PotionEffect> effectList;
     private int color;
     private boolean hideParticle;
-    private final Collection<PotionEffect> effectList;
 
     public PotionColorCalculationEvent(EntityLivingBase entity, int color, boolean hideParticle,
-            Collection<PotionEffect> effectList)
+                                       Collection<PotionEffect> effectList)
     {
         super(entity);
         this.color = color;
@@ -48,7 +49,7 @@ public class PotionColorCalculationEvent extends LivingEvent
 
     public int getColor()
     {
-        return color;
+        return this.color;
     }
 
     public void setColor(int color)
@@ -58,7 +59,7 @@ public class PotionColorCalculationEvent extends LivingEvent
 
     public boolean areParticlesHidden()
     {
-        return hideParticle;
+        return this.hideParticle;
     }
 
     public void shouldHideParticles(boolean hideParticle)
@@ -68,11 +69,11 @@ public class PotionColorCalculationEvent extends LivingEvent
 
     /**
      * Note that returned list is unmodifiable.
-     * 
+     *
      * @return effects
      */
     public Collection<PotionEffect> getEffects()
     {
-        return Collections.unmodifiableCollection(effectList);
+        return Collections.unmodifiableCollection(this.effectList);
     }
 }

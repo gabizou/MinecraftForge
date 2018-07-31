@@ -19,11 +19,11 @@
 
 package net.minecraftforge.event.old.entity.player;
 
-import net.minecraftforge.fml.common.eventhandler.Event.HasResult;
-import net.minecraftforge.fml.common.eventhandler.Cancelable;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.eventhandler.Cancelable;
+import net.minecraftforge.fml.common.eventhandler.Event.HasResult;
 
 /**
  * This event is fired whenever a player attacks an Entity in
@@ -41,11 +41,11 @@ import net.minecraft.entity.player.EntityPlayer;
 @HasResult
 public class CriticalHitEvent extends PlayerEvent
 {
-    private float damageModifier;
     private final float oldDamageModifier;
     private final Entity target;
     private final boolean vanillaCritical;
-    
+    private float damageModifier;
+
     public CriticalHitEvent(EntityPlayer player, Entity target, float damageModifier, boolean vanillaCritical)
     {
         super(player);
@@ -54,47 +54,47 @@ public class CriticalHitEvent extends PlayerEvent
         this.oldDamageModifier = damageModifier;
         this.vanillaCritical = vanillaCritical;
     }
-    
+
     /**
-    * The Entity that was damaged by the player.
-    */
+     * The Entity that was damaged by the player.
+     */
     public Entity getTarget()
     {
-        return target;
+        return this.target;
     }
-    
+
     /**
-    * This set the damage multiplier for the hit.
-    * If you set it to 0, then the particles are still generated but damage is not done.
-    */
-    public void setDamageModifier(float mod)
-    {
-        this.damageModifier = mod;
-    }
-    
-    /**
-    * The damage modifier for the hit.<br>
-    * This is by default 1.5F for ciritcal hits and 1F for normal hits .
-    */
+     * The damage modifier for the hit.<br>
+     * This is by default 1.5F for ciritcal hits and 1F for normal hits .
+     */
     public float getDamageModifier()
     {
         return this.damageModifier;
     }
 
     /**
-    * The orignal damage modifier for the hit wthout any changes.<br>
-    * This is 1.5F for ciritcal hits and 1F for normal hits .
-    */
+     * This set the damage multiplier for the hit.
+     * If you set it to 0, then the particles are still generated but damage is not done.
+     */
+    public void setDamageModifier(float mod)
+    {
+        this.damageModifier = mod;
+    }
+
+    /**
+     * The orignal damage modifier for the hit wthout any changes.<br>
+     * This is 1.5F for ciritcal hits and 1F for normal hits .
+     */
     public float getOldDamageModifier()
     {
         return this.oldDamageModifier;
     }
-    
+
     /**
-    * Returns true if this hit was critical by vanilla
-    */
+     * Returns true if this hit was critical by vanilla
+     */
     public boolean isVanillaCritical()
     {
-        return vanillaCritical;
+        return this.vanillaCritical;
     }
 }

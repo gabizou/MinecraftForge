@@ -20,11 +20,11 @@
 package net.minecraftforge.event.world;
 
 import net.minecraft.client.multiplayer.ChunkProviderClient;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.Cause;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
-import net.minecraftforge.fml.common.eventhandler.Event.HasResult;
 
 /**
  * LoadChunkEvent is fired when vanilla Minecraft attempts to load a Chunk into the world.<br>
@@ -38,10 +38,35 @@ import net.minecraftforge.fml.common.eventhandler.Event.HasResult;
  * <br>
  * This event is fired on the {@link MinecraftForge#EVENT_BUS}.<br>
  **/
-public class LoadChunkEvent extends ChunkEvent {
+public class LoadChunkEvent extends ChunkEvent
+{
 
     public LoadChunkEvent(Cause cause, Chunk chunk)
     {
         super(cause, chunk);
+    }
+
+
+    /**
+     * ChunkDataEvent.Load is fired when vanilla Minecraft attempts to load Chunk data.<br>
+     * This event is fired during chunk loading in
+     * {@link net.minecraftforge.common.chunkio.ChunkIOProvider#syncCallback()}.<br>
+     * <br>
+     * This event is fired on the {@link MinecraftForge#EVENT_BUS}.<br>
+     **/
+    public static class Data extends LoadChunkEvent
+    {
+        private final NBTTagCompound data;
+
+        public Data(Cause cause, Chunk chunk, NBTTagCompound data)
+        {
+            super(cause, chunk);
+            this.data = data;
+        }
+
+        public NBTTagCompound getData()
+        {
+            return this.data;
+        }
     }
 }

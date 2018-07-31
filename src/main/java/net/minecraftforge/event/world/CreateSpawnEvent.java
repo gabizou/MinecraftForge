@@ -41,16 +41,18 @@ public class CreateSpawnEvent extends WorldEvent implements Cancellable
 
     public WorldSettings getSettings()
     {
-        return settings;
+        return this.settings;
     }
 
     @Override
-    public boolean isCancelled() {
+    public boolean isCancelled()
+    {
         return this.isCancelled;
     }
 
     @Override
-    public void setCancelled(boolean cancelled) {
+    public void setCancelled(boolean cancelled)
+    {
         this.isCancelled = cancelled;
     }
 }

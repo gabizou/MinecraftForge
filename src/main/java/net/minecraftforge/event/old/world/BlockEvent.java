@@ -19,9 +19,7 @@
 
 package net.minecraftforge.event.old.world;
 
-import java.util.EnumSet;
-import java.util.List;
-
+import com.google.common.collect.ImmutableList;
 import net.minecraft.block.BlockPortal;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -29,9 +27,9 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Enchantments;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.util.BlockSnapshot;
@@ -39,9 +37,9 @@ import net.minecraftforge.event.Cancellable;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
-import com.google.common.collect.ImmutableList;
-
 import javax.annotation.Nonnull;
+import java.util.EnumSet;
+import java.util.List;
 
 public class BlockEvent extends Event
 {
@@ -50,6 +48,7 @@ public class BlockEvent extends Event
     private final World world;
     private final BlockPos pos;
     private final IBlockState state;
+
     public BlockEvent(World world, BlockPos pos, IBlockState state)
     {
         this.pos = pos;
@@ -59,26 +58,26 @@ public class BlockEvent extends Event
 
     public World getWorld()
     {
-        return world;
+        return this.world;
     }
 
     public BlockPos getPos()
     {
-        return pos;
+        return this.pos;
     }
 
     public IBlockState getState()
     {
-        return state;
+        return this.state;
     }
 
     /**
      * Fired when a block is about to drop it's harvested items. The {@link #drops} array can be amended, as can the {@link #dropChance}.
      * <strong>Note well:</strong> the {@link #harvester} player field is null in a variety of scenarios. Code expecting null.
-     *
+     * <p>
      * The {@link #dropChance} is used to determine which items in this array will actually drop, compared to a random number. If you wish, you
      * can pre-filter yourself, and set {@link #dropChance} to 1.0f to always drop the contents of the {@link #drops} array.
-     *
+     * <p>
      * {@link #isSilkTouching} is set if this is considered a silk touch harvesting operation, vs a normal harvesting operation. Act accordingly.
      *
      * @author cpw
@@ -88,8 +87,8 @@ public class BlockEvent extends Event
         private final int fortuneLevel;
         private final List<ItemStack> drops;
         private final boolean isSilkTouching;
-        private float dropChance; // Change to e.g. 1.0f, if you manipulate the list and want to guarantee it always drops
         private final EntityPlayer harvester; // May be null for non-player harvesting such as explosions or machines
+        private float dropChance; // Change to e.g. 1.0f, if you manipulate the list and want to guarantee it always drops
 
         public HarvestDropsEvent(World world, BlockPos pos, IBlockState state, int fortuneLevel, float dropChance, List<ItemStack> drops, EntityPlayer harvester, boolean isSilkTouching)
         {
@@ -101,12 +100,35 @@ public class BlockEvent extends Event
             this.harvester = harvester;
         }
 
-        public int getFortuneLevel() { return fortuneLevel; }
-        public List<ItemStack> getDrops() { return drops; }
-        public boolean isSilkTouching() { return isSilkTouching; }
-        public float getDropChance() { return dropChance; }
-        public void setDropChance(float dropChance) { this.dropChance = dropChance; }
-        public EntityPlayer getHarvester() { return harvester; }
+        public int getFortuneLevel()
+        {
+            return this.fortuneLevel;
+        }
+
+        public List<ItemStack> getDrops()
+        {
+            return this.drops;
+        }
+
+        public boolean isSilkTouching()
+        {
+            return this.isSilkTouching;
+        }
+
+        public float getDropChance()
+        {
+            return this.dropChance;
+        }
+
+        public void setDropChance(float dropChance)
+        {
+            this.dropChance = dropChance;
+        }
+
+        public EntityPlayer getHarvester()
+        {
+            return this.harvester;
+        }
     }
 
     /**
@@ -115,7 +137,9 @@ public class BlockEvent extends Event
      */
     public static class BreakEvent extends BlockEvent implements Cancellable
     {
-        /** Reference to the Player who broke the block. If no player is available, use a EntityFakePlayer */
+        /**
+         * Reference to the Player who broke the block. If no player is available, use a EntityFakePlayer
+         */
         private final EntityPlayer player;
         private int exp;
 
@@ -125,11 +149,10 @@ public class BlockEvent extends Event
             this.player = player;
 
             if (state == null || !ForgeHooks.canHarvestBlock(state.getBlock(), player, world, pos) || // Handle empty block or player unable to break block scenario
-                (state.getBlock().canSilkHarvest(world, pos, world.getBlockState(pos), player) && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, player.getHeldItemMainhand()) > 0)) // If the block is being silk harvested, the exp dropped is 0
+                    (state.getBlock().canSilkHarvest(world, pos, world.getBlockState(pos), player) && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, player.getHeldItemMainhand()) > 0)) // If the block is being silk harvested, the exp dropped is 0
             {
                 this.exp = 0;
-            }
-            else
+            } else
             {
                 int bonusLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player.getHeldItemMainhand());
                 this.exp = state.getBlock().getExpDrop(state, world, pos, bonusLevel);
@@ -138,7 +161,7 @@ public class BlockEvent extends Event
 
         public EntityPlayer getPlayer()
         {
-            return player;
+            return this.player;
         }
 
         /**
@@ -148,7 +171,7 @@ public class BlockEvent extends Event
          */
         public int getExpToDrop()
         {
-            return this.isCanceled() ? 0 : exp;
+            return this.isCanceled() ? 0 : this.exp;
         }
 
         /**
@@ -164,7 +187,7 @@ public class BlockEvent extends Event
 
     /**
      * Called when a block is placed by a player.
-     *
+     * <p>
      * If a Block Place event is cancelled, the block will not be placed.
      */
     @Cancelable
@@ -176,7 +199,8 @@ public class BlockEvent extends Event
         private final IBlockState placedAgainst;
         private final EnumHand hand;
 
-        public PlaceEvent(@Nonnull BlockSnapshot blockSnapshot, @Nonnull IBlockState placedAgainst, @Nonnull EntityPlayer player, @Nonnull EnumHand hand) {
+        public PlaceEvent(@Nonnull BlockSnapshot blockSnapshot, @Nonnull IBlockState placedAgainst, @Nonnull EntityPlayer player, @Nonnull EnumHand hand)
+        {
             super(blockSnapshot.getWorld(), blockSnapshot.getPos(), blockSnapshot.getCurrentBlock());
             this.player = player;
             this.blockSnapshot = blockSnapshot;
@@ -189,14 +213,37 @@ public class BlockEvent extends Event
             }
         }
 
-        public EntityPlayer getPlayer() { return player; }
+        public EntityPlayer getPlayer()
+        {
+            return this.player;
+        }
+
         @Nonnull
         @Deprecated
-        public ItemStack getItemInHand() { return player.getHeldItem(hand); }
-        public BlockSnapshot getBlockSnapshot() { return blockSnapshot; }
-        public IBlockState getPlacedBlock() { return placedBlock; }
-        public IBlockState getPlacedAgainst() { return placedAgainst; }
-        public EnumHand getHand() { return hand; }
+        public ItemStack getItemInHand()
+        {
+            return this.player.getHeldItem(this.hand);
+        }
+
+        public BlockSnapshot getBlockSnapshot()
+        {
+            return this.blockSnapshot;
+        }
+
+        public IBlockState getPlacedBlock()
+        {
+            return this.placedBlock;
+        }
+
+        public IBlockState getPlacedAgainst()
+        {
+            return this.placedAgainst;
+        }
+
+        public EnumHand getHand()
+        {
+            return this.hand;
+        }
     }
 
     /**
@@ -211,7 +258,8 @@ public class BlockEvent extends Event
     {
         private final List<BlockSnapshot> blockSnapshots;
 
-        public MultiPlaceEvent(@Nonnull List<BlockSnapshot> blockSnapshots, @Nonnull IBlockState placedAgainst, @Nonnull EntityPlayer player, @Nonnull EnumHand hand) {
+        public MultiPlaceEvent(@Nonnull List<BlockSnapshot> blockSnapshots, @Nonnull IBlockState placedAgainst, @Nonnull EntityPlayer player, @Nonnull EnumHand hand)
+        {
             super(blockSnapshots.get(0), placedAgainst, player, hand);
             this.blockSnapshots = ImmutableList.copyOf(blockSnapshots);
             if (DEBUG)
@@ -228,7 +276,7 @@ public class BlockEvent extends Event
          */
         public List<BlockSnapshot> getReplacedBlockSnapshots()
         {
-            return blockSnapshots;
+            return this.blockSnapshots;
         }
     }
 
@@ -257,16 +305,17 @@ public class BlockEvent extends Event
          */
         public EnumSet<EnumFacing> getNotifiedSides()
         {
-            return notifiedSides;
+            return this.notifiedSides;
         }
 
         /**
          * Get if redstone update was forced during setBlock call (0x16 to flags)
+         *
          * @return if the flag was set
          */
         public boolean getForceRedstoneUpdate()
         {
-            return forceRedstoneUpdate;
+            return this.forceRedstoneUpdate;
         }
     }
 
@@ -289,7 +338,7 @@ public class BlockEvent extends Event
      * Fired when a liquid places a block. Use {@link #setNewState(IBlockState)} to change the result of
      * a cobblestone generator or add variants of obsidian. Alternatively, you  could execute
      * arbitrary code when lava sets blocks on fire, even preventing it.
-     *
+     * <p>
      * {@link #getState()} will return the block that was originally going to be placed.
      * {@link #getPos()} will return the position of the block to be changed.
      */
@@ -313,7 +362,7 @@ public class BlockEvent extends Event
          */
         public BlockPos getLiquidPos()
         {
-            return liquidPos;
+            return this.liquidPos;
         }
 
         /**
@@ -321,7 +370,7 @@ public class BlockEvent extends Event
          */
         public IBlockState getNewState()
         {
-            return newState;
+            return this.newState;
         }
 
         public void setNewState(IBlockState state)
@@ -334,13 +383,12 @@ public class BlockEvent extends Event
          */
         public IBlockState getOriginalState()
         {
-            return origState;
+            return this.origState;
         }
     }
 
     /**
      * Fired when a crop block grows.  See subevents.
-     *
      */
     public static class CropGrowEvent extends BlockEvent
     {
@@ -381,15 +429,16 @@ public class BlockEvent extends Event
         public static class Post extends CropGrowEvent
         {
             private final IBlockState originalState;
+
             public Post(World world, BlockPos pos, IBlockState original, IBlockState state)
             {
                 super(world, pos, state);
-                originalState = original;
+                this.originalState = original;
             }
 
             public IBlockState getOriginalState()
             {
-                return originalState;
+                return this.originalState;
             }
         }
     }
@@ -412,12 +461,14 @@ public class BlockEvent extends Event
             this.fallDistance = fallDistance;
         }
 
-        public Entity getEntity() {
-            return entity;
+        public Entity getEntity()
+        {
+            return this.entity;
         }
 
-        public float getFallDistance() {
-            return fallDistance;
+        public float getFallDistance()
+        {
+            return this.fallDistance;
         }
 
     }
@@ -440,7 +491,7 @@ public class BlockEvent extends Event
 
         public BlockPortal.Size getPortalSize()
         {
-            return size;
+            return this.size;
         }
     }
 }

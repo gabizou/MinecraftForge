@@ -19,18 +19,18 @@
 
 package net.minecraftforge.event.old.entity.living;
 
-import net.minecraftforge.fml.common.eventhandler.Cancelable;
-import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityMagmaCube;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.old.entity.EntityEvent;
+import net.minecraftforge.fml.common.eventhandler.Cancelable;
+import net.minecraftforge.fml.common.eventhandler.Event;
 
 /**
  * LivingEvent is fired whenever an event involving Living entities occurs.<br>
- * If a method utilizes this {@link Event} as its parameter, the method will 
+ * If a method utilizes this {@link Event} as its parameter, the method will
  * receive every child event of this class.<br>
  * <br>
  * All children of this event are fired on the {@link MinecraftForge#EVENT_BUS}.<br>
@@ -38,20 +38,21 @@ import net.minecraftforge.event.old.entity.EntityEvent;
 public class LivingEvent extends EntityEvent
 {
     private final EntityLivingBase entityLiving;
+
     public LivingEvent(EntityLivingBase entity)
     {
         super(entity);
-        entityLiving = entity;
+        this.entityLiving = entity;
     }
 
     public EntityLivingBase getEntityLiving()
     {
-        return entityLiving;
+        return this.entityLiving;
     }
 
     /**
      * LivingUpdateEvent is fired when an Entity is updated. <br>
-     * This event is fired whenever an Entity is updated in 
+     * This event is fired whenever an Entity is updated in
      * {@link EntityLivingBase#onUpdate()}. <br>
      * <br>
      * This event is fired via the {@link ForgeHooks#onLivingUpdate(EntityLivingBase)}.<br>
@@ -66,12 +67,15 @@ public class LivingEvent extends EntityEvent
     @Cancelable
     public static class LivingUpdateEvent extends LivingEvent
     {
-        public LivingUpdateEvent(EntityLivingBase e){ super(e); }
+        public LivingUpdateEvent(EntityLivingBase e)
+        {
+            super(e);
+        }
     }
-    
+
     /**
      * LivingJumpEvent is fired when an Entity jumps.<br>
-     * This event is fired whenever an Entity jumps in 
+     * This event is fired whenever an Entity jumps in
      * {@link EntityLivingBase#jump()}, {@link EntityMagmaCube#jump()},
      * and {@link EntityHorse#jump()}.<br>
      * <br>
@@ -85,6 +89,9 @@ public class LivingEvent extends EntityEvent
      **/
     public static class LivingJumpEvent extends LivingEvent
     {
-        public LivingJumpEvent(EntityLivingBase e){ super(e); }
+        public LivingJumpEvent(EntityLivingBase e)
+        {
+            super(e);
+        }
     }
 }

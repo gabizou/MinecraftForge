@@ -29,7 +29,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldSettings;
 import net.minecraftforge.event.Cause;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
-import net.minecraftforge.fml.common.eventhandler.Event.HasResult;
 
 /**
  * LoadWorldEvent is fired when Minecraft loads a world.<br>
@@ -46,9 +45,11 @@ import net.minecraftforge.fml.common.eventhandler.Event.HasResult;
  * <br>
  * This event is fired on the {@link MinecraftForge#EVENT_BUS}.<br>
  **/
-public class LoadWorldEvent extends WorldEvent {
+public class LoadWorldEvent extends WorldEvent
+{
 
-    public LoadWorldEvent(Cause cause, World world) {
+    public LoadWorldEvent(Cause cause, World world)
+    {
         super(cause, world);
     }
 

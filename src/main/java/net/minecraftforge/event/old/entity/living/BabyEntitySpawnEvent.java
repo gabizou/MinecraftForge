@@ -28,6 +28,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import net.minecraftforge.fml.common.eventhandler.Event;
+
 import javax.annotation.Nullable;
 
 /**
@@ -61,13 +62,14 @@ public class BabyEntitySpawnEvent extends Event
     {
         //causedByPlayer calculated here to simplify the patch.
         EntityPlayer causedByPlayer = null;
-        if (parentA instanceof EntityAnimal) {
-            causedByPlayer = ((EntityAnimal)parentA).getLoveCause();
+        if (parentA instanceof EntityAnimal)
+        {
+            causedByPlayer = ((EntityAnimal) parentA).getLoveCause();
         }
 
         if (causedByPlayer == null && parentB instanceof EntityAnimal)
         {
-            causedByPlayer = ((EntityAnimal)parentB).getLoveCause();
+            causedByPlayer = ((EntityAnimal) parentB).getLoveCause();
         }
 
         this.parentA = parentA;
@@ -78,28 +80,28 @@ public class BabyEntitySpawnEvent extends Event
 
     public EntityLiving getParentA()
     {
-        return parentA;
+        return this.parentA;
     }
 
     public EntityLiving getParentB()
     {
-        return parentB;
+        return this.parentB;
     }
 
     @Nullable
     public EntityPlayer getCausedByPlayer()
     {
-        return causedByPlayer;
+        return this.causedByPlayer;
     }
 
     @Nullable
     public EntityAgeable getChild()
     {
-        return child;
+        return this.child;
     }
 
     public void setChild(EntityAgeable proposedChild)
     {
-        child = proposedChild;
+        this.child = proposedChild;
     }
 }

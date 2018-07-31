@@ -25,7 +25,6 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 import net.minecraftforge.event.Cause;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
-import net.minecraftforge.fml.common.eventhandler.Event.HasResult;
 
 /**
  * UnloadWorldEvent is fired when Minecraft unloads a world.<br>
@@ -41,9 +40,11 @@ import net.minecraftforge.fml.common.eventhandler.Event.HasResult;
  * <br>
  * This event is fired on the {@link MinecraftForge#EVENT_BUS}.<br>
  **/
-public class UnloadWorldEvent extends WorldEvent {
+public class UnloadWorldEvent extends WorldEvent
+{
 
-    public UnloadWorldEvent(Cause cause, World world) {
+    public UnloadWorldEvent(Cause cause, World world)
+    {
         super(cause, world);
     }
 

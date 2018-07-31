@@ -19,29 +19,52 @@
 
 package net.minecraftforge.event.world;
 
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IProgressUpdate;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraft.world.chunk.storage.AnvilChunkLoader;
+import net.minecraftforge.common.ForgeInternalHandler;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.Cause;
-import net.minecraftforge.fml.common.eventhandler.Cancelable;
-import net.minecraftforge.fml.common.eventhandler.Event.HasResult;
 
 /**
  * SaveWorldEvent is fired when Minecraft saves a world.<br>
  * This event is fired when a world is saved in
  * {@link WorldServer#saveAllChunks(boolean, IProgressUpdate)},
- * {@link ForgeInternalHandler#onDimensionSave(Save)}. <br>
- * <br>
- * This event is not {@link Cancelable}.<br>
- * <br>
- * This event does not have a result. {@link HasResult} <br>
+ * {@link ForgeInternalHandler#onDimensionSave(SaveWorldEvent)}. <br>
  * <br>
  * This event is fired on the {@link MinecraftForge#EVENT_BUS}.<br>
  **/
-public class SaveWorldEvent extends WorldEvent {
+public class SaveWorldEvent extends WorldEvent
+{
 
-    public SaveWorldEvent(Cause cause, World world) {
+    public SaveWorldEvent(Cause cause, World world)
+    {
         super(cause, world);
     }
 
+
+    /**
+     * ChunkDataEvent.Save is fired when vanilla Minecraft attempts to save Chunk data.<br>
+     * This event is fired during chunk saving in
+     * {@link AnvilChunkLoader#saveChunk(World, net.minecraft.world.chunk.Chunk)}<br>
+     * <br>
+     * This event is fired on the {@link MinecraftForge#EVENT_BUS}.<br>
+     **/
+    public static class Chunk extends ChunkEvent
+    {
+        private final NBTTagCompound data;
+
+        public Chunk(Cause cause, net.minecraft.world.chunk.Chunk chunk, NBTTagCompound data)
+        {
+            super(cause, chunk);
+            this.data = data;
+        }
+
+        public NBTTagCompound getData()
+        {
+            return this.data;
+        }
+    }
 }

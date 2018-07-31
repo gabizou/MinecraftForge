@@ -47,11 +47,11 @@ public class AnimalTameEvent extends LivingEvent
 
     public EntityAnimal getAnimal()
     {
-        return animal;
+        return this.animal;
     }
 
     public EntityPlayer getTamer()
     {
-        return tamer;
+        return this.tamer;
     }
 }

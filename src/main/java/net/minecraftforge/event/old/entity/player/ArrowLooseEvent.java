@@ -20,12 +20,12 @@
 package net.minecraftforge.event.old.entity.player;
 
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.ItemBow;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.eventhandler.Cancelable;
 
 import javax.annotation.Nonnull;
 
@@ -62,9 +62,28 @@ public class ArrowLooseEvent extends PlayerEvent
     }
 
     @Nonnull
-    public ItemStack getBow() { return this.bow; }
-    public World getWorld() { return this.world; }
-    public boolean hasAmmo() { return this.hasAmmo; }
-    public int getCharge() { return this.charge; }
-    public void setCharge(int charge) { this.charge = charge; }
+    public ItemStack getBow()
+    {
+        return this.bow;
+    }
+
+    public World getWorld()
+    {
+        return this.world;
+    }
+
+    public boolean hasAmmo()
+    {
+        return this.hasAmmo;
+    }
+
+    public int getCharge()
+    {
+        return this.charge;
+    }
+
+    public void setCharge(int charge)
+    {
+        this.charge = charge;
+    }
 }

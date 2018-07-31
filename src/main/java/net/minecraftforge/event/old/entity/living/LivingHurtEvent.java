@@ -19,16 +19,16 @@
 
 package net.minecraftforge.event.old.entity.living;
 
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.DamageSource;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
-import net.minecraft.util.DamageSource;
-import net.minecraft.entity.EntityLivingBase;
 
 /**
  * LivingHurtEvent is fired when an Entity is set to be hurt. <br>
- * This event is fired whenever an Entity is hurt in 
+ * This event is fired whenever an Entity is hurt in
  * {@link EntityLivingBase#damageEntity(DamageSource, float)} and
  * {@link EntityPlayer#damageEntity(DamageSource, float)}.<br>
  * <br>
@@ -43,6 +43,7 @@ import net.minecraft.entity.EntityLivingBase;
  * This event does not have a result. {@link HasResult}<br>
  * <br>
  * This event is fired on the {@link MinecraftForge#EVENT_BUS}.
+ *
  * @see LivingDamageEvent
  **/
 @Cancelable
@@ -50,6 +51,7 @@ public class LivingHurtEvent extends LivingEvent
 {
     private final DamageSource source;
     private float amount;
+
     public LivingHurtEvent(EntityLivingBase entity, DamageSource source, float amount)
     {
         super(entity);
@@ -57,9 +59,18 @@ public class LivingHurtEvent extends LivingEvent
         this.amount = amount;
     }
 
-    public DamageSource getSource() { return source; }
+    public DamageSource getSource()
+    {
+        return this.source;
+    }
 
-    public float getAmount() { return amount; }
+    public float getAmount()
+    {
+        return this.amount;
+    }
 
-    public void setAmount(float amount) { this.amount = amount; }
+    public void setAmount(float amount)
+    {
+        this.amount = amount;
+    }
 }

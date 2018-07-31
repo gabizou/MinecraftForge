@@ -17,20 +17,21 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package net.minecraftforge.event.old.terraingen;
+package net.minecraftforge.event.world.gen;
+
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeDecorator;
+import net.minecraft.world.gen.feature.WorldGenerator;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.Cause;
+import net.minecraftforge.event.ResultFocused;
+import net.minecraftforge.fml.common.eventhandler.Event;
 
 import java.util.Random;
 
-import net.minecraft.world.biome.BiomeDecorator;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.eventhandler.Cancelable;
-import net.minecraftforge.fml.common.eventhandler.Event;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.WorldGenerator;
-
 /**
- * OreGenEvent is fired when an event involving ore generation occurs.<br>
+ * GenerateOreEvent is fired when an event involving ore generation occurs.<br>
  * If a method utilizes this {@link Event} as its parameter, the method will
  * receive every child event of this class.<br>
  * <br>
@@ -40,14 +41,15 @@ import net.minecraft.world.gen.feature.WorldGenerator;
  * <br>
  * All children of this event are fired on the {@link MinecraftForge#ORE_GEN_BUS}.<br>
  **/
-public class OreGenEvent extends Event
+public class GenerateOreEvent extends Event
 {
     private final World world;
     private final Random rand;
     private final BlockPos pos;
 
-    public OreGenEvent(World world, Random rand, BlockPos pos)
+    protected GenerateOreEvent(Cause cause, World world, Random rand, BlockPos pos)
     {
+        super(cause);
         this.world = world;
         this.rand = rand;
         this.pos = pos;
@@ -55,54 +57,46 @@ public class OreGenEvent extends Event
 
     public World getWorld()
     {
-        return world;
+        return this.world;
     }
 
     public Random getRand()
     {
-        return rand;
+        return this.rand;
     }
 
     public BlockPos getPos()
     {
-        return pos;
+        return this.pos;
     }
 
     /**
-     * OreGenEvent.Pre is fired just before a chunk is populated with ores.<br>
+     * GenerateOreEvent.Pre is fired just before a chunk is populated with ores.<br>
      * This event is fired just before ore generation in
      * {@link BiomeDecorator#generateOres(World, Random)}.<br>
      * <br>
-     * This event is not {@link Cancelable}.<br>
-     * <br>
-     * This event does not have a result. {@link HasResult} <br>
-     * <br>
      * This event is fired on the {@link MinecraftForge#ORE_GEN_BUS}.<br>
      **/
-    public static class Pre extends OreGenEvent
+    public static class Pre extends GenerateOreEvent
     {
-        public Pre(World world, Random rand, BlockPos pos)
+        public Pre(Cause cause, World world, Random rand, BlockPos pos)
         {
-            super(world, rand, pos);
+            super(cause, world, rand, pos);
         }
     }
 
     /**
-     * OreGenEvent.Post is fired just after a chunk is populated with ores.<br>
+     * GenerateOreEvent.Post is fired just after a chunk is populated with ores.<br>
      * This event is fired just after ore generation in
      * {@link BiomeDecorator#generateOres(World, Random)}.<br>
      * <br>
-     * This event is not {@link Cancelable}.<br>
-     * <br>
-     * This event does not have a result. {@link HasResult} <br>
-     * <br>
      * This event is fired on the {@link MinecraftForge#ORE_GEN_BUS}.<br>
      **/
-    public static class Post extends OreGenEvent
+    public static class Post extends GenerateOreEvent
     {
-        public Post(World world, Random rand, BlockPos pos)
+        public Post(Cause cause, World world, Random rand, BlockPos pos)
         {
-            super(world, rand, pos);
+            super(cause, world, rand, pos);
         }
     }
 
@@ -114,36 +108,46 @@ public class OreGenEvent extends Event
      * {@link #type} contains the enum value for the Ore attempting to be generated.<br>
      * {@link #generator} contains the WorldGenerator generating this ore. <br>
      * <br>
-     * This event is not {@link Cancelable}.<br>
-     * <br>
-     * This event has a result. {@link HasResult} <br>
-     * This result determines whether the ore is allowed to be generated.<br>
-     * <br>
      * This event is fired on the {@link MinecraftForge#ORE_GEN_BUS}.<br>
      **/
-    @HasResult
-    public static class GenerateMinable extends OreGenEvent
+    public static class GenerateMinable extends GenerateOreEvent implements ResultFocused
     {
-        public static enum EventType { COAL, DIAMOND, DIRT, GOLD, GRAVEL, IRON, LAPIS, REDSTONE, QUARTZ, DIORITE, GRANITE, ANDESITE, EMERALD, SILVERFISH, CUSTOM }
-
         private final EventType type;
         private final WorldGenerator generator;
+        private ResultFocused.Result result = ResultFocused.Result.DEFAULT;
 
-        public GenerateMinable(World world, Random rand, WorldGenerator generator, BlockPos pos, EventType type)
+        public GenerateMinable(Cause cause, World world, Random rand, WorldGenerator generator, BlockPos pos, EventType type)
         {
-            super(world, rand, pos);
+            super(cause, world, rand, pos);
             this.generator = generator;
             this.type = type;
         }
 
         public EventType getType()
         {
-            return type;
+            return this.type;
         }
 
         public WorldGenerator getGenerator()
         {
-            return generator;
+            return this.generator;
+        }
+
+        @Override
+        public ResultFocused.Result getResult()
+        {
+            return this.result;
+        }
+
+        @Override
+        public void setResult(ResultFocused.Result result)
+        {
+            this.result = result;
+        }
+
+        public static enum EventType
+        {
+            COAL, DIAMOND, DIRT, GOLD, GRAVEL, IRON, LAPIS, REDSTONE, QUARTZ, DIORITE, GRANITE, ANDESITE, EMERALD, SILVERFISH, CUSTOM
         }
     }
 }

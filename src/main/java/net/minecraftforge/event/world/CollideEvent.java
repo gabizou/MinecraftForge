@@ -5,26 +5,31 @@ import net.minecraftforge.event.Cancellable;
 import net.minecraftforge.event.Cause;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
-public class CollideEvent extends Event implements Cancellable {
+public class CollideEvent extends Event implements Cancellable
+{
 
     private final RayTraceResult rayTraceResult;
 
-    public CollideEvent(Cause cause, RayTraceResult rayTraceResult) {
+    public CollideEvent(Cause cause, RayTraceResult rayTraceResult)
+    {
         super(cause);
         this.rayTraceResult = rayTraceResult;
     }
 
-    public RayTraceResult getRayTraceResult() {
-        return rayTraceResult;
+    public RayTraceResult getRayTraceResult()
+    {
+        return this.rayTraceResult;
     }
 
     @Override
-    public boolean isCancelled() {
+    public boolean isCancelled()
+    {
         return false;
     }
 
     @Override
-    public void setCancelled(boolean cancelled) {
+    public void setCancelled(boolean cancelled)
+    {
 
     }
 }

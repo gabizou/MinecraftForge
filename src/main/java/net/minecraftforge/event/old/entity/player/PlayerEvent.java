@@ -19,18 +19,17 @@
 
 package net.minecraftforge.event.old.entity.player;
 
-import java.io.File;
-
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.fml.common.eventhandler.Cancelable;
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.old.entity.living.LivingEvent;
+import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import net.minecraftforge.fml.common.eventhandler.Event;
+
+import java.io.File;
 
 /**
  * PlayerEvent is fired whenever an event involving Living entities occurs. <br>
@@ -42,15 +41,16 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 public class PlayerEvent extends LivingEvent
 {
     private final EntityPlayer entityPlayer;
+
     public PlayerEvent(EntityPlayer player)
     {
         super(player);
-        entityPlayer = player;
+        this.entityPlayer = player;
     }
 
     public EntityPlayer getEntityPlayer()
     {
-        return entityPlayer;
+        return this.entityPlayer;
     }
 
     /**
@@ -81,9 +81,20 @@ public class PlayerEvent extends LivingEvent
             this.success = success;
         }
 
-        public IBlockState getTargetBlock() { return this.state; }
-        public boolean canHarvest() { return this.success; }
-        public void setCanHarvest(boolean success){ this.success = success; }
+        public IBlockState getTargetBlock()
+        {
+            return this.state;
+        }
+
+        public boolean canHarvest()
+        {
+            return this.success;
+        }
+
+        public void setCanHarvest(boolean success)
+        {
+            this.success = success;
+        }
     }
 
     /**
@@ -110,8 +121,8 @@ public class PlayerEvent extends LivingEvent
     {
         private final IBlockState state;
         private final float originalSpeed;
-        private float newSpeed = 0.0f;
         private final BlockPos pos; // Y position of -1 notes unknown location
+        private float newSpeed = 0.0f;
 
         public BreakSpeed(EntityPlayer player, IBlockState state, float original, BlockPos pos)
         {
@@ -122,11 +133,30 @@ public class PlayerEvent extends LivingEvent
             this.pos = pos;
         }
 
-        public IBlockState getState() { return state; }
-        public float getOriginalSpeed() { return originalSpeed; }
-        public float getNewSpeed() { return newSpeed; }
-        public void setNewSpeed(float newSpeed) { this.newSpeed = newSpeed; }
-        public BlockPos getPos() { return pos; }
+        public IBlockState getState()
+        {
+            return this.state;
+        }
+
+        public float getOriginalSpeed()
+        {
+            return this.originalSpeed;
+        }
+
+        public float getNewSpeed()
+        {
+            return this.newSpeed;
+        }
+
+        public void setNewSpeed(float newSpeed)
+        {
+            this.newSpeed = newSpeed;
+        }
+
+        public BlockPos getPos()
+        {
+            return this.pos;
+        }
     }
 
     /**
@@ -150,7 +180,8 @@ public class PlayerEvent extends LivingEvent
         private final String username;
         private String displayname;
 
-        public NameFormat(EntityPlayer player, String username) {
+        public NameFormat(EntityPlayer player, String username)
+        {
             super(player);
             this.username = username;
             this.setDisplayname(username);
@@ -158,12 +189,12 @@ public class PlayerEvent extends LivingEvent
 
         public String getUsername()
         {
-            return username;
+            return this.username;
         }
 
         public String getDisplayname()
         {
-            return displayname;
+            return this.displayname;
         }
 
         public void setDisplayname(String displayname)
@@ -193,7 +224,7 @@ public class PlayerEvent extends LivingEvent
          */
         public EntityPlayer getOriginal()
         {
-            return original;
+            return this.original;
         }
 
         /**
@@ -202,15 +233,15 @@ public class PlayerEvent extends LivingEvent
          */
         public boolean isWasDeath()
         {
-            return wasDeath;
+            return this.wasDeath;
         }
     }
 
     /**
      * Fired when an Entity is started to be "tracked" by this player (the player receives updates about this entity, e.g. motion).
-     *
      */
-    public static class StartTracking extends PlayerEvent {
+    public static class StartTracking extends PlayerEvent
+    {
 
         private final Entity target;
 
@@ -225,15 +256,15 @@ public class PlayerEvent extends LivingEvent
          */
         public Entity getTarget()
         {
-            return target;
+            return this.target;
         }
     }
 
     /**
      * Fired when an Entity is stopped to be "tracked" by this player (the player no longer receives updates about this entity, e.g. motion).
-     *
      */
-    public static class StopTracking extends PlayerEvent {
+    public static class StopTracking extends PlayerEvent
+    {
 
         private final Entity target;
 
@@ -248,7 +279,7 @@ public class PlayerEvent extends LivingEvent
          */
         public Entity getTarget()
         {
-            return target;
+            return this.target;
         }
     }
 
@@ -258,7 +289,8 @@ public class PlayerEvent extends LivingEvent
      * allow mods to load an additional file from the players directory
      * containing additional mod related player data.
      */
-    public static class LoadFromFile extends PlayerEvent {
+    public static class LoadFromFile extends PlayerEvent
+    {
         private final File playerDirectory;
         private final String playerUUID;
 
@@ -271,13 +303,14 @@ public class PlayerEvent extends LivingEvent
 
         /**
          * Construct and return a recommended file for the supplied suffix
+         *
          * @param suffix The suffix to use.
          * @return
          */
         public File getPlayerFile(String suffix)
         {
             if ("dat".equals(suffix)) throw new IllegalArgumentException("The suffix 'dat' is reserved");
-            return new File(this.getPlayerDirectory(), this.getPlayerUUID() +"."+suffix);
+            return new File(this.getPlayerDirectory(), this.getPlayerUUID() + "." + suffix);
         }
 
         /**
@@ -286,7 +319,7 @@ public class PlayerEvent extends LivingEvent
          */
         public File getPlayerDirectory()
         {
-            return playerDirectory;
+            return this.playerDirectory;
         }
 
         /**
@@ -295,9 +328,10 @@ public class PlayerEvent extends LivingEvent
          */
         public String getPlayerUUID()
         {
-            return playerUUID;
+            return this.playerUUID;
         }
     }
+
     /**
      * The player is being saved to the world store. Note that the
      * player may be in the process of logging out or otherwise departing
@@ -311,7 +345,8 @@ public class PlayerEvent extends LivingEvent
      * <em>WARNING</em>: Do not overwrite the player's .dat file here. You will
      * corrupt the world state.
      */
-    public static class SaveToFile extends PlayerEvent {
+    public static class SaveToFile extends PlayerEvent
+    {
         private final File playerDirectory;
         private final String playerUUID;
 
@@ -324,13 +359,14 @@ public class PlayerEvent extends LivingEvent
 
         /**
          * Construct and return a recommended file for the supplied suffix
+         *
          * @param suffix The suffix to use.
          * @return
          */
         public File getPlayerFile(String suffix)
         {
             if ("dat".equals(suffix)) throw new IllegalArgumentException("The suffix 'dat' is reserved");
-            return new File(this.getPlayerDirectory(), this.getPlayerUUID() +"."+suffix);
+            return new File(this.getPlayerDirectory(), this.getPlayerUUID() + "." + suffix);
         }
 
         /**
@@ -339,7 +375,7 @@ public class PlayerEvent extends LivingEvent
          */
         public File getPlayerDirectory()
         {
-            return playerDirectory;
+            return this.playerDirectory;
         }
 
         /**
@@ -348,7 +384,7 @@ public class PlayerEvent extends LivingEvent
          */
         public String getPlayerUUID()
         {
-            return playerUUID;
+            return this.playerUUID;
         }
     }
 
@@ -372,7 +408,7 @@ public class PlayerEvent extends LivingEvent
          */
         public void modifyVisibility(double mod)
         {
-            visibilityModifier *= mod;
+            this.visibilityModifier *= mod;
         }
 
         /**
@@ -380,7 +416,7 @@ public class PlayerEvent extends LivingEvent
          */
         public double getVisibilityModifier()
         {
-            return visibilityModifier;
+            return this.visibilityModifier;
         }
     }
 }

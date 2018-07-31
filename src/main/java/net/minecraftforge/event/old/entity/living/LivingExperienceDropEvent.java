@@ -29,7 +29,7 @@ import net.minecraftforge.fml.common.eventhandler.Cancelable;
  * by canceling the event.
  */
 @Cancelable
-public class LivingExperienceDropEvent extends LivingEvent 
+public class LivingExperienceDropEvent extends LivingEvent
 {
     private final EntityPlayer attackingPlayer;
     private final int originalExperiencePoints;
@@ -46,7 +46,7 @@ public class LivingExperienceDropEvent extends LivingEvent
 
     public int getDroppedExperience()
     {
-        return droppedExperiencePoints;
+        return this.droppedExperiencePoints;
     }
 
     public void setDroppedExperience(int droppedExperience)
@@ -56,11 +56,11 @@ public class LivingExperienceDropEvent extends LivingEvent
 
     public EntityPlayer getAttackingPlayer()
     {
-        return attackingPlayer;
+        return this.attackingPlayer;
     }
 
     public int getOriginalExperience()
     {
-        return originalExperiencePoints;
+        return this.originalExperiencePoints;
     }
 }

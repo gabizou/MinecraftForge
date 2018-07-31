@@ -54,6 +54,7 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityMinecartContainer;
 import net.minecraft.entity.player.EntityPlayer;
@@ -119,6 +120,7 @@ import net.minecraftforge.event.UpdateAnvilEvent;
 import net.minecraftforge.event.ChangeDifficultyEvent;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.ServerChatEvent;
+import net.minecraftforge.event.action.LightningEvent;
 import net.minecraftforge.event.entity.MoveEntityEvent;
 import net.minecraftforge.event.entity.item.DropItemEvent;
 import net.minecraftforge.event.old.entity.living.LivingAttackEvent;
@@ -161,6 +163,19 @@ import org.apache.commons.io.IOUtils;
 
 public class ForgeHooks
 {
+    public static void lightningStrikeEntities(EntityLightningBolt entityLightningBolt, List<Entity> list)
+    {
+        final LightningEvent.Strike strike = ForgeEventFactory.lightingStrikeEntities(entityLightningBolt, list);
+        if (strike.isCancelled())
+        {
+            return;
+        }
+        for (Entity entity : strike.getEntitiesToStrike())
+        {
+            entity.onStruckByLightning(entityLightningBolt);
+        }
+    }
+
     //TODO: Loot tables?
     static class SeedEntry extends WeightedRandom.Item
     {

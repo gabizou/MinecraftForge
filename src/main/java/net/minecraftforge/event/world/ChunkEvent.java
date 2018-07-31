@@ -45,6 +45,6 @@ public class ChunkEvent extends WorldEvent
 
     public Chunk getChunk()
     {
-        return chunk;
+        return this.chunk;
     }
 }

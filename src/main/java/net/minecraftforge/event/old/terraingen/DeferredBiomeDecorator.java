@@ -19,14 +19,16 @@
 
 package net.minecraftforge.event.old.terraingen;
 
-import java.util.Random;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeDecorator;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeDecorator;
 import net.minecraftforge.common.MinecraftForge;
 
-public class DeferredBiomeDecorator extends BiomeDecorator {
+import java.util.Random;
+
+public class DeferredBiomeDecorator extends BiomeDecorator
+{
     private BiomeDecorator wrapped;
 
     public DeferredBiomeDecorator(BiomeDecorator wrappedOriginal)
@@ -41,24 +43,25 @@ public class DeferredBiomeDecorator extends BiomeDecorator {
         // On first call to decorate, we fire and substitute ourselves, if we haven't already done so
         biome.decorator.decorate(par1World, par2Random, biome, pos);
     }
+
     public void fireCreateEventAndReplace(Biome biome)
     {
         // Copy any configuration from us to the real instance.
-        wrapped.bigMushroomsPerChunk = bigMushroomsPerChunk;
-        wrapped.cactiPerChunk = cactiPerChunk;
-        wrapped.clayPerChunk = clayPerChunk;
-        wrapped.deadBushPerChunk = deadBushPerChunk;
-        wrapped.flowersPerChunk = flowersPerChunk;
-        wrapped.generateFalls = generateFalls;
-        wrapped.grassPerChunk = grassPerChunk;
-        wrapped.mushroomsPerChunk = mushroomsPerChunk;
-        wrapped.reedsPerChunk = reedsPerChunk;
-        wrapped.gravelPatchesPerChunk = gravelPatchesPerChunk;
-        wrapped.sandPatchesPerChunk = sandPatchesPerChunk;
-        wrapped.treesPerChunk = treesPerChunk;
-        wrapped.waterlilyPerChunk = waterlilyPerChunk;
+        this.wrapped.bigMushroomsPerChunk = this.bigMushroomsPerChunk;
+        this.wrapped.cactiPerChunk = this.cactiPerChunk;
+        this.wrapped.clayPerChunk = this.clayPerChunk;
+        this.wrapped.deadBushPerChunk = this.deadBushPerChunk;
+        this.wrapped.flowersPerChunk = this.flowersPerChunk;
+        this.wrapped.generateFalls = this.generateFalls;
+        this.wrapped.grassPerChunk = this.grassPerChunk;
+        this.wrapped.mushroomsPerChunk = this.mushroomsPerChunk;
+        this.wrapped.reedsPerChunk = this.reedsPerChunk;
+        this.wrapped.gravelPatchesPerChunk = this.gravelPatchesPerChunk;
+        this.wrapped.sandPatchesPerChunk = this.sandPatchesPerChunk;
+        this.wrapped.treesPerChunk = this.treesPerChunk;
+        this.wrapped.waterlilyPerChunk = this.waterlilyPerChunk;
 
-        BiomeEvent.CreateDecorator event = new BiomeEvent.CreateDecorator(biome, wrapped);
+        BiomeEvent.CreateDecorator event = new BiomeEvent.CreateDecorator(biome, this.wrapped);
         MinecraftForge.TERRAIN_GEN_BUS.post(event);
         biome.decorator = event.getNewBiomeDecorator();
     }

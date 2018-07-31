@@ -19,14 +19,14 @@
 
 package net.minecraftforge.event.old.entity.living;
 
-import net.minecraftforge.fml.common.eventhandler.Event.HasResult;
 import net.minecraft.entity.EntityLiving;
+import net.minecraftforge.fml.common.eventhandler.Event.HasResult;
 
 @HasResult
 public class LivingPackSizeEvent extends LivingEvent
 {
     private int maxPackSize;
-    
+
     public LivingPackSizeEvent(EntityLiving entity)
     {
         super(entity);
@@ -36,13 +36,13 @@ public class LivingPackSizeEvent extends LivingEvent
      * This event is fired when the spawning system determines the
      * maximum amount of the selected entity that can spawn at the same
      * time.
-     *
+     * <p>
      * If you set the result to 'ALLOW', it means that you want to return
      * the value of maxPackSize as the maximum pack size for current entity.
      */
     public int getMaxPackSize()
     {
-        return maxPackSize;
+        return this.maxPackSize;
     }
 
     public void setMaxPackSize(int maxPackSize)

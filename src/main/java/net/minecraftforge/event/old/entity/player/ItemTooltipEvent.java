@@ -19,8 +19,6 @@
 
 package net.minecraftforge.event.old.entity.player;
 
-import java.util.List;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,6 +26,7 @@ import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class ItemTooltipEvent extends PlayerEvent
 {
@@ -53,7 +52,7 @@ public class ItemTooltipEvent extends PlayerEvent
      */
     public ITooltipFlag getFlags()
     {
-        return flags;
+        return this.flags;
     }
 
     /**
@@ -62,7 +61,7 @@ public class ItemTooltipEvent extends PlayerEvent
     @Nonnull
     public ItemStack getItemStack()
     {
-        return itemStack;
+        return this.itemStack;
     }
 
     /**
@@ -70,7 +69,7 @@ public class ItemTooltipEvent extends PlayerEvent
      */
     public List<String> getToolTip()
     {
-        return toolTip;
+        return this.toolTip;
     }
 
     /**

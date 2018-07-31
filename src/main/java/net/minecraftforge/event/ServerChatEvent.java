@@ -62,14 +62,14 @@ public class ServerChatEvent extends Event implements Cancellable
         this.component = component;
     }
 
-    public void setComponent(ITextComponent e)
-    {
-        this.component = e;
-    }
-
     public ITextComponent getComponent()
     {
         return this.component;
+    }
+
+    public void setComponent(ITextComponent e)
+    {
+        this.component = e;
     }
 
     public String getMessage()

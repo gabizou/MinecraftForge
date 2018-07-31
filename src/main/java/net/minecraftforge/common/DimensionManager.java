@@ -56,8 +56,12 @@ import net.minecraft.world.WorldProvider;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.WorldServerMulti;
 import net.minecraft.world.storage.ISaveHandler;
+import net.minecraftforge.event.Cause;
 import net.minecraftforge.event.old.world.WorldEvent;
+import net.minecraftforge.event.world.LoadWorldEvent;
+import net.minecraftforge.event.world.UnloadWorldEvent;
 import net.minecraftforge.fml.common.FMLLog;
+import net.minecraftforge.fml.common.Loader;
 
 import javax.annotation.Nullable;
 
@@ -262,7 +266,7 @@ public class DimensionManager
 
         WorldServer world = (dim == 0 ? overworld : (WorldServer)(new WorldServerMulti(mcServer, savehandler, dim, overworld, mcServer.profiler).init()));
         world.addEventListener(new ServerWorldEventHandler(mcServer, world));
-        MinecraftForge.EVENT_BUS.post(new WorldEvent.Load(world));
+        MinecraftForge.EVENT_BUS.post(new LoadWorldEvent(Cause.of(mcServer), world));
         if (!mcServer.isSinglePlayer())
         {
             world.getWorldInfo().setGameType(mcServer.getGameType());
@@ -400,7 +404,7 @@ public class DimensionManager
             }
             finally
             {
-                MinecraftForge.EVENT_BUS.post(new WorldEvent.Unload(w));
+                MinecraftForge.EVENT_BUS.post(new UnloadWorldEvent(Cause.of(Loader.instance().activeModContainer()), w));
                 w.flush();
                 setWorld(id, null, w.getMinecraftServer());
             }

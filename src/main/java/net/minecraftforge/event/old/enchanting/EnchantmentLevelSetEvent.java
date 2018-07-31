@@ -29,7 +29,7 @@ import javax.annotation.Nonnull;
 /**
  * Fired when the enchantment level is set for each of the three potential enchantments in the enchanting table.
  * The {@link #level} is set to the vanilla value and can be modified by this event handler.
- *
+ * <p>
  * The {@link #enchantRow} is used to determine which enchantment level is being set, 1, 2, or 3. The {@link #power} is a number
  * from 0-15 and indicates how many bookshelves surround the enchanting table. The {@link #itemStack} representing the item being
  * enchanted is also available.
@@ -58,78 +58,78 @@ public class EnchantmentLevelSetEvent extends Event
 
     /**
      * Get the world object
-     * 
+     *
      * @return the world object
      */
     public World getWorld()
     {
-        return world;
+        return this.world;
     }
 
     /**
      * Get the pos of the enchantment table
-     * 
+     *
      * @return the pos of the enchantment table
      */
     public BlockPos getPos()
     {
-        return pos;
+        return this.pos;
     }
 
     /**
      * Get the row for which the enchantment level is being set
-     * 
+     *
      * @return the row for which the enchantment level is being set
      */
     public int getEnchantRow()
     {
-        return enchantRow;
+        return this.enchantRow;
     }
 
     /**
      * Get the power (# of bookshelves) for the enchanting table
-     * 
+     *
      * @return the power (# of bookshelves) for the enchanting table
      */
     public int getPower()
     {
-        return power;
+        return this.power;
     }
 
     /**
      * Get the item being enchanted
-     * 
+     *
      * @return the item being enchanted
      */
     @Nonnull
     public ItemStack getItem()
     {
-        return itemStack;
+        return this.itemStack;
     }
 
     /**
      * Get the original level of the enchantment for this row (0-30)
-     * 
+     *
      * @return the original level of the enchantment for this row (0-30)
      */
     public int getOriginalLevel()
     {
-        return originalLevel;
+        return this.originalLevel;
     }
 
     /**
      * Get the level of the enchantment for this row (0-30)
-     * 
+     *
      * @return the level of the enchantment for this row (0-30)
      */
     public int getLevel()
     {
-        return level;
+        return this.level;
     }
 
     /**
      * Set the new level of the enchantment (0-30)
-     * 
+     *
      * @param level the new level of the enchantment (0-30)
      */
     public void setLevel(int level)

@@ -43,7 +43,7 @@ public class LivingDestroyBlockEvent extends LivingEvent
 {
     private final BlockPos pos;
     private final IBlockState state;
-    
+
     public LivingDestroyBlockEvent(EntityLivingBase entity, BlockPos pos, IBlockState state)
     {
         super(entity);
@@ -53,11 +53,11 @@ public class LivingDestroyBlockEvent extends LivingEvent
 
     public IBlockState getState()
     {
-        return state;
+        return this.state;
     }
-    
+
     public BlockPos getPos()
     {
-        return pos;
+        return this.pos;
     }
 }

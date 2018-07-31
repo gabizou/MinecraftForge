@@ -23,8 +23,8 @@ import net.minecraft.entity.player.EntityPlayer;
 
 /**
  * Occurs when a player falls, but is able to fly.  Doesn't need to be cancelable, this is mainly for notification purposes.
- * @author Mithion
  *
+ * @author Mithion
  */
 public class PlayerFlyableFallEvent extends PlayerEvent
 {
@@ -38,8 +38,23 @@ public class PlayerFlyableFallEvent extends PlayerEvent
         this.multiplier = multiplier;
     }
 
-    public float getDistance() { return distance;}
-    public void setDistance(float distance) { this.distance = distance; }
-    public float getMultiplier() { return multiplier; }
-    public void setMultiplier(float multiplier) { this.multiplier = multiplier; }
+    public float getDistance()
+    {
+        return this.distance;
+    }
+
+    public void setDistance(float distance)
+    {
+        this.distance = distance;
+    }
+
+    public float getMultiplier()
+    {
+        return this.multiplier;
+    }
+
+    public void setMultiplier(float multiplier)
+    {
+        this.multiplier = multiplier;
+    }
 }

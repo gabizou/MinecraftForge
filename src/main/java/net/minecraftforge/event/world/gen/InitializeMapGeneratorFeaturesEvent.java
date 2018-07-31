@@ -17,29 +17,50 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package net.minecraftforge.event.old.terraingen;
+package net.minecraftforge.event.world.gen;
 
-import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraft.world.gen.MapGenBase;
+import net.minecraftforge.event.Cause;
+import net.minecraftforge.fml.common.eventhandler.Event;
 
-public class InitMapGenEvent extends Event
+public class InitializeMapGeneratorFeaturesEvent extends Event
 {
-    /** Use CUSTOM to filter custom event types
-     */
-    public static enum EventType { CAVE, MINESHAFT, NETHER_BRIDGE, NETHER_CAVE, RAVINE, SCATTERED_FEATURE, STRONGHOLD, VILLAGE, OCEAN_MONUMENT, WOODLAND_MANSION, END_CITY, CUSTOM }
-
     private final EventType type;
     private final MapGenBase originalGen;
     private MapGenBase newGen;
-
-    InitMapGenEvent(EventType type, MapGenBase original)
+    InitializeMapGeneratorFeaturesEvent(Cause cause, EventType type, MapGenBase original)
     {
+        super(cause);
         this.type = type;
         this.originalGen = original;
         this.setNewGen(original);
     }
-    public EventType getType() { return type; }
-    public MapGenBase getOriginalGen() { return originalGen; }
-    public MapGenBase getNewGen() { return newGen; }
-    public void setNewGen(MapGenBase newGen) { this.newGen = newGen; }
+
+    public EventType getType()
+    {
+        return this.type;
+    }
+
+    public MapGenBase getOriginalGen()
+    {
+        return this.originalGen;
+    }
+
+    public MapGenBase getNewGen()
+    {
+        return this.newGen;
+    }
+
+    public void setNewGen(MapGenBase newGen)
+    {
+        this.newGen = newGen;
+    }
+
+    /**
+     * Use CUSTOM to filter custom event types
+     */
+    public enum EventType
+    {
+        CAVE, MINESHAFT, NETHER_BRIDGE, NETHER_CAVE, RAVINE, SCATTERED_FEATURE, STRONGHOLD, VILLAGE, OCEAN_MONUMENT, WOODLAND_MANSION, END_CITY, CUSTOM
+    }
 }

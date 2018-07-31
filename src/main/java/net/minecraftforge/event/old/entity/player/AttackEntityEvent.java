@@ -19,10 +19,10 @@
 
 package net.minecraftforge.event.old.entity.player;
 
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.eventhandler.Cancelable;
 
 /**
  * AttackEntityEvent is fired when a player attacks an Entity.<br>
@@ -42,6 +42,7 @@ import net.minecraft.entity.player.EntityPlayer;
 public class AttackEntityEvent extends PlayerEvent
 {
     private final Entity target;
+
     public AttackEntityEvent(EntityPlayer player, Entity target)
     {
         super(player);
@@ -50,6 +51,6 @@ public class AttackEntityEvent extends PlayerEvent
 
     public Entity getTarget()
     {
-        return target;
+        return this.target;
     }
 }

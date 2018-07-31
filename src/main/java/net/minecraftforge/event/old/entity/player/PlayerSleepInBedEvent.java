@@ -41,8 +41,8 @@ import net.minecraftforge.fml.common.eventhandler.Cancelable;
  **/
 public class PlayerSleepInBedEvent extends PlayerEvent
 {
-    private SleepResult result = null;
     private final BlockPos pos;
+    private SleepResult result = null;
 
     public PlayerSleepInBedEvent(EntityPlayer player, BlockPos pos)
     {
@@ -52,7 +52,7 @@ public class PlayerSleepInBedEvent extends PlayerEvent
 
     public SleepResult getResultStatus()
     {
-        return result;
+        return this.result;
     }
 
     public void setResult(SleepResult result)
@@ -62,6 +62,6 @@ public class PlayerSleepInBedEvent extends PlayerEvent
 
     public BlockPos getPos()
     {
-        return pos;
+        return this.pos;
     }
 }

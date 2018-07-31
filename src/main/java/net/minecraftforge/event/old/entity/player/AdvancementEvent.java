@@ -45,6 +45,6 @@ public class AdvancementEvent extends PlayerEvent
 
     public Advancement getAdvancement()
     {
-        return advancement;
+        return this.advancement;
     }
 }

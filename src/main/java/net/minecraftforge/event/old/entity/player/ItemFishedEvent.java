@@ -30,7 +30,7 @@ import java.util.List;
 
 /**
  * This event is called when a player fishes an item.
- *
+ * <p>
  * This event is {@link net.minecraftforge.fml.common.eventhandler.Cancelable}
  * Canceling the event will cause the player to receive no items at all.
  * The hook will still take the damage specified
@@ -52,16 +52,18 @@ public class ItemFishedEvent extends PlayerEvent
 
     /**
      * Get the damage the rod will take.
+     *
      * @return The damage the rod will take
      */
     public int getRodDamage()
     {
-        return rodDamage;
+        return this.rodDamage;
     }
 
     /**
      * Specifies the amount of damage that the fishing rod should take.
      * This is not added to the pre-existing damage to be taken.
+     *
      * @param rodDamage The damage the rod will take. Must be nonnegative
      */
     public void damageRodBy(@Nonnegative int rodDamage)
@@ -77,7 +79,7 @@ public class ItemFishedEvent extends PlayerEvent
      */
     public NonNullList<ItemStack> getDrops()
     {
-        return stacks;
+        return this.stacks;
     }
 
     /**
@@ -85,6 +87,6 @@ public class ItemFishedEvent extends PlayerEvent
      */
     public EntityFishHook getHookEntity()
     {
-        return hook;
+        return this.hook;
     }
 }

@@ -39,6 +39,7 @@ import net.minecraftforge.fml.common.eventhandler.Cancelable;
 public class UpdateEntityEvent extends EntityEvent
 {
     private boolean canUpdate = false;
+
     public UpdateEntityEvent(Cause cause, Entity entity)
     {
         super(cause, entity);
@@ -65,7 +66,8 @@ public class UpdateEntityEvent extends EntityEvent
 
         private final BlockPos finalPosition;
 
-        public Post(Cause cause, Entity entity, BlockPos pos) {
+        public Post(Cause cause, Entity entity, BlockPos pos)
+        {
             super(cause, entity);
             this.finalPosition = pos;
         }

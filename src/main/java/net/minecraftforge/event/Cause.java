@@ -1,26 +1,51 @@
 package net.minecraftforge.event;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.base.Preconditions.checkState;
-
 import com.google.common.collect.ImmutableList;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.StringJoiner;
-
 import javax.annotation.Nullable;
+import java.util.*;
+
+import static com.google.common.base.Preconditions.*;
 
 @SuppressWarnings("unchecked")
 public class Cause implements Iterable<Object>
 {
+
+    private final Object[] cause;
+    // lazy load
+    @Nullable
+    private ImmutableList<Object> immutableCauses;
+
+    /**
+     * Constructs a new cause.
+     *
+     * @param causes The causes
+     */
+    private Cause(Object[] causes)
+    {
+        final Object[] objects = new Object[causes.length];
+        for (int index = 0; index < causes.length; index++)
+        {
+            objects[index] = checkNotNull(causes[index], "Null cause element!");
+        }
+        this.cause = objects;
+    }
+
+    /**
+     * Constructs a new cause.
+     *
+     * @param causes The causes
+     */
+    private Cause(Collection<Object> causes)
+    {
+        final Object[] objects = new Object[causes.size()];
+        int index = 0;
+        for (Object cause : causes)
+        {
+            objects[index++] = checkNotNull(cause, "Null cause element!");
+        }
+        this.cause = objects;
+    }
 
     /**
      * Creates a new {@link Builder} to make a new {@link Cause}.
@@ -47,7 +72,7 @@ public class Cause implements Iterable<Object>
     /**
      * Constructs a new cause with the specified event context and causes.
      *
-     * @param cause The direct object cause
+     * @param cause  The direct object cause
      * @param causes Other associated causes
      * @return The built cause
      */
@@ -78,44 +103,6 @@ public class Cause implements Iterable<Object>
         return builder.build();
     }
 
-    final Object[] cause;
-
-    // lazy load
-    @Nullable private ImmutableList<Object> immutableCauses;
-
-    /**
-     * Constructs a new cause.
-     *
-     * @param causes The causes
-     */
-    Cause(Object[] causes)
-    {
-        final Object[] objects = new Object[causes.length];
-        for (int index = 0; index < causes.length; index++)
-        {
-            objects[index] = checkNotNull(causes[index], "Null cause element!");
-        }
-        this.cause = objects;
-    }
-
-    /**
-     * Constructs a new cause.
-     *
-     * @param causes The causes
-     */
-    Cause(Collection<Object> causes)
-    {
-        final Object[] objects = new Object[causes.size()];
-        int index = 0;
-        for (Object cause : causes)
-        {
-            objects[index++] = checkNotNull(cause, "Null cause element!");
-        }
-        this.cause = objects;
-    }
-
-
-
     /**
      * Gets the root {@link Object} of this cause.
      *
@@ -130,7 +117,7 @@ public class Cause implements Iterable<Object>
      * Gets the first <code>T</code> object of this {@link Cause}, if available.
      *
      * @param target The class of the target type
-     * @param <T> The type of object being queried for
+     * @param <T>    The type of object being queried for
      * @return The first element of the type, if available
      */
     public <T> Optional<T> first(Class<T> target)
@@ -150,7 +137,7 @@ public class Cause implements Iterable<Object>
      * <code>T</code>.
      *
      * @param target The class of the target type
-     * @param <T> The type of object being queried for
+     * @param <T>    The type of object being queried for
      * @return The last element of the type, if available
      */
     public <T> Optional<T> last(Class<T> target)
@@ -258,7 +245,7 @@ public class Cause implements Iterable<Object>
      * Gets an {@link ImmutableList} of all objects that are instances of the
      * given {@link Class} type <code>T</code>.
      *
-     * @param <T> The type of objects to query for
+     * @param <T>    The type of objects to query for
      * @param target The class of the target type
      * @return An immutable list of the objects queried
      */
@@ -297,6 +284,12 @@ public class Cause implements Iterable<Object>
 
     /**
      * Gets an {@link List} of all causes within this {@link Cause}.
+     * <p>The ordering is very important as the direct first object
+     * within a {@link Cause} is the most direct object that is
+     * "causing" an event to be thrown. Additional objects may be
+     * considered as "indirect" or "associated" such as
+     * players riding an entity that the entity being ridden caused
+     * some collisions to occur.</p>
      *
      * @return An immutable list of all the causes
      */
@@ -328,7 +321,7 @@ public class Cause implements Iterable<Object>
      * Creates a new {@link Cause} where the objects are added at the end of the
      * cause array of objects.
      *
-     * @param additional The additional object to add
+     * @param additional  The additional object to add
      * @param additionals The remaining objects to add
      * @return The new cause
      */
@@ -414,33 +407,6 @@ public class Cause implements Iterable<Object>
         return causeString + joiner.toString() + "}]";
     }
 
-    private class Itr implements Iterator<Object>
-    {
-
-        private int index = 0;
-
-        Itr()
-        {
-        }
-
-        @Override
-        public Object next()
-        {
-            if (this.index >= Cause.this.cause.length)
-            {
-                throw new NoSuchElementException();
-            }
-            return Cause.this.cause[this.index++];
-        }
-
-        @Override
-        public boolean hasNext()
-        {
-            return this.index != Cause.this.cause.length;
-        }
-
-    }
-
     public static final class Builder
     {
 
@@ -472,7 +438,7 @@ public class Cause implements Iterable<Object>
          * Inserts the specified object into the cause.
          *
          * @param position The position to insert into
-         * @param cause The object to insert into the cause
+         * @param cause    The object to insert into the cause
          * @return The modified builder, for chaining
          */
         public Builder insert(int position, Object cause)
@@ -520,6 +486,33 @@ public class Cause implements Iterable<Object>
             this.causes.clear();
             return this;
         }
+    }
+
+    private class Itr implements Iterator<Object>
+    {
+
+        private int index = 0;
+
+        Itr()
+        {
+        }
+
+        @Override
+        public Object next()
+        {
+            if (this.index >= Cause.this.cause.length)
+            {
+                throw new NoSuchElementException();
+            }
+            return Cause.this.cause[this.index++];
+        }
+
+        @Override
+        public boolean hasNext()
+        {
+            return this.index != Cause.this.cause.length;
+        }
+
     }
 
 }

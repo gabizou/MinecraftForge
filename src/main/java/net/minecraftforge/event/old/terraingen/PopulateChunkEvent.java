@@ -19,13 +19,13 @@
 
 package net.minecraftforge.event.old.terraingen;
 
-import java.util.Random;
-
 import net.minecraft.world.World;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import net.minecraftforge.fml.common.eventhandler.Event;
+
+import java.util.Random;
 
 /**
  * PopulateChunkEvent is fired when an event involving chunk terrain feature population occurs.<br>
@@ -38,10 +38,12 @@ import net.minecraftforge.fml.common.eventhandler.Event;
  * {@link #chunkZ} contains the z-coordinate of the chunk currently being populated with ores.<br>
  * {@link #hasVillageGenerated} contains the boolean value stating if the chunk already has a village spawned in it.<br>
  * <br>
- * All children of this event are fired on the {@link MinecraftForge#EVENT_BUS}, except {@link Populate}, which fires on the {@link MinecraftForge#TERRAIN_GEN_BUS}.<br>
+ * All children of this event are fired on the {@link MinecraftForge#EVENT_BUS}, except {@link Populate}, which fires on the {@link
+ * MinecraftForge#TERRAIN_GEN_BUS}.<br>
  **/
 public class PopulateChunkEvent extends ChunkGeneratorEvent
 {
+
     private final World world;
     private final Random rand;
     private final int chunkX;
@@ -58,11 +60,31 @@ public class PopulateChunkEvent extends ChunkGeneratorEvent
         this.hasVillageGenerated = hasVillageGenerated;
     }
 
-    public World getWorld() { return world; }
-    public Random getRand() { return rand; }
-    public int getChunkX() { return chunkX; }
-    public int getChunkZ() { return chunkZ; }
-    public boolean isHasVillageGenerated() { return hasVillageGenerated; }
+    public World getWorld()
+    {
+        return this.world;
+    }
+
+    public Random getRand()
+    {
+        return this.rand;
+    }
+
+    public int getChunkX()
+    {
+        return this.chunkX;
+    }
+
+    public int getChunkZ()
+    {
+        return this.chunkZ;
+    }
+
+    public boolean isHasVillageGenerated()
+    {
+        return this.hasVillageGenerated;
+    }
+
     /**
      * PopulateChunkEvent.Pre is fired just before a chunk is populated a terrain feature.<br>
      * This event is fired just before terrain feature generation in
@@ -78,6 +100,7 @@ public class PopulateChunkEvent extends ChunkGeneratorEvent
      **/
     public static class Pre extends PopulateChunkEvent
     {
+
         public Pre(IChunkGenerator gen, World world, Random rand, int chunkX, int chunkZ, boolean hasVillageGenerated)
         {
             super(gen, world, rand, chunkX, chunkZ, hasVillageGenerated);
@@ -99,6 +122,7 @@ public class PopulateChunkEvent extends ChunkGeneratorEvent
      **/
     public static class Post extends PopulateChunkEvent
     {
+
         public Post(IChunkGenerator chunkProvider, World world, Random rand, int chunkX, int chunkZ, boolean hasVillageGenerated)
         {
             super(chunkProvider, world, rand, chunkX, chunkZ, hasVillageGenerated);
@@ -124,14 +148,6 @@ public class PopulateChunkEvent extends ChunkGeneratorEvent
     @HasResult
     public static class Populate extends PopulateChunkEvent
     {
-        public EventType getType()
-        {
-            return type;
-        }
-
-        /** Use CUSTOM to filter custom event types
-         */
-        public static enum EventType { DUNGEON, FIRE, GLOWSTONE, ICE, LAKE, LAVA, NETHER_LAVA, NETHER_LAVA2, NETHER_MAGMA, ANIMALS, CUSTOM }
 
         private final EventType type;
 
@@ -139,6 +155,19 @@ public class PopulateChunkEvent extends ChunkGeneratorEvent
         {
             super(gen, world, rand, chunkX, chunkZ, hasVillageGenerated);
             this.type = type;
+        }
+
+        public EventType getType()
+        {
+            return this.type;
+        }
+
+        /**
+         * Use CUSTOM to filter custom event types
+         */
+        public static enum EventType
+        {
+            DUNGEON, FIRE, GLOWSTONE, ICE, LAKE, LAVA, NETHER_LAVA, NETHER_LAVA2, NETHER_MAGMA, ANIMALS, CUSTOM
         }
     }
 }

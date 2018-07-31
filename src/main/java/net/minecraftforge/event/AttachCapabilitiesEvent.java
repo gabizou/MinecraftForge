@@ -19,19 +19,18 @@
 
 package net.minecraftforge.event;
 
-import java.util.Collections;
-import java.util.Map;
-
 import com.google.common.collect.Maps;
-
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.common.eventhandler.GenericEvent;
 
+import java.util.Collections;
+import java.util.Map;
+
 /**
  * Fired whenever an object with Capabilities support {currently TileEntity/Item/Entity)
  * is created. Allowing for the attachment of arbitrary capability providers.
- *
+ * <p>
  * Please note that as this is fired for ALL object creations efficient code is recommended.
  * And if possible use one of the sub-classes to filter your intended objects.
  */
@@ -39,7 +38,7 @@ public class AttachCapabilitiesEvent<T> extends GenericEvent<T>
 {
     private final T obj;
     private final Map<ResourceLocation, ICapabilityProvider> caps = Maps.newLinkedHashMap();
-    private final Map<ResourceLocation, ICapabilityProvider> view = Collections.unmodifiableMap(caps);
+    private final Map<ResourceLocation, ICapabilityProvider> view = Collections.unmodifiableMap(this.caps);
 
     public AttachCapabilitiesEvent(Cause cause, Class<T> type, T obj)
     {
@@ -65,8 +64,8 @@ public class AttachCapabilitiesEvent<T> extends GenericEvent<T>
      */
     public void addCapability(ResourceLocation key, ICapabilityProvider cap)
     {
-        if (caps.containsKey(key))
-            throw new IllegalStateException("Duplicate Capability Key: " + key  + " " + cap);
+        if (this.caps.containsKey(key))
+            throw new IllegalStateException("Duplicate Capability Key: " + key + " " + cap);
         this.caps.put(key, cap);
     }
 
@@ -75,6 +74,6 @@ public class AttachCapabilitiesEvent<T> extends GenericEvent<T>
      */
     public Map<ResourceLocation, ICapabilityProvider> getCapabilities()
     {
-        return view;
+        return this.view;
     }
 }

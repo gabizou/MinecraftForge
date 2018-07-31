@@ -19,11 +19,6 @@
 
 package net.minecraftforge.event;
 
-import java.util.Collection;
-import java.util.stream.Collectors;
-
-import org.apache.commons.lang3.Validate;
-
 import com.google.common.collect.ImmutableList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.ModContainer;
@@ -32,6 +27,10 @@ import net.minecraftforge.fml.common.eventhandler.GenericEvent;
 import net.minecraftforge.fml.common.eventhandler.IContextSetter;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryEntry;
+import org.apache.commons.lang3.Validate;
+
+import java.util.Collection;
+import java.util.stream.Collectors;
 
 
 /**
@@ -39,9 +38,11 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
  */
 public class RegistryEvent<T extends IForgeRegistryEntry<T>> extends GenericEvent<T> implements IContextSetter
 {
-    RegistryEvent(Cause cause, Class<T> clazz) {
+    RegistryEvent(Cause cause, Class<T> clazz)
+    {
         super(cause, clazz);
     }
+
     /**
      * Register new registries when you receive this event, through the {@link RecipeBuilder}
      */
@@ -58,11 +59,12 @@ public class RegistryEvent<T extends IForgeRegistryEntry<T>> extends GenericEven
      * Register your objects for the appropriate registry type when you receive this event.
      *
      * <code>event.getRegistry().register(...)</code>
-     *
+     * <p>
      * The registries will be visited in alphabetic order of their name, except blocks and items,
      * which will be visited FIRST and SECOND respectively.
-     *
+     * <p>
      * ObjectHolders will reload between Blocks and Items, and after all registries have been visited.
+     *
      * @param <T> The registry top level type
      */
     public static class Register<T extends IForgeRegistryEntry<T>> extends RegistryEvent<T>
@@ -79,12 +81,12 @@ public class RegistryEvent<T extends IForgeRegistryEntry<T>> extends GenericEven
 
         public IForgeRegistry<T> getRegistry()
         {
-            return registry;
+            return this.registry;
         }
 
         public ResourceLocation getName()
         {
-            return name;
+            return this.name;
         }
 
     }
@@ -164,9 +166,9 @@ public class RegistryEvent<T extends IForgeRegistryEntry<T>> extends GenericEven
         public static class Mapping<T extends IForgeRegistryEntry<T>>
         {
             public final IForgeRegistry<T> registry;
-            private final IForgeRegistry<T> pool;
             public final ResourceLocation key;
             public final int id;
+            private final IForgeRegistry<T> pool;
             private Action action = Action.DEFAULT;
             private T target;
 
@@ -183,7 +185,7 @@ public class RegistryEvent<T extends IForgeRegistryEntry<T>> extends GenericEven
              */
             public void ignore()
             {
-                action = Action.IGNORE;
+                this.action = Action.IGNORE;
             }
 
             /**
@@ -191,7 +193,7 @@ public class RegistryEvent<T extends IForgeRegistryEntry<T>> extends GenericEven
              */
             public void warn()
             {
-                action = Action.WARN;
+                this.action = Action.WARN;
             }
 
             /**
@@ -199,12 +201,12 @@ public class RegistryEvent<T extends IForgeRegistryEntry<T>> extends GenericEven
              */
             public void fail()
             {
-                action = Action.FAIL;
+                this.action = Action.FAIL;
             }
 
             /**
              * Remap the missing entry to the specified object.
-             *
+             * <p>
              * Use this if you have renamed an entry.
              * Existing references using the old name will point to the new one.
              *
@@ -213,8 +215,8 @@ public class RegistryEvent<T extends IForgeRegistryEntry<T>> extends GenericEven
             public void remap(T target)
             {
                 Validate.notNull(target, "Remap target can not be null");
-                Validate.isTrue(pool.getKey(target) != null, String.format("The specified entry %s hasn't been registered in registry yet.", target));
-                action = Action.REMAP;
+                Validate.isTrue(this.pool.getKey(target) != null, String.format("The specified entry %s hasn't been registered in registry yet.", target));
+                this.action = Action.REMAP;
                 this.target = target;
             }
 
@@ -226,7 +228,7 @@ public class RegistryEvent<T extends IForgeRegistryEntry<T>> extends GenericEven
 
             public T getTarget()
             {
-                return target;
+                return this.target;
             }
         }
     }

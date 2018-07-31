@@ -19,10 +19,11 @@
 
 package net.minecraftforge.event.world;
 
-import net.minecraft.server.management.PlayerChunkMapEntry;
-import net.minecraftforge.event.Cause;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.management.PlayerChunkMapEntry;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.chunk.Chunk;
+import net.minecraftforge.event.Cause;
 
 /**
  * WatchChunkEvent is fired when an event involving a chunk being watched occurs.<br>
@@ -33,9 +34,18 @@ import net.minecraft.world.chunk.Chunk;
  **/
 public class WatchChunkEvent extends ChunkEvent
 {
-    public WatchChunkEvent(Cause cause, Chunk chunk)
+
+    private final ChunkPos pos;
+
+    public WatchChunkEvent(Cause cause, Chunk chunk, ChunkPos pos)
     {
         super(cause, chunk);
+        this.pos = pos;
+    }
+
+    public ChunkPos getChunkPos()
+    {
+        return this.pos;
     }
 
     /**
@@ -45,7 +55,10 @@ public class WatchChunkEvent extends ChunkEvent
      **/
     public static class Add extends WatchChunkEvent
     {
-        public Add(Cause cause, Chunk chunk) { super(cause, chunk); }
+        public Add(Cause cause, Chunk chunk, ChunkPos pos)
+        {
+            super(cause, chunk, pos);
+        }
     }
 
     /**
@@ -56,6 +69,9 @@ public class WatchChunkEvent extends ChunkEvent
      **/
     public static class Remove extends WatchChunkEvent
     {
-        public Remove(Cause cause, Chunk chunk) { super(cause, chunk); }
+        public Remove(Cause cause, Chunk chunk, ChunkPos pos)
+        {
+            super(cause, chunk, pos);
+        }
     }
 }

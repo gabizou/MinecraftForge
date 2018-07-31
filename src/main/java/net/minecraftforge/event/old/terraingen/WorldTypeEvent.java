@@ -19,12 +19,12 @@
 
 package net.minecraftforge.event.old.terraingen;
 
+import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.BiomeProvider;
+import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import net.minecraftforge.fml.common.eventhandler.Event;
-import net.minecraft.world.gen.layer.GenLayer;
-import net.minecraft.world.WorldType;
 
 /**
  * WorldTypeEvent is fired when an event involving the world occurs.<br>
@@ -46,7 +46,7 @@ public class WorldTypeEvent extends Event
 
     public WorldType getWorldType()
     {
-        return worldType;
+        return this.worldType;
     }
 
     /**
@@ -72,18 +72,18 @@ public class WorldTypeEvent extends Event
         public BiomeSize(WorldType worldType, int original)
         {
             super(worldType);
-            originalSize = original;
+            this.originalSize = original;
             setNewSize(original);
         }
 
         public int getOriginalSize()
         {
-            return originalSize;
+            return this.originalSize;
         }
 
         public int getNewSize()
         {
-            return newSize;
+            return this.newSize;
         }
 
         public void setNewSize(int newSize)
@@ -118,23 +118,23 @@ public class WorldTypeEvent extends Event
         {
             super(worldType);
             this.seed = seed;
-            originalBiomeGens = original;
+            this.originalBiomeGens = original;
             setNewBiomeGens(original.clone());
         }
 
         public long getSeed()
         {
-            return seed;
+            return this.seed;
         }
 
         public GenLayer[] getOriginalBiomeGens()
         {
-            return originalBiomeGens;
+            return this.originalBiomeGens;
         }
 
         public GenLayer[] getNewBiomeGens()
         {
-            return newBiomeGens;
+            return this.newBiomeGens;
         }
 
         public void setNewBiomeGens(GenLayer[] newBiomeGens)

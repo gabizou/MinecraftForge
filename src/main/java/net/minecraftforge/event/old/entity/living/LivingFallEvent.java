@@ -19,10 +19,10 @@
 
 package net.minecraftforge.event.old.entity.living;
 
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
-import net.minecraft.entity.EntityLivingBase;
 
 /**
  * LivingFallEvent is fired when an Entity is set to be falling.<br>
@@ -45,6 +45,7 @@ public class LivingFallEvent extends LivingEvent
 {
     private float distance;
     private float damageMultiplier;
+
     public LivingFallEvent(EntityLivingBase entity, float distance, float damageMultiplier)
     {
         super(entity);
@@ -52,8 +53,23 @@ public class LivingFallEvent extends LivingEvent
         this.setDamageMultiplier(damageMultiplier);
     }
 
-    public float getDistance() { return distance; }
-    public void setDistance(float distance) { this.distance = distance; }
-    public float getDamageMultiplier() { return damageMultiplier; }
-    public void setDamageMultiplier(float damageMultiplier) { this.damageMultiplier = damageMultiplier; }
+    public float getDistance()
+    {
+        return this.distance;
+    }
+
+    public void setDistance(float distance)
+    {
+        this.distance = distance;
+    }
+
+    public float getDamageMultiplier()
+    {
+        return this.damageMultiplier;
+    }
+
+    public void setDamageMultiplier(float damageMultiplier)
+    {
+        this.damageMultiplier = damageMultiplier;
+    }
 }

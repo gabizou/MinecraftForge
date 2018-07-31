@@ -1,6 +1,7 @@
 package net.minecraftforge.event;
 
-public interface Cancellable {
+public interface Cancellable
+{
 
     boolean isCancelled();
 

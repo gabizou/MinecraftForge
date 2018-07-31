@@ -25,7 +25,8 @@ import net.minecraft.world.gen.ChunkProviderServer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.old.world.ChunkDataEvent;
+import net.minecraftforge.event.Cause;
+import net.minecraftforge.event.world.LoadChunkEvent;
 
 import java.io.IOException;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -100,7 +101,7 @@ class ChunkIOProvider implements Runnable
         // Load Entities
         this.loader.loadEntities(this.chunkInfo.world, this.nbt.getCompoundTag("Level"), this.chunk);
 
-        MinecraftForge.EVENT_BUS.post(new ChunkDataEvent.Load(this.chunk, this.nbt)); // Don't call ChunkDataEvent.Load async
+        MinecraftForge.EVENT_BUS.post(new LoadChunkEvent.Data(Cause.of(this), this.chunk, this.nbt)); // Don't call ChunkDataEvent.Load async
 
         this.chunk.setLastSaveTime(provider.world.getTotalWorldTime());
         this.provider.chunkGenerator.recreateStructures(this.chunk, this.chunkInfo.x, this.chunkInfo.z);

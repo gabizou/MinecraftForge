@@ -19,10 +19,6 @@
 
 package net.minecraftforge.event.old.terraingen;
 
-import java.util.Random;
-
-import javax.annotation.Nullable;
-
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
@@ -30,6 +26,9 @@ import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import net.minecraftforge.fml.common.eventhandler.Event;
+
+import javax.annotation.Nullable;
+import java.util.Random;
 
 /**
  * DecorateBiomeEvent is fired when a BiomeDecorator is created.
@@ -51,7 +50,9 @@ public class DecorateBiomeEvent extends Event
 {
     private final World world;
     private final Random rand;
-    /** @deprecated use {@link #chunkPos} */
+    /**
+     * @deprecated use {@link #chunkPos}
+     */
     @Deprecated // TODO remove in 1.13
     private final BlockPos pos;
     private final ChunkPos chunkPos;
@@ -75,12 +76,12 @@ public class DecorateBiomeEvent extends Event
 
     public World getWorld()
     {
-        return world;
+        return this.world;
     }
 
     public Random getRand()
     {
-        return rand;
+        return this.rand;
     }
 
     /**
@@ -89,12 +90,12 @@ public class DecorateBiomeEvent extends Event
     @Deprecated
     public BlockPos getPos()
     {
-        return pos;
+        return this.pos;
     }
 
     public ChunkPos getChunkPos()
     {
-        return chunkPos;
+        return this.chunkPos;
     }
 
     /**
@@ -139,18 +140,9 @@ public class DecorateBiomeEvent extends Event
     @HasResult
     public static class Decorate extends DecorateBiomeEvent
     {
-        /**
-         * Use {@link EventType#CUSTOM} to filter custom event types
-         */
-        public enum EventType
-        {
-            BIG_SHROOM, CACTUS, CLAY, DEAD_BUSH, DESERT_WELL, LILYPAD, FLOWERS, FOSSIL, GRASS, ICE, LAKE_WATER, LAKE_LAVA, PUMPKIN, REED, ROCK, SAND, SAND_PASS2, SHROOM, TREE, CUSTOM
-        }
-
         private final EventType type;
         @Nullable
         private final BlockPos placementPos;
-
         public Decorate(World world, Random rand, ChunkPos chunkPos, @Nullable BlockPos placementPos, EventType type)
         {
             super(world, rand, chunkPos);
@@ -168,7 +160,7 @@ public class DecorateBiomeEvent extends Event
 
         public EventType getType()
         {
-            return type;
+            return this.type;
         }
 
         /**
@@ -181,6 +173,14 @@ public class DecorateBiomeEvent extends Event
         public BlockPos getPlacementPos()
         {
             return this.placementPos;
+        }
+
+        /**
+         * Use {@link EventType#CUSTOM} to filter custom event types
+         */
+        public enum EventType
+        {
+            BIG_SHROOM, CACTUS, CLAY, DEAD_BUSH, DESERT_WELL, LILYPAD, FLOWERS, FOSSIL, GRASS, ICE, LAKE_WATER, LAKE_LAVA, PUMPKIN, REED, ROCK, SAND, SAND_PASS2, SHROOM, TREE, CUSTOM
         }
     }
 }

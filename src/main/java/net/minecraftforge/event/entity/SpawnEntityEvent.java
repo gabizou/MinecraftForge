@@ -19,23 +19,22 @@
 
 package net.minecraftforge.event.entity;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.MobSpawnerBaseLogic;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.Cancellable;
 import net.minecraftforge.event.Cause;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
-import net.minecraft.entity.Entity;
-import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Optional;
 
-import javax.annotation.Nullable;
-
 /**
  * SpawnEntityEvent is fired when an Entity joins the world. <br>
- * This event is fired whenever an Entity is added to the world in 
+ * This event is fired whenever an Entity is added to the world in
  * {@link World#loadEntities(Collection)}, {@link WorldServer#loadEntities(Collection)} {@link World#joinEntityInSurroundings(Entity)}, and {@link World#spawnEntity(Entity)}. <br>
  * <br>
  * {@link #world} contains the world in which the entity is to join.<br>
@@ -70,39 +69,47 @@ public class SpawnEntityEvent extends EntityEvent implements Cancellable
         return this.world;
     }
 
-    public float getX() {
+    public float getX()
+    {
         return this.x;
     }
 
-    public float getY() {
+    public float getY()
+    {
         return this.y;
     }
 
-    public float getZ() {
+    public float getZ()
+    {
         return this.z;
     }
 
     @Override
-    public boolean isCancelled() {
+    public boolean isCancelled()
+    {
         return this.iscancelled;
     }
 
     @Override
-    public void setCancelled(boolean cancelled) {
+    public void setCancelled(boolean cancelled)
+    {
         this.iscancelled = cancelled;
     }
 
     public static class Check extends SpawnEntityEvent
     {
 
-        @Nullable private final MobSpawnerBaseLogic logic;
+        @Nullable
+        private final MobSpawnerBaseLogic logic;
 
-        public Check(Cause cause, Entity entity, World world, float x, float y, float z, @Nullable MobSpawnerBaseLogic logic) {
+        public Check(Cause cause, Entity entity, World world, float x, float y, float z, @Nullable MobSpawnerBaseLogic logic)
+        {
             super(cause, entity, world, x, y, z);
             this.logic = logic;
         }
 
-        public Optional<MobSpawnerBaseLogic> getSpawner() {
+        public Optional<MobSpawnerBaseLogic> getSpawner()
+        {
             return Optional.ofNullable(this.logic);
         }
     }

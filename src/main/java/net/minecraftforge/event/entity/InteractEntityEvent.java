@@ -10,11 +10,9 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.Cancellable;
 import net.minecraftforge.event.Cause;
-import net.minecraftforge.fml.common.eventhandler.Cancelable;
-
-import java.util.Optional;
 
 import javax.annotation.Nullable;
+import java.util.Optional;
 
 /**
  * InteractEntityEvent is fired when a player interacts with an entity. <br>
@@ -29,23 +27,28 @@ import javax.annotation.Nullable;
  * <br>
  * This event is fired on the {@link MinecraftForge#EVENT_BUS}.
  **/
-public class InteractEntityEvent extends EntityEvent implements Cancellable {
+public class InteractEntityEvent extends EntityEvent implements Cancellable
+{
 
-    @Nullable private final Vec3d interactionPoint;
+    @Nullable
+    private final Vec3d interactionPoint;
     private final EnumHand hand;
     private boolean cancelled = false;
 
-    public InteractEntityEvent(Cause cause, Entity entity, @Nullable Vec3d interactionPoint, EnumHand hand) {
+    public InteractEntityEvent(Cause cause, Entity entity, @Nullable Vec3d interactionPoint, EnumHand hand)
+    {
         super(cause, entity);
         this.interactionPoint = interactionPoint;
         this.hand = hand;
     }
 
-    public Optional<Vec3d> getInteractionPoint() {
+    public Optional<Vec3d> getInteractionPoint()
+    {
         return Optional.ofNullable(this.interactionPoint);
     }
 
-    public EnumHand getHand() {
+    public EnumHand getHand()
+    {
         return this.hand;
     }
 
@@ -57,19 +60,22 @@ public class InteractEntityEvent extends EntityEvent implements Cancellable {
      *
      * @return The item stack used in the event, if available
      */
-    public Optional<ItemStack> getItemUsed() {
+    public Optional<ItemStack> getItemUsed()
+    {
         return getCause().first(EntityPlayer.class)
-            .map(EntityPlayer::getHeldItemMainhand)
-            .filter(stack -> !stack.isEmpty());
+                .map(EntityPlayer::getHeldItemMainhand)
+                .filter(stack -> !stack.isEmpty());
     }
 
     @Override
-    public boolean isCancelled() {
+    public boolean isCancelled()
+    {
         return this.cancelled;
     }
 
     @Override
-    public void setCancelled(boolean cancelled) {
+    public void setCancelled(boolean cancelled)
+    {
         this.cancelled = cancelled;
     }
 }

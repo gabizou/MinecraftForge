@@ -19,12 +19,12 @@
 
 package net.minecraftforge.event.old.terraingen;
 
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeDecorator;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import net.minecraftforge.fml.common.eventhandler.Event;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.world.biome.BiomeDecorator;
-import net.minecraft.world.biome.Biome;
 
 /**
  * BiomeEvent is fired whenever an event involving biomes occurs.<br>
@@ -45,7 +45,7 @@ public class BiomeEvent extends Event
 
     public Biome getBiome()
     {
-        return biome;
+        return this.biome;
     }
 
     /**
@@ -70,18 +70,18 @@ public class BiomeEvent extends Event
         public CreateDecorator(Biome biome, BiomeDecorator original)
         {
             super(biome);
-            originalBiomeDecorator = original;
+            this.originalBiomeDecorator = original;
             setNewBiomeDecorator(original);
         }
 
         public BiomeDecorator getOriginalBiomeDecorator()
         {
-            return originalBiomeDecorator;
+            return this.originalBiomeDecorator;
         }
 
         public BiomeDecorator getNewBiomeDecorator()
         {
-            return newBiomeDecorator;
+            return this.newBiomeDecorator;
         }
 
         public void setNewBiomeDecorator(BiomeDecorator newBiomeDecorator)
@@ -105,18 +105,18 @@ public class BiomeEvent extends Event
         public BiomeColor(Biome biome, int original)
         {
             super(biome);
-            originalColor = original;
+            this.originalColor = original;
             setNewColor(original);
         }
 
         public int getOriginalColor()
         {
-            return originalColor;
+            return this.originalColor;
         }
 
         public int getNewColor()
         {
-            return newColor;
+            return this.newColor;
         }
 
         public void setNewColor(int newColor)
@@ -128,7 +128,7 @@ public class BiomeEvent extends Event
     /**
      * This event is fired when the village generator attempts to choose a block ID
      * based on the village's biome.
-     *
+     * <p>
      * You can cancel the event to override default values
      */
     @HasResult
@@ -145,12 +145,12 @@ public class BiomeEvent extends Event
 
         public IBlockState getOriginal()
         {
-            return original;
+            return this.original;
         }
 
         public IBlockState getReplacement()
         {
-            return replacement;
+            return this.replacement;
         }
 
         public void setReplacement(IBlockState replacement)

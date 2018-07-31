@@ -23,7 +23,6 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.Cause;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
-import net.minecraftforge.fml.common.eventhandler.Event.HasResult;
 
 /**
  * UnloadChunkEvent is fired when vanilla Minecraft attempts to unload a Chunk from the world.<br>
@@ -36,9 +35,11 @@ import net.minecraftforge.fml.common.eventhandler.Event.HasResult;
  * <br>
  * This event is fired on the {@link MinecraftForge#EVENT_BUS}.<br>
  **/
-public class UnloadChunkEvent extends ChunkEvent {
+public class UnloadChunkEvent extends ChunkEvent
+{
 
-    public UnloadChunkEvent(Cause cause, Chunk chunk) {
+    public UnloadChunkEvent(Cause cause, Chunk chunk)
+    {
         super(cause, chunk);
     }
 

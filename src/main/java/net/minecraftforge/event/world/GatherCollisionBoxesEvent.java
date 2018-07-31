@@ -17,12 +17,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package net.minecraftforge.event.old.world;
+package net.minecraftforge.event.world;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.Cause;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
 
 import javax.annotation.Nullable;
@@ -42,15 +43,15 @@ import java.util.List;
  * <br>
  * This event is fired on the {@link MinecraftForge#EVENT_BUS}.<br>
  **/
-public class GetCollisionBoxesEvent extends WorldEvent
+public class GatherCollisionBoxesEvent extends WorldEvent
 {
     private final Entity entity;
     private final AxisAlignedBB aabb;
     private final List<AxisAlignedBB> collisionBoxesList;
 
-    public GetCollisionBoxesEvent(World world, @Nullable Entity entity, AxisAlignedBB aabb, List<AxisAlignedBB> collisionBoxesList)
+    public GatherCollisionBoxesEvent(Cause cause, World world, @Nullable Entity entity, AxisAlignedBB aabb, List<AxisAlignedBB> collisionBoxesList)
     {
-        super(world);
+        super(cause, world);
         this.entity = entity;
         this.aabb = aabb;
         this.collisionBoxesList = collisionBoxesList;
@@ -58,16 +59,16 @@ public class GetCollisionBoxesEvent extends WorldEvent
 
     public Entity getEntity()
     {
-        return entity;
+        return this.entity;
     }
 
     public AxisAlignedBB getAabb()
     {
-        return aabb;
+        return this.aabb;
     }
 
     public List<AxisAlignedBB> getCollisionBoxesList()
     {
-        return collisionBoxesList;
+        return this.collisionBoxesList;
     }
 }

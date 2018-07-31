@@ -45,6 +45,7 @@ public class LivingSetAttackTargetEvent extends LivingEvent
 {
 
     private final EntityLivingBase target;
+
     public LivingSetAttackTargetEvent(EntityLivingBase entity, EntityLivingBase target)
     {
         super(entity);
@@ -53,6 +54,6 @@ public class LivingSetAttackTargetEvent extends LivingEvent
 
     public EntityLivingBase getTarget()
     {
-        return target;
+        return this.target;
     }
 }

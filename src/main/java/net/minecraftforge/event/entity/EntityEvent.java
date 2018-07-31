@@ -19,10 +19,10 @@
 
 package net.minecraftforge.event.entity;
 
+import net.minecraft.entity.Entity;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.Cause;
 import net.minecraftforge.fml.common.eventhandler.Event;
-import net.minecraft.entity.Entity;
 
 /**
  * EntityEvent is fired when an event involving any Entity occurs.<br>
@@ -45,6 +45,6 @@ public class EntityEvent extends Event
 
     public Entity getEntity()
     {
-        return entity;
+        return this.entity;
     }
 }

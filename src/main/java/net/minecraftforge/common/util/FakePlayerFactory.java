@@ -52,7 +52,7 @@ public class FakePlayerFactory
     /**
      * Get a fake player with a given username,
      * Mods should either hold weak references to the return value, or listen for a
-     * WorldEvent.Unload and kill all references to prevent worlds staying in memory.
+     * UnloadWorldEvent and kill all references to prevent worlds staying in memory.
      */
     public static FakePlayer get(WorldServer world, GameProfile username)
     {

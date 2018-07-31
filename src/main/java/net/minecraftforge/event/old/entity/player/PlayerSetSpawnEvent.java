@@ -19,17 +19,18 @@
 
 package net.minecraftforge.event.old.entity.player;
 
-import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.common.eventhandler.Cancelable;
 
 @Cancelable
 public class PlayerSetSpawnEvent extends PlayerEvent
 {
     private final boolean forced;
     private final BlockPos newSpawn;
-    
-    public PlayerSetSpawnEvent(EntityPlayer player, BlockPos newSpawn, boolean forced) {
+
+    public PlayerSetSpawnEvent(EntityPlayer player, BlockPos newSpawn, boolean forced)
+    {
         super(player);
         this.newSpawn = newSpawn;
         this.forced = forced;
@@ -41,11 +42,11 @@ public class PlayerSetSpawnEvent extends PlayerEvent
      */
     public boolean isForced()
     {
-        return forced;
+        return this.forced;
     }
 
     public BlockPos getNewSpawn()
     {
-        return newSpawn;
+        return this.newSpawn;
     }
 }

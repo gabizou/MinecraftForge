@@ -19,9 +19,6 @@
 
 package net.minecraftforge.event.world;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -30,9 +27,14 @@ import net.minecraft.world.biome.Biome.SpawnListEntry;
 import net.minecraftforge.event.Cancellable;
 import net.minecraftforge.event.Cause;
 
-public class SpawnerEvent extends WorldEvent {
+import java.util.ArrayList;
+import java.util.List;
 
-    public SpawnerEvent(Cause cause, World world) {
+public class SpawnerEvent extends WorldEvent
+{
+
+    public SpawnerEvent(Cause cause, World world)
+    {
         super(cause, world);
     }
 
@@ -59,8 +61,7 @@ public class SpawnerEvent extends WorldEvent {
             if (oldList != null)
             {
                 this.list = new ArrayList<SpawnListEntry>(oldList);
-            }
-            else
+            } else
             {
                 this.list = new ArrayList<SpawnListEntry>();
             }
@@ -68,26 +69,28 @@ public class SpawnerEvent extends WorldEvent {
 
         public EnumCreatureType getType()
         {
-            return type;
+            return this.type;
         }
 
         public BlockPos getPos()
         {
-            return pos;
+            return this.pos;
         }
 
         public List<SpawnListEntry> getList()
         {
-            return list;
+            return this.list;
         }
 
         @Override
-        public boolean isCancelled() {
+        public boolean isCancelled()
+        {
             return this.isCancelled;
         }
 
         @Override
-        public void setCancelled(boolean cancelled) {
+        public void setCancelled(boolean cancelled)
+        {
             this.isCancelled = cancelled;
         }
     }

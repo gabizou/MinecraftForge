@@ -23,8 +23,11 @@ import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.multiplayer.PlayerControllerMP;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.management.PlayerInteractionManager;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -32,9 +35,6 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumHand;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -69,6 +69,7 @@ public class PlayerDestroyItemEvent extends PlayerEvent
     private final ItemStack original;
     @Nullable
     private final EnumHand hand; // May be null if this player destroys the item by any use besides holding it.
+
     public PlayerDestroyItemEvent(EntityPlayer player, @Nonnull ItemStack original, @Nullable EnumHand hand)
     {
         super(player);
@@ -77,8 +78,15 @@ public class PlayerDestroyItemEvent extends PlayerEvent
     }
 
     @Nonnull
-    public ItemStack getOriginal() { return this.original; }
+    public ItemStack getOriginal()
+    {
+        return this.original;
+    }
+
     @Nullable
-    public EnumHand getHand() { return this.hand; }
+    public EnumHand getHand()
+    {
+        return this.hand;
+    }
 
 }

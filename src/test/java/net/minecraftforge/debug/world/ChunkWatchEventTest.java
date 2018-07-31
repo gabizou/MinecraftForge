@@ -19,10 +19,11 @@
 
 package net.minecraftforge.debug.world;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.event.world.WatchChunkEvent;
 import org.apache.logging.log4j.Logger;
 
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.old.world.ChunkWatchEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -47,14 +48,21 @@ public class ChunkWatchEventTest
     }
 
     @SubscribeEvent
-    public static void onUnwatch(ChunkWatchEvent.UnWatch event)
+    public static void onUnwatch(WatchChunkEvent.Remove event)
     {
-        logger.info("Unwatching chunk {} in dimension {}. Player's dimension: {} ", event.getChunk(), event.getChunkInstance().getWorld().provider.getDimension(), event.getPlayer().getEntityWorld().provider.getDimension());
+        event.getCause().first(EntityPlayer.class)
+            .ifPresent(player -> {
+                logger.info("Unwatching chunk {} in dimension {}. Player's dimension: {} ", event.getChunkPos(),
+                    event.getChunk().getWorld().provider.getDimension(), player.getEntityWorld().provider.getDimension());
+            });
     }
 
     @SubscribeEvent
-    public static void onWatch(ChunkWatchEvent.Watch event)
+    public static void onWatch(WatchChunkEvent.Add event)
     {
-        logger.info("Watching chunk {} in dimension {}. Player's dimension: {} ", event.getChunk(), event.getChunkInstance().getWorld().provider.getDimension(), event.getPlayer().getEntityWorld().provider.getDimension());
+        event.getCause().first(EntityPlayer.class)
+            .ifPresent(player -> {
+                logger.info("Watching chunk {} in dimension {}. Player's dimension: {} ", event.getChunkPos(), event.getChunk().getWorld().provider.getDimension(), player.getEntityWorld().provider.getDimension());
+            });
     }
 }

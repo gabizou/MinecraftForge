@@ -30,17 +30,19 @@ import net.minecraftforge.fml.common.eventhandler.Event;
  * <br>
  * This event is fired on the {@link MinecraftForge#EVENT_BUS}.<br>
  **/
-public class PlaySoundEvent extends Event implements Cancellable {
+public class PlaySoundEvent extends Event implements Cancellable
+{
 
-    private SoundEvent sound;
-    private SoundCategory category;
     private final float volume;
     private final float pitch;
+    private SoundEvent sound;
+    private SoundCategory category;
     private float newVolume;
     private float newPitch;
     private boolean cancelled = false;
 
-    public PlaySoundEvent(Cause cause, SoundEvent sound, SoundCategory category, float volume, float pitch) {
+    public PlaySoundEvent(Cause cause, SoundEvent sound, SoundCategory category, float volume, float pitch)
+    {
         super(cause);
         this.sound = sound;
         this.category = category;
@@ -50,53 +52,65 @@ public class PlaySoundEvent extends Event implements Cancellable {
         this.newPitch = pitch;
     }
 
-    public SoundEvent getSound() {
-        return sound;
+    public SoundEvent getSound()
+    {
+        return this.sound;
     }
 
-    public void setSound(SoundEvent name) {
+    public void setSound(SoundEvent name)
+    {
         this.sound = name;
     }
 
-    public SoundCategory getCategory() {
-        return category;
+    public SoundCategory getCategory()
+    {
+        return this.category;
     }
 
-    public void setCategory(SoundCategory category) {
+    public void setCategory(SoundCategory category)
+    {
         this.category = category;
     }
 
-    public float getDefaultVolume() {
-        return volume;
+    public float getDefaultVolume()
+    {
+        return this.volume;
     }
 
-    public float getDefaultPitch() {
-        return pitch;
+    public float getDefaultPitch()
+    {
+        return this.pitch;
     }
 
-    public float getNewVolume() {
-        return newVolume;
+    public float getNewVolume()
+    {
+        return this.newVolume;
     }
 
-    public void setNewVolume(float newVolume) {
+    public void setNewVolume(float newVolume)
+    {
         this.newVolume = newVolume;
     }
 
-    public float getNewPitch() {
-        return newPitch;
+    public float getNewPitch()
+    {
+        return this.newPitch;
     }
 
-    public void setNewPitch(float newPitch) {
+    public void setNewPitch(float newPitch)
+    {
         this.newPitch = newPitch;
     }
 
     @Override
-    public boolean isCancelled() {
+    public boolean isCancelled()
+    {
         return this.cancelled;
     }
 
     @Override
-    public void setCancelled(boolean cancelled) {
+    public void setCancelled(boolean cancelled)
+    {
         this.cancelled = cancelled;
     }
 }

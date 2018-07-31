@@ -25,10 +25,16 @@ import net.minecraft.inventory.Container;
 public class PlayerContainerEvent extends PlayerEvent
 {
     private final Container container;
+
     public PlayerContainerEvent(EntityPlayer player, Container container)
     {
         super(player);
         this.container = container;
+    }
+
+    public Container getContainer()
+    {
+        return this.container;
     }
 
     public static class Open extends PlayerContainerEvent
@@ -38,16 +44,12 @@ public class PlayerContainerEvent extends PlayerEvent
             super(player, container);
         }
     }
+
     public static class Close extends PlayerContainerEvent
     {
         public Close(EntityPlayer player, Container container)
         {
             super(player, container);
         }
-    }
-
-    public Container getContainer()
-    {
-        return container;
     }
 }

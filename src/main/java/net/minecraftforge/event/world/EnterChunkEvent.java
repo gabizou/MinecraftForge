@@ -41,7 +41,8 @@ public class EnterChunkEvent extends ChunkEvent
         this.oldChunkPos = oldChunkPos;
     }
 
-    public ChunkPos getOldChunkPos() {
+    public ChunkPos getOldChunkPos()
+    {
         return this.oldChunkPos;
     }
 }

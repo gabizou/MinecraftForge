@@ -50,11 +50,11 @@ public class ChangeDifficultyEvent extends Event
 
     public EnumDifficulty getDifficulty()
     {
-        return difficulty;
+        return this.difficulty;
     }
 
     public EnumDifficulty getOldDifficulty()
     {
-        return oldDifficulty;
+        return this.oldDifficulty;
     }
 }

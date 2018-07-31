@@ -44,6 +44,6 @@ public class WorldEvent extends Event
 
     public World getWorld()
     {
-        return world;
+        return this.world;
     }
 }

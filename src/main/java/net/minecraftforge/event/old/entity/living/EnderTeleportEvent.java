@@ -19,13 +19,13 @@
 
 package net.minecraftforge.event.old.entity.living;
 
-import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraftforge.fml.common.eventhandler.Cancelable;
 
 /**
  * Event for when an Enderman/Shulker teleports or an ender pearl is used.  Can be used to either modify the target position, or cancel the teleport outright.
- * @author Mithion
  *
+ * @author Mithion
  */
 @Cancelable
 public class EnderTeleportEvent extends LivingEvent
@@ -45,12 +45,43 @@ public class EnderTeleportEvent extends LivingEvent
         this.setAttackDamage(attackDamage);
     }
 
-    public double getTargetX() { return targetX; }
-    public void setTargetX(double targetX) { this.targetX = targetX; }
-    public double getTargetY() { return targetY; }
-    public void setTargetY(double targetY) { this.targetY = targetY; }
-    public double getTargetZ() { return targetZ; }
-    public void setTargetZ(double targetZ) { this.targetZ = targetZ; }
-    public float getAttackDamage() { return attackDamage; }
-    public void setAttackDamage(float attackDamage) { this.attackDamage = attackDamage; }
+    public double getTargetX()
+    {
+        return this.targetX;
+    }
+
+    public void setTargetX(double targetX)
+    {
+        this.targetX = targetX;
+    }
+
+    public double getTargetY()
+    {
+        return this.targetY;
+    }
+
+    public void setTargetY(double targetY)
+    {
+        this.targetY = targetY;
+    }
+
+    public double getTargetZ()
+    {
+        return this.targetZ;
+    }
+
+    public void setTargetZ(double targetZ)
+    {
+        this.targetZ = targetZ;
+    }
+
+    public float getAttackDamage()
+    {
+        return this.attackDamage;
+    }
+
+    public void setAttackDamage(float attackDamage)
+    {
+        this.attackDamage = attackDamage;
+    }
 }

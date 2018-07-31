@@ -248,14 +248,6 @@ public class GameRegistry
         fuelHandlers.add(handler);
     }
 
-    /**
-     * @deprecated use {@link ForgeEventFactory#getItemBurnTime(ItemStack)}
-     */
-    @Deprecated
-    public static int getFuelValue(@Nonnull ItemStack itemStack)
-    {
-        return ForgeEventFactory.getItemBurnTime(itemStack);
-    }
 
     /**
      * @deprecated use {@link ForgeEventFactory#getItemBurnTime(ItemStack)}

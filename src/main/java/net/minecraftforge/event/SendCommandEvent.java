@@ -62,17 +62,17 @@ public class SendCommandEvent extends Event implements Cancellable
 
     public ICommand getCommand()
     {
-        return command;
+        return this.command;
     }
 
     public ICommandSender getSender()
     {
-        return sender;
+        return this.sender;
     }
 
     public String[] getParameters()
     {
-        return parameters;
+        return this.parameters;
     }
 
     public void setParameters(String[] parameters)
@@ -82,7 +82,7 @@ public class SendCommandEvent extends Event implements Cancellable
 
     public Throwable getException()
     {
-        return exception;
+        return this.exception;
     }
 
     public void setException(Throwable exception)

@@ -46,17 +46,26 @@ public class PlayerWakeUpEvent extends PlayerEvent
      * Used for the 'wake up animation'.
      * This is false if the player is considered 'sleepy' and the overlay should slowly fade away.
      */
-    public boolean wakeImmediately() { return wakeImmediately; }
+    public boolean wakeImmediately()
+    {
+        return this.wakeImmediately;
+    }
 
     /**
      * Indicates if the server should be notified of sleeping changes.
      * This will only be false if the server is considered 'up to date' already, because, for example, it initiated the call.
      */
-    public boolean updateWorld() { return updateWorld; }
+    public boolean updateWorld()
+    {
+        return this.updateWorld;
+    }
 
     /**
      * Indicates if the player's sleep was considered successful.
      * In vanilla, this is used to determine if the spawn chunk is to be set to the bed's position.
      */
-    public boolean shouldSetSpawn() { return setSpawn; }
+    public boolean shouldSetSpawn()
+    {
+        return this.setSpawn;
+    }
 }

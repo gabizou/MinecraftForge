@@ -19,15 +19,14 @@
 
 package net.minecraftforge.event;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
 import javax.annotation.Nonnull;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
- * 
  * UpdateAnvilEvent is fired when a player places items in both the left and right slots of a anvil.
  * If the event is canceled, vanilla behavior will not run, and the output will be set to null.
  * If the event is not canceled, but the output is not null, it will set the output and not run vanilla behavior.
@@ -60,24 +59,24 @@ public class UpdateAnvilEvent extends Event implements Cancellable
     @Nonnull
     public ItemStack getLeft()
     {
-        return left;
+        return this.left;
     }
 
     @Nonnull
     public ItemStack getRight()
     {
-        return right;
+        return this.right;
     }
 
     public String getName()
     {
-        return name;
+        return this.name;
     }
 
     @Nonnull
     public ItemStack getOutput()
     {
-        return output;
+        return this.output;
     }
 
     public void setOutput(@Nonnull ItemStack output)
@@ -87,7 +86,7 @@ public class UpdateAnvilEvent extends Event implements Cancellable
 
     public int getCost()
     {
-        return cost;
+        return this.cost;
     }
 
     public void setCost(int cost)
@@ -97,7 +96,7 @@ public class UpdateAnvilEvent extends Event implements Cancellable
 
     public int getMaterialCost()
     {
-        return materialCost;
+        return this.materialCost;
     }
 
     public void setMaterialCost(int materialCost)
@@ -106,12 +105,14 @@ public class UpdateAnvilEvent extends Event implements Cancellable
     }
 
     @Override
-    public boolean isCancelled() {
+    public boolean isCancelled()
+    {
         return this.isCancelled;
     }
 
     @Override
-    public void setCancelled(boolean cancelled) {
+    public void setCancelled(boolean cancelled)
+    {
         this.isCancelled = cancelled;
     }
 }

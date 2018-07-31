@@ -19,26 +19,17 @@
 
 package net.minecraftforge.event.old.world;
 
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.List;
-
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.WorldClient;
-import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.profiler.Profiler;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.integrated.IntegratedServer;
-import net.minecraft.util.IProgressUpdate;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.WorldSettings;
 import net.minecraft.world.biome.Biome.SpawnListEntry;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import net.minecraftforge.fml.common.eventhandler.Event;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * WorldEvent is fired when an event involving the world occurs.<br>
@@ -60,63 +51,7 @@ public class WorldEvent extends Event
 
     public World getWorld()
     {
-        return world;
-    }
-
-    /**
-     * WorldEvent.Load is fired when Minecraft loads a world.<br>
-     * This event is fired when a world is loaded in
-     * {@link WorldClient#WorldClient(NetHandlerPlayClient, WorldSettings, int, EnumDifficulty, Profiler)},
-     * {@link MinecraftServer#loadAllWorlds(String, String, long, WorldType, String)},
-     * {@link IntegratedServer#loadAllWorlds(String, String, long, WorldType, String)}
-     * {@link DimensionManager#initDimension(int)},
-     * and {@link ForgeInternalHandler#onDimensionLoad(Load)}. <br>
-     * <br>
-     * This event is not {@link Cancelable}.<br>
-     * <br>
-     * This event does not have a result. {@link HasResult} <br>
-     * <br>
-     * This event is fired on the {@link MinecraftForge#EVENT_BUS}.<br>
-     **/
-    public static class Load extends WorldEvent
-    {
-        public Load(World world) { super(world); }
-    }
-
-    /**
-     * WorldEvent.Unload is fired when Minecraft unloads a world.<br>
-     * This event is fired when a world is unloaded in
-     * {@link Minecraft#loadWorld(WorldClient, String)},
-     * {@link MinecraftServer#stopServer()},
-     * {@link DimensionManager#unloadWorlds(Hashtable)},
-     * {@link ForgeInternalHandler#onDimensionUnload(Unload)}. <br>
-     * <br>
-     * This event is not {@link Cancelable}.<br>
-     * <br>
-     * This event does not have a result. {@link HasResult} <br>
-     * <br>
-     * This event is fired on the {@link MinecraftForge#EVENT_BUS}.<br>
-     **/
-    public static class Unload extends WorldEvent
-    {
-        public Unload(World world) { super(world); }
-    }
-
-    /**
-     * WorldEvent.Save is fired when Minecraft saves a world.<br>
-     * This event is fired when a world is saved in
-     * {@link WorldServer#saveAllChunks(boolean, IProgressUpdate)},
-     * {@link ForgeInternalHandler#onDimensionSave(Save)}. <br>
-     * <br>
-     * This event is not {@link Cancelable}.<br>
-     * <br>
-     * This event does not have a result. {@link HasResult} <br>
-     * <br>
-     * This event is fired on the {@link MinecraftForge#EVENT_BUS}.<br>
-     **/
-    public static class Save extends WorldEvent
-    {
-        public Save(World world) { super(world); }
+        return this.world;
     }
 
     /**
@@ -142,8 +77,7 @@ public class WorldEvent extends Event
             if (oldList != null)
             {
                 this.list = new ArrayList<SpawnListEntry>(oldList);
-            }
-            else
+            } else
             {
                 this.list = new ArrayList<SpawnListEntry>();
             }
@@ -151,17 +85,17 @@ public class WorldEvent extends Event
 
         public EnumCreatureType getType()
         {
-            return type;
+            return this.type;
         }
 
         public BlockPos getPos()
         {
-            return pos;
+            return this.pos;
         }
 
         public List<SpawnListEntry> getList()
         {
-            return list;
+            return this.list;
         }
     }
 
@@ -173,6 +107,7 @@ public class WorldEvent extends Event
     public static class CreateSpawnPosition extends WorldEvent
     {
         private final WorldSettings settings;
+
         public CreateSpawnPosition(World world, WorldSettings settings)
         {
             super(world);
@@ -181,7 +116,7 @@ public class WorldEvent extends Event
 
         public WorldSettings getSettings()
         {
-            return settings;
+            return this.settings;
         }
     }
 }

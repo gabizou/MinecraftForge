@@ -19,14 +19,14 @@
 
 package net.minecraftforge.event.old.entity.player;
 
-import net.minecraftforge.fml.common.eventhandler.Cancelable;
-import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.eventhandler.Cancelable;
+import net.minecraftforge.fml.common.eventhandler.Event;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -34,10 +34,10 @@ import javax.annotation.Nullable;
 /**
  * This event is called when a player attempts to use Bonemeal on a block.
  * It can be canceled to completely prevent any further processing.
- *
+ * <p>
  * You can also set the result to ALLOW to mark the event as processed
  * and use up a bonemeal from the stack but do no further processing.
- *
+ * <p>
  * oldSetResult(ALLOW) is the same as the old setHandled()
  */
 @Cancelable
@@ -52,7 +52,7 @@ public class BonemealEvent extends PlayerEvent
     private final ItemStack stack;
 
     public BonemealEvent(@Nonnull EntityPlayer player, @Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState block, @Nullable EnumHand hand,
-            @Nonnull ItemStack stack)
+                         @Nonnull ItemStack stack)
     {
         super(player);
         this.world = world;
@@ -64,28 +64,28 @@ public class BonemealEvent extends PlayerEvent
 
     public World getWorld()
     {
-        return world;
+        return this.world;
     }
 
     public BlockPos getPos()
     {
-        return pos;
+        return this.pos;
     }
 
     public IBlockState getBlock()
     {
-        return block;
+        return this.block;
     }
 
     @Nullable
     public EnumHand getHand()
     {
-        return hand;
+        return this.hand;
     }
 
     @Nonnull
     public ItemStack getStack()
     {
-        return stack;
+        return this.stack;
     }
 }
