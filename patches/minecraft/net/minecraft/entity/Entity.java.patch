@@ -125,15 +125,7 @@
           }
        }
     }
-@@ -1132,6 +1146,7 @@
-          this.field_70126_B -= 360.0F;
-       }
- 
-+      if (!this.field_70170_p.field_72995_K) this.field_70170_p.func_212866_a_((int) Math.floor(this.field_70165_t) >> 4, (int) Math.floor(this.field_70161_v) >> 4); // Forge - ensure target chunk is loaded.
-       this.func_70107_b(this.field_70165_t, this.field_70163_u, this.field_70161_v);
-       this.func_70101_b(p_70080_7_, p_70080_8_);
-    }
-@@ -1368,6 +1383,7 @@
+@@ -1368,6 +1382,7 @@
           if (this.field_184238_ar) {
              p_189511_1_.func_74757_a("Glowing", this.field_184238_ar);
           }
@@ -141,7 +133,7 @@
  
           if (!this.field_184236_aF.isEmpty()) {
              ListNBT listnbt = new ListNBT();
-@@ -1379,6 +1395,10 @@
+@@ -1379,6 +1394,10 @@
              p_189511_1_.func_218657_a("Tags", listnbt);
           }
  
@@ -152,7 +144,7 @@
           this.func_213281_b(p_189511_1_);
           if (this.func_184207_aI()) {
              ListNBT listnbt1 = new ListNBT();
-@@ -1455,6 +1475,9 @@
+@@ -1455,6 +1474,9 @@
                 this.func_174810_b(p_70020_1_.func_74767_n("Silent"));
                 this.func_189654_d(p_70020_1_.func_74767_n("NoGravity"));
                 this.func_184195_f(p_70020_1_.func_74767_n("Glowing"));
@@ -162,7 +154,7 @@
                 if (p_70020_1_.func_150297_b("Tags", 9)) {
                    this.field_184236_aF.clear();
                    ListNBT listnbt1 = p_70020_1_.func_150295_c("Tags", 8);
-@@ -1543,6 +1566,8 @@
+@@ -1543,6 +1565,8 @@
        } else {
           ItemEntity itementity = new ItemEntity(this.field_70170_p, this.field_70165_t, this.field_70163_u + (double)p_70099_2_, this.field_70161_v, p_70099_1_);
           itementity.func_174869_p();
@@ -171,7 +163,7 @@
           this.field_70170_p.func_217376_c(itementity);
           return itementity;
        }
-@@ -1586,6 +1611,7 @@
+@@ -1586,6 +1610,7 @@
  
     public void func_70098_U() {
        this.func_213317_d(Vec3d.field_186680_a);
@@ -179,7 +171,7 @@
        this.func_70071_h_();
        if (this.func_184218_aH()) {
           this.func_184187_bx().func_184232_k(this);
-@@ -1626,6 +1652,7 @@
+@@ -1626,6 +1651,7 @@
           }
        }
  
@@ -187,7 +179,7 @@
        if (p_184205_2_ || this.func_184228_n(p_184205_1_) && p_184205_1_.func_184219_q(this)) {
           if (this.func_184218_aH()) {
              this.func_184210_p();
-@@ -1657,6 +1684,7 @@
+@@ -1657,6 +1683,7 @@
     public void func_184210_p() {
        if (this.field_184239_as != null) {
           Entity entity = this.field_184239_as;
@@ -195,7 +187,7 @@
           this.field_184239_as = null;
           entity.func_184225_p(this);
        }
-@@ -1807,6 +1835,7 @@
+@@ -1807,6 +1834,7 @@
        return !this.func_184188_bt().isEmpty();
     }
  
@@ -203,7 +195,7 @@
     public boolean func_205710_ba() {
        return true;
     }
-@@ -2005,7 +2034,7 @@
+@@ -2005,7 +2033,7 @@
           func_207712_c(itextcomponent1);
           return itextcomponent1;
        } else {
@@ -212,7 +204,7 @@
        }
     }
  
-@@ -2063,6 +2092,7 @@
+@@ -2063,6 +2091,7 @@
  
     @Nullable
     public Entity func_212321_a(DimensionType p_212321_1_) {
@@ -220,7 +212,7 @@
        if (!this.field_70170_p.field_72995_K && !this.field_70128_L) {
           this.field_70170_p.func_217381_Z().func_76320_a("changeDimension");
           MinecraftServer minecraftserver = this.func_184102_h();
-@@ -2080,16 +2110,9 @@
+@@ -2080,16 +2109,9 @@
           } else if (p_212321_1_ == DimensionType.field_223229_c_) {
              blockpos = serverworld1.func_180504_m();
           } else {
@@ -240,7 +232,7 @@
  
              double d3 = Math.min(-2.9999872E7D, serverworld1.func_175723_af().func_177726_b() + 16.0D);
              double d4 = Math.min(-2.9999872E7D, serverworld1.func_175723_af().func_177736_c() + 16.0D);
-@@ -2118,7 +2141,7 @@
+@@ -2118,7 +2140,7 @@
              serverworld1.func_217460_e(entity);
           }
  
@@ -249,7 +241,7 @@
           this.field_70170_p.func_217381_Z().func_76319_b();
           serverworld.func_82742_i();
           serverworld1.func_82742_i();
-@@ -2146,10 +2169,12 @@
+@@ -2146,10 +2168,12 @@
     }
  
     public Vec3d func_181014_aG() {
@@ -262,7 +254,7 @@
        return this.field_181018_ap;
     }
  
-@@ -2274,7 +2299,7 @@
+@@ -2274,7 +2298,7 @@
        Pose pose = this.func_213283_Z();
        EntitySize entitysize1 = this.func_213305_a(pose);
        this.field_213325_aI = entitysize1;
@@ -271,7 +263,7 @@
        if (entitysize1.field_220315_a < entitysize.field_220315_a) {
           double d0 = (double)entitysize1.field_220315_a / 2.0D;
           this.func_174826_a(new AxisAlignedBB(this.field_70165_t - d0, this.field_70163_u, this.field_70161_v - d0, this.field_70165_t + d0, this.field_70163_u + (double)entitysize1.field_220316_b, this.field_70161_v + d0));
-@@ -2641,6 +2666,7 @@
+@@ -2641,6 +2665,7 @@
        return this.field_211517_W;
     }
  
@@ -279,7 +271,7 @@
     public final float func_213311_cf() {
        return this.field_213325_aI.field_220315_a;
     }
-@@ -2670,4 +2696,69 @@
+@@ -2670,4 +2695,69 @@
     public void func_213293_j(double p_213293_1_, double p_213293_3_, double p_213293_5_) {
        this.func_213317_d(new Vec3d(p_213293_1_, p_213293_3_, p_213293_5_));
     }
